@@ -4,1412 +4,633 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GAME SHOP ORAN | ألعاب PS4</title>
-<meta name="description" content="GAME SHOP ORAN - كتالوج ألعاب PS4">
+<meta name="description" content="GAME SHOP ORAN — كتالوج ألعاب PS4، أكثر من 340 لعبة.">
+<meta name="theme-color" content="#070a10">
+<meta property="og:title" content="GAME SHOP ORAN | ألعاب PS4">
+<meta property="og:description" content="كتالوج ألعاب PS4 — أكثر من 340 لعبة.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8E%AE</text></svg>">
 <style>
-:root{--bg:#070a10;--panel:#0d121b;--card:#111823;--line:#202b3a;--text:#f4f7fb;--muted:#9ba8ba;--accent:#35e0a1;--accent2:#6d7cff}
+:root{
+  --bg:#070a10; --card:#111823; --line:#202b3a; --text:#f4f7fb; --muted:#9ba8ba;
+  --accent:#35e0a1; --accent2:#6d7cff; --radius:16px;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(circle at 15% 0%,rgba(109,124,255,.12),transparent 30%),radial-gradient(circle at 90% 10%,rgba(53,224,161,.08),transparent 28%),var(--bg);color:var(--text);font-family:Arial,"Tahoma",sans-serif}
+body{
+  margin:0; color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(109,124,255,.12),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(53,224,161,.08),transparent 28%),
+    var(--bg);
+  min-height:100vh;
+}
+
+/* ---------- الرأس ---------- */
 .header{position:sticky;top:0;z-index:100;background:rgba(7,10,16,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
-.header-inner{max-width:1400px;margin:auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-inner{max-width:1400px;margin:auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:13px}
-.brand-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#05070b;font-size:23px;font-weight:900;box-shadow:0 8px 25px rgba(53,224,161,.15)}
-.brand-name{font-size:24px;font-weight:900;letter-spacing:.5px}.brand-sub{font-size:11px;color:var(--muted);margin-top:3px}
-.search{width:min(420px,45vw);background:#0b1018;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 16px;outline:none;font-size:14px}
+.brand-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),var(--accent));font-size:23px;box-shadow:0 8px 25px rgba(53,224,161,.15)}
+.brand-name{font-size:23px;font-weight:900;letter-spacing:.5px}
+.brand-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.search-wrap{position:relative;width:min(420px,100%);flex:1 1 260px}
+.search{width:100%;background:#0b1018;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 44px 12px 40px;outline:none;font:inherit;font-size:14px}
+.search::placeholder{color:#64748b}
 .search:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(109,124,255,.12)}
-.container{max-width:1400px;margin:auto;padding:30px 28px 60px}
-.section-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:20px}.section-title h1{font-size:25px;margin:0;font-weight:900}.section-title span{color:var(--muted);font-size:13px}
+.search-ico{position:absolute;inset-inline-start:15px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:15px}
+.search-clear{position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px;display:none}
+.search-clear:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.search-wrap.filled .search-clear{display:block}
+
+/* ---------- شريط الأدوات ---------- */
+.container{max-width:1400px;margin:auto;padding:26px 28px 70px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.toolbar h1{font-size:24px;margin:0;font-weight:900}
+.count{color:var(--muted);font-size:13px;margin-top:5px}
+.count b{color:var(--accent);font-weight:800}
+.sorts{display:flex;gap:8px;background:#0b1018;border:1px solid var(--line);border-radius:12px;padding:4px}
+.sort-btn{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;font-weight:700;padding:8px 14px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s}
+.sort-btn:hover{color:var(--text)}
+.sort-btn[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#05070b}
+
+/* ---------- الشبكة ---------- */
 .game-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.game-card{min-width:0;background:linear-gradient(180deg,#121925,#0d131c);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.game-card{
+  position:relative;min-width:0;background:linear-gradient(180deg,#121925,#0d131c);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
 .game-card:hover{transform:translateY(-5px);border-color:rgba(109,124,255,.65);box-shadow:0 16px 35px rgba(0,0,0,.35)}
-.game-cover{aspect-ratio:1/1;background:#080c13;overflow:hidden}
-.game-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}.game-card:hover .game-cover img{transform:scale(1.045)}
-.game-name{min-height:58px;display:flex;align-items:center;padding:13px 15px;font-size:15px;font-weight:800;line-height:1.35;color:#fff;text-align:center;justify-content:center;border-top:1px solid rgba(255,255,255,.05)}
-.footer{max-width:1400px;margin:auto;padding:0 28px 35px;color:#667387;font-size:12px;text-align:center}
+.game-cover{position:relative;aspect-ratio:1/1;background:#080c13;overflow:hidden}
+.game-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.game-card:hover .game-cover img{transform:scale(1.045)}
+.game-cover.no-img{display:grid;place-items:center;background:linear-gradient(135deg,#0d131c,#151d2b)}
+.game-cover.no-img::after{content:"🎮";font-size:40px;opacity:.28}
+.game-cover.no-img img{display:none}
+/* unicode-bidi:plaintext => "7 Days To Die" ne devient pas "Days To Die 7" dans une page RTL */
+.game-name{min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;padding:13px 15px;font-size:15px;font-weight:800;line-height:1.35;border-top:1px solid rgba(255,255,255,.05);unicode-bidi:plaintext}
+
+/* شارات */
+.badge{position:absolute;top:10px;font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+.badge-size{inset-inline-start:10px;background:rgba(7,10,16,.78);border:1px solid var(--line);color:#cbd5e1}
+.badge-new{inset-inline-end:10px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#05070b;box-shadow:0 4px 14px rgba(53,224,161,.35)}
+
+/* ---------- لا نتائج ---------- */
+.empty{display:none;text-align:center;padding:70px 20px;color:var(--muted)}
+.empty.show{display:block}
+.empty-ico{font-size:52px;opacity:.35;margin-bottom:14px}
+.empty h2{color:var(--text);font-size:19px;margin:0 0 8px}
+.empty p{margin:0;font-size:14px}
+
+/* ---------- العودة للأعلى ---------- */
+.to-top{
+  position:fixed;inset-block-end:24px;inset-inline-start:24px;z-index:90;
+  width:48px;height:48px;border:1px solid var(--line);border-radius:14px;cursor:pointer;
+  background:rgba(13,18,27,.92);color:var(--text);font-size:20px;backdrop-filter:blur(10px);
+  display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity .25s,transform .25s,visibility .25s,border-color .2s;
+}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);color:var(--accent)}
+
+.footer{max-width:1400px;margin:auto;padding:0 28px 40px;color:#667387;font-size:12px;text-align:center;line-height:1.8}
+
 @media(max-width:1100px){.game-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:720px){.header-inner{padding:14px 16px}.brand-name{font-size:19px}.search{width:42vw}.container{padding:22px 16px 45px}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.game-name{font-size:13px;min-height:52px;padding:10px}}
+@media(max-width:720px){
+  .header-inner{padding:13px 16px;gap:12px}
+  .brand-name{font-size:18px}
+  .search-wrap{flex-basis:100%;order:3}
+  .container{padding:20px 16px 60px}
+  .game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+  .game-name{font-size:13px;min-height:52px;padding:10px}
+  .toolbar h1{font-size:20px}
+  .sort-btn{padding:7px 11px;font-size:12px}
+  .to-top{inset-block-end:16px;inset-inline-start:16px;width:44px;height:44px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<header class="header"><div class="header-inner">
-  <div class="brand"><div class="brand-icon">🎮</div><div><div class="brand-name">GAME SHOP ORAN</div><div class="brand-sub">كتالوج ألعاب PS4</div></div></div>
-  <input id="buscador" class="search" type="text" placeholder="🔎 ابحث عن لعبة...">
-</div></header>
-<main class="container">
-  <div class="section-title"><h1>ألعاب PS4</h1><span>اختر اللعبة من الصور</span></div>
-  <section class="game-grid">
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/EA SPORT FC27.png" data-src="./icon_games/EA SPORT FC27.png" alt="" loading="lazy"></div>
-      <div class="game-name">EA SPORT FC27</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/7 Days To Die.png" data-src="./icon_games/7 Days To Die.png" alt="" loading="lazy"></div>
-      <div class="game-name">7 Days To Die</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/A.Plague.Tale.Innocence.png" data-src="./icon_games/A.Plague.Tale.Innocence.png" alt="" loading="lazy"></div>
-      <div class="game-name">A Plague Tale Innocence</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/A.Way.Out.game.png" data-src="./icon_games/A.Way.Out.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">A Way Out</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassins.Creed.Chronicles.Trilogy.Pack.10.6.GB.png" data-src="./icon_games/Assassins.Creed.Chronicles.Trilogy.Pack.10.6.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin’s Creed® Chronicles Trilogy Pack</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's.Creed.Origins.CUSA05625.EUR.v1.00-v1.41.png" data-src="./icon_games/Assassin's.Creed.Origins.CUSA05625.EUR.v1.00-v1.41.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed Origins</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's Creed Ezio Collection (34.8GB).png" data-src="./icon_games/Assassin's Creed Ezio Collection (34.8GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed The Ezio Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's.Creed.III.Remastered.png" data-src="./icon_games/Assassin's.Creed.III.Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® III Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's.Creed.IV-Black.Flag.17.1.GB.png" data-src="./icon_games/Assassin's.Creed.IV-Black.Flag.17.1.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® IV Black Flag</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassins.Creed.Odyssey.game.png" data-src="./icon_games/Assassins.Creed.Odyssey.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® Odyssey</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's.Creed.Rogue.Remastered.png" data-src="./icon_games/Assassin's.Creed.Rogue.Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® Rogue Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's Creed Syndicate 37.5 GB.png" data-src="./icon_games/Assassin's Creed Syndicate 37.5 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® Syndicate</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's Creed Unity 36.6 GB.png" data-src="./icon_games/Assassin's Creed Unity 36.6 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® Unity</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassins.Creed.Valhalla.game.png" data-src="./icon_games/Assassins.Creed.Valhalla.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin&#39;s Creed® Valhalla</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Attack.on.Titan.2.png" data-src="./icon_games/Attack.on.Titan.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">Atack of Titan 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/BATMAN.ARKHAM.KNIGHT.-.(43.4GB).png" data-src="./icon_games/BATMAN.ARKHAM.KNIGHT.-.(43.4GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">BATMAN™ ARKHAM KNIGHT ΩΩ</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/BATTLEFIELD 4 - (30.0GB).png" data-src="./icon_games/BATTLEFIELD 4 - (30.0GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Battlefield 4™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Battlefield.1.png" data-src="./icon_games/Battlefield.1.png" alt="" loading="lazy"></div>
-      <div class="game-name">Battlefield™ 1</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Battlefield Hardline.png" data-src="./icon_games/Battlefield Hardline.png" alt="" loading="lazy"></div>
-      <div class="game-name">Battlefield™ Hardline</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Battlefield.V.png" data-src="./icon_games/Battlefield.V.png" alt="" loading="lazy"></div>
-      <div class="game-name">Battlefield™ V</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Beyond.Two.Souls.34.7.GB.png" data-src="./icon_games/Beyond.Two.Souls.34.7.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Beyond Two Souls™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/BiomutantGame.png" data-src="./icon_games/BiomutantGame.png" alt="" loading="lazy"></div>
-      <div class="game-name">Biomutant</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Bloodborne.game.png" data-src="./icon_games/Bloodborne.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Bloodborne™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/BORDERLANDS.3.png" data-src="./icon_games/BORDERLANDS.3.png" alt="" loading="lazy"></div>
-      <div class="game-name">Borderlands® 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Bratz.Flaunt.your.Fashion.game.png" data-src="./icon_games/Bratz.Flaunt.your.Fashion.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Bratz Flaunt your Fashion</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call.of.Duty.Modern.Warfare.II.game.png" data-src="./icon_games/Call.of.Duty.Modern.Warfare.II.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty Modern Warfare II</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call.of.Duty.Black.Ops.III.png" data-src="./icon_games/Call.of.Duty.Black.Ops.III.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Black Ops III</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty® Ghosts.png" data-src="./icon_games/Call of Duty® Ghosts.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Ghosts</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call.of.Duty.Infinite.Warfare.44.5.GB.png" data-src="./icon_games/Call.of.Duty.Infinite.Warfare.44.5.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Infinite Warfare</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call_of_Duty_Modern_Warfare_2_Campaign_Remastered_PS4-CAF.png" data-src="./icon_games/Call_of_Duty_Modern_Warfare_2_Campaign_Remastered_PS4-CAF.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Modern Warfare® 2 Campaign Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call.of.Duty.Modern.Warfare.Remastered.png" data-src="./icon_games/Call.of.Duty.Modern.Warfare.Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Modern Warfare® Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/CODWWII.png" data-src="./icon_games/CODWWII.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® WWII</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Cars.3.Driven.to.Win.png" data-src="./icon_games/Cars.3.Driven.to.Win.png" alt="" loading="lazy"></div>
-      <div class="game-name">Cars 3 Hacia la victoria</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Contra.Anniversary.Collection.game.png" data-src="./icon_games/Contra.Anniversary.Collection.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Contra Anniversary Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Control.png" data-src="./icon_games/Control.png" alt="" loading="lazy"></div>
-      <div class="game-name">Control</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crash.Bandicoot.N..Sane.Trilogy.21.1.GB..png" data-src="./icon_games/Crash.Bandicoot.N..Sane.Trilogy.21.1.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Crash Bandicoot N. Sane Trilogy</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crash.Bandicoot.4.It's.About.Time.png" data-src="./icon_games/Crash.Bandicoot.4.It's.About.Time.png" alt="" loading="lazy"></div>
-      <div class="game-name">Crash Bandicoot™ 4 It&#39;s About Time</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crash.Team.Racing.Nitro-Fueled.png" data-src="./icon_games/Crash.Team.Racing.Nitro-Fueled.png" alt="" loading="lazy"></div>
-      <div class="game-name">Crash™ Team Racing Nitro-Fueled</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crysis Remastered.png" data-src="./icon_games/Crysis Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Crysis® Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crysis 2 Remastered.png" data-src="./icon_games/Crysis 2 Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Crysis2® Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Crysis 3 Remastered.png" data-src="./icon_games/Crysis 3 Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">Crysis3® Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Cuphead.png" data-src="./icon_games/Cuphead.png" alt="" loading="lazy"></div>
-      <div class="game-name">Cuphead</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DARK.SOULSll10.6.GB.png" data-src="./icon_games/DARK.SOULSll10.6.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">DARK SOULS™ II Scholar of the First Sin</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DARK.SOULS.III.The.Fire.Fades.Edition.game.png" data-src="./icon_games/DARK.SOULS.III.The.Fire.Fades.Edition.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">DARK SOULS™ III The Fire Fades™ Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DARK.SOULS.REMASTERED.png" data-src="./icon_games/DARK.SOULS.REMASTERED.png" alt="" loading="lazy"></div>
-      <div class="game-name">DARK SOULS™ REMASTERED</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Darksiders.III.png" data-src="./icon_games/Darksiders.III.png" alt="" loading="lazy"></div>
-      <div class="game-name">Darksiders III</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DAYSGONE.game.png" data-src="./icon_games/DAYSGONE.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">DAYS GONE</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dead.Island-Definitive.Edition.4.38.GB..png" data-src="./icon_games/Dead.Island-Definitive.Edition.4.38.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Dead Island - Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Deadpool.png" data-src="./icon_games/Deadpool.png" alt="" loading="lazy"></div>
-      <div class="game-name">Deadpool</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Death.Stranding.[PS4][DUPLEX][CUSA12605].png" data-src="./icon_games/Death.Stranding.[PS4][DUPLEX][CUSA12605].png" alt="" loading="lazy"></div>
-      <div class="game-name">DEATH STRANDING™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Demon.Slayer.Kimetsu.no.Yaiba.The.Hinokami.Chronicles.game.png" data-src="./icon_games/Demon.Slayer.Kimetsu.no.Yaiba.The.Hinokami.Chronicles.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Detroit.Become.Human.png" data-src="./icon_games/Detroit.Become.Human.png" alt="" loading="lazy"></div>
-      <div class="game-name">Detroit Become Human™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Devil.May.Cry.5.game.[PS4][DUPLEX][CUSA8161].png" data-src="./icon_games/Devil.May.Cry.5.game.[PS4][DUPLEX][CUSA8161].png" alt="" loading="lazy"></div>
-      <div class="game-name">Devil May Cry 5</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Deivil may Cray HD collection 11.1 GB.png" data-src="./icon_games/Deivil may Cray HD collection 11.1 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Devil May Cry® HD Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DMC DEVIL MAY CRY DEFINITIVE EDITION - (16.9GB).png" data-src="./icon_games/DMC DEVIL MAY CRY DEFINITIVE EDITION - (16.9GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Devil May Cry™ Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Diablo.III.Reaper.of.SoulsUltimate.Evil.Edition.32.2.GB.png" data-src="./icon_games/Diablo.III.Reaper.of.SoulsUltimate.Evil.Edition.32.2.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Diablo III Reaper of Souls – Ultimate Evil Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Don't.Starve.Together.Console.Edition.game.png" data-src="./icon_games/Don't.Starve.Together.Console.Edition.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Don&#39;t Starve Together Console Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DOOM.Eternal.EUR.Game.png" data-src="./icon_games/DOOM.Eternal.EUR.Game.png" alt="" loading="lazy"></div>
-      <div class="game-name">DOOM Eternal</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DRAGON.BALL.FighterZ.3.86.GB.png" data-src="./icon_games/DRAGON.BALL.FighterZ.3.86.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">DRAGON BALL FighterZ</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DRAGONBALL XENOVERSE - (9.12GB).png" data-src="./icon_games/DRAGONBALL XENOVERSE - (9.12GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">DRAGON BALL XENOVERSE</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DRAGONBALL.XENOVERSE.2.-.(11.3GB).png" data-src="./icon_games/DRAGONBALL.XENOVERSE.2.-.(11.3GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">DRAGON BALL XENOVERSE 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dragogn-Ball-Z-Kakarot.png" data-src="./icon_games/Dragogn-Ball-Z-Kakarot.png" alt="" loading="lazy"></div>
-      <div class="game-name">DRAGON BALL Z KAKAROT</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/DRIVECLUB.png" data-src="./icon_games/DRIVECLUB.png" alt="" loading="lazy"></div>
-      <div class="game-name">DRIVECLUB™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Duck Hunt Remake.png" data-src="./icon_games/Duck Hunt Remake.png" alt="" loading="lazy"></div>
-      <div class="game-name">Duck Hunt Remake</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dying.Light.The.Following.Enhanced.Edition.13.6.Gb.png" data-src="./icon_games/Dying.Light.The.Following.Enhanced.Edition.13.6.Gb.png" alt="" loading="lazy"></div>
-      <div class="game-name">Dying Light The Following – Enhanced Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/ELDEN.RING.game.png" data-src="./icon_games/ELDEN.RING.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">ELDEN RING™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Evil.West.game.png" data-src="./icon_games/Evil.West.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Evil West</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Far.Cry.4.20.6.GB.png" data-src="./icon_games/Far.Cry.4.20.6.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Far.Cry.5.33.8.GB.png" data-src="./icon_games/Far.Cry.5.33.8.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® 5</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/FARCRY.6.game.png" data-src="./icon_games/FARCRY.6.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® 6</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/FARCRY.New.Dawn.png" data-src="./icon_games/FARCRY.New.Dawn.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® New Dawn</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Far.Cry.Primal.10.5.GB..png" data-src="./icon_games/Far.Cry.Primal.10.5.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® Primal</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GAME OF THRONES A TALLTALE GAMES SERIES - (9.78GB).png" data-src="./icon_games/GAME OF THRONES A TALLTALE GAMES SERIES - (9.78GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Game of Thrones</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Gang.Beasts.game.png" data-src="./icon_games/Gang.Beasts.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Gang Beasts</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Ghost.of.Tsushima.game.png" data-src="./icon_games/Ghost.of.Tsushima.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Ghost of Tsushima - Director&#39;s Cut</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/God of War I game.png" data-src="./icon_games/God of War I game.png" alt="" loading="lazy"></div>
-      <div class="game-name">God of War I <br>[PS2toPS4]</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GOD OF WAR 2 Multi CUSA00002_00-.png" data-src="./icon_games/GOD OF WAR 2 Multi CUSA00002_00-.png" alt="" loading="lazy"></div>
-      <div class="game-name">God of War II <br>[PS2toPS4]</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/God.of.War.III.Remastered.png" data-src="./icon_games/God.of.War.III.Remastered.png" alt="" loading="lazy"></div>
-      <div class="game-name">God of War III Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/God.of.War.game.png" data-src="./icon_games/God.of.War.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">God of War IV [2018]</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GTA.3.Definitive.Edition.png" data-src="./icon_games/GTA.3.Definitive.Edition.png" alt="" loading="lazy"></div>
-      <div class="game-name">Grand Theft Auto III – The Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Grand Theft Auto - San Andreas.png" data-src="./icon_games/Grand Theft Auto - San Andreas.png" alt="" loading="lazy"></div>
-      <div class="game-name">Grand Theft Auto San Andreas</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GTA.San.Andreas.Definitive.Edition.png" data-src="./icon_games/GTA.San.Andreas.Definitive.Edition.png" alt="" loading="lazy"></div>
-      <div class="game-name">Grand Theft Auto San Andreas – The Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Grand.Theft.Auto.V.png" data-src="./icon_games/Grand.Theft.Auto.V.png" alt="" loading="lazy"></div>
-      <div class="game-name">Grand Theft Auto V</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GTA.Vice.City.Definitive.Edition.png" data-src="./icon_games/GTA.Vice.City.Definitive.Edition.png" alt="" loading="lazy"></div>
-      <div class="game-name">Grand Theft Auto Vice City – The Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GRAVITY.RUSH.2.15.9.GB..png" data-src="./icon_games/GRAVITY.RUSH.2.15.9.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">GRAVITY RUSH™ 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Gravity Rush™ Remastered 9.19 GB-ESP.png" data-src="./icon_games/Gravity Rush™ Remastered 9.19 GB-ESP.png" alt="" loading="lazy"></div>
-      <div class="game-name">Gravity Rush™ Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Hasbro.Family.Fun.Pack.3.13.GB...png" data-src="./icon_games/Hasbro.Family.Fun.Pack.3.13.GB...png" alt="" loading="lazy"></div>
-      <div class="game-name">Hasbro Family Fun Pack</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/HEAVY.RAIN.-.(30.0GB)-ESP.png" data-src="./icon_games/HEAVY.RAIN.-.(30.0GB)-ESP.png" alt="" loading="lazy"></div>
-      <div class="game-name">HEAVY RAIN™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Hellblade Senuas Sacrifice game.png" data-src="./icon_games/Hellblade Senuas Sacrifice game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Hellblade</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/HITMAN.2.png" data-src="./icon_games/HITMAN.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">HITMAN 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/HITMAN.3.game.png" data-src="./icon_games/HITMAN.3.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">HITMAN 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Hogwarts.Legacy.game.png" data-src="./icon_games/Hogwarts.Legacy.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Hogwarts Legacy</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Hollow.Knight.game.png" data-src="./icon_games/Hollow.Knight.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Hollow Knight</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Horizon.Zero.Dawn.Complete.Edition.44.5.GB.png" data-src="./icon_games/Horizon.Zero.Dawn.Complete.Edition.44.5.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Horizon Zero Dawn Complete Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/HOT.WHEELS.UNLEASHED.game.png" data-src="./icon_games/HOT.WHEELS.UNLEASHED.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">HOT WHEELS UNLEASHED</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Immortals.Fenyx.Rising.game.png" data-src="./icon_games/Immortals.Fenyx.Rising.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Immortals Fenyx Rising ™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/inFAMOUS.Second.Son.20.00.GB..png" data-src="./icon_games/inFAMOUS.Second.Son.20.00.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">inFAMOUS Second Son™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/inFAMOUS.First.Light.9.34.GB..png" data-src="./icon_games/inFAMOUS.First.Light.9.34.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">inFAMOUS™ First Light</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/INJUSTICE.2.Legendry.Edition.0000-A0100-V0100.png" data-src="./icon_games/INJUSTICE.2.Legendry.Edition.0000-A0100-V0100.png" alt="" loading="lazy"></div>
-      <div class="game-name">Injustice 2 Legendary Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/It.takes.two.1.02.png" data-src="./icon_games/It.takes.two.1.02.png" alt="" loading="lazy"></div>
-      <div class="game-name">It Takes Two</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Journey Collector’s Edition 1.91 GB .png" data-src="./icon_games/Journey Collector’s Edition 1.91 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">Journey™ Collector’s Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Judgment game.png" data-src="./icon_games/Judgment game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Judgment</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/JUMP.FORCE.game.png" data-src="./icon_games/JUMP.FORCE.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">JUMP FORCE</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/JUST.CAUSE.4..png" data-src="./icon_games/JUST.CAUSE.4..png" alt="" loading="lazy"></div>
-      <div class="game-name">Just Cause 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Kena.Bridge.of.Spirits.png" data-src="./icon_games/Kena.Bridge.of.Spirits.png" alt="" loading="lazy"></div>
-      <div class="game-name">Kena Bridge of Spirits</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Kingdom Come Deliverance Royal Edition game.png" data-src="./icon_games/Kingdom Come Deliverance Royal Edition game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Kingdom Come Deliverance Royal Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Kingdom.Hearts.III.game.CUSA12025.png" data-src="./icon_games/Kingdom.Hearts.III.game.CUSA12025.png" alt="" loading="lazy"></div>
-      <div class="game-name">KINGDOM HEARTS Ⅲ</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/KUNGFU.PANDA.4.12.GB.png" data-src="./icon_games/KUNGFU.PANDA.4.12.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Kung Fu Panda Confrontación de leyendas legendarias</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/L.A.Noire.PS4-DUPLEX.png" data-src="./icon_games/L.A.Noire.PS4-DUPLEX.png" alt="" loading="lazy"></div>
-      <div class="game-name">L.A. Noire</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO.Batman.3.Beyond.Gotham-[PS4-J][CUSA00580][ESP][HEN-4.05][V1.0].png" data-src="./icon_games/LEGO.Batman.3.Beyond.Gotham-[PS4-J][CUSA00580][ESP][HEN-4.05][V1.0].png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® Batman™ 3 Beyond Gotham ΩΩΩ</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO Jurassic World 11.7 GB .png" data-src="./icon_games/LEGO Jurassic World 11.7 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® Jurassic World™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO.Marvel.Super.Heroes.2.png" data-src="./icon_games/LEGO.Marvel.Super.Heroes.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® MARVEL Super Heroes 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO.MARVEL.AVENGE.12.03.GB..png" data-src="./icon_games/LEGO.MARVEL.AVENGE.12.03.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® MARVEL&#39;s Avengers</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO Movie - Videogame.png" data-src="./icon_games/LEGO Movie - Videogame.png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® Movie - Videogame</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/LEGO STAR WARS The Force Awakens-[PS4-J][CUSA03372][ESP][HEN-4.05][V1.0].png" data-src="./icon_games/LEGO STAR WARS The Force Awakens-[PS4-J][CUSA03372][ESP][HEN-4.05][V1.0].png" alt="" loading="lazy"></div>
-      <div class="game-name">LEGO® STAR WARS™ The Force Awakens</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Life.is.Trange.2..1.game.Episode.1.PS4-DUPLEX.png" data-src="./icon_games/Life.is.Trange.2..1.game.Episode.1.PS4-DUPLEX.png" alt="" loading="lazy"></div>
-      <div class="game-name">Life is Strange 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Life.is.Strange.True.Colors.game.png" data-src="./icon_games/Life.is.Strange.True.Colors.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Life is Strange True Colors™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Little.Nightmares.1.png" data-src="./icon_games/Little.Nightmares.1.png" alt="" loading="lazy"></div>
-      <div class="game-name">Little Nightmares</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Little.Nightmare.II..png" data-src="./icon_games/Little.Nightmare.II..png" alt="" loading="lazy"></div>
-      <div class="game-name">Little Nightmares II</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MAD.MAX.-.(30.8GB)-ESP.png" data-src="./icon_games/MAD.MAX.-.(30.8GB)-ESP.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mad Max</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mafia Definitive Edition.png" data-src="./icon_games/Mafia Definitive Edition.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mafia Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mafia.lll.42.8.GB.png" data-src="./icon_games/Mafia.lll.42.8.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mafia III</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Maneater.game.png" data-src="./icon_games/Maneater.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Maneater</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mario.Mania.png" data-src="./icon_games/Mario.Mania.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mario Mania</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MARVEL.VS..CAPCOM.INFINITE..35.5.GB.png" data-src="./icon_games/MARVEL.VS..CAPCOM.INFINITE..35.5.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">MARVEL VS. CAPCOM INFINITE</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Marvel's.Avengers.png" data-src="./icon_games/Marvel's.Avengers.png" alt="" loading="lazy"></div>
-      <div class="game-name">Marvel&#39;s Avengers</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Marvels.SpiderMan.png" data-src="./icon_games/Marvels.SpiderMan.png" alt="" loading="lazy"></div>
-      <div class="game-name">Marvel&#39;s Spider-Man</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Marvels Spider.Man Miles Morales game.png" data-src="./icon_games/Marvels Spider.Man Miles Morales game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Marvel&#39;s Spider-Man Miles Morales</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mass.Effect.Andromeda.39.2.GB..png" data-src="./icon_games/Mass.Effect.Andromeda.39.2.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Mass Effect™ Andromeda</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mega.Man.Legacy.Collection.275.MB..png" data-src="./icon_games/Mega.Man.Legacy.Collection.275.MB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Mega Man Legacy Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/METAL.GEAR.SOLID.V.THE.PHANTOM.PAIN.png" data-src="./icon_games/METAL.GEAR.SOLID.V.THE.PHANTOM.PAIN.png" alt="" loading="lazy"></div>
-      <div class="game-name">METAL GEAR SOLID V THE PHANTOM PAIN</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mertro.REDUX-.2033Last.Light.png" data-src="./icon_games/Mertro.REDUX-.2033Last.Light.png" alt="" loading="lazy"></div>
-      <div class="game-name">Metro Redux</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MIDDLE.EARTH.SHADOW.OF.MORDOR.GOTY.-.(34.1GB).png" data-src="./icon_games/MIDDLE.EARTH.SHADOW.OF.MORDOR.GOTY.-.(34.1GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Middle-earth™ Shadow of Mordor™ - Game of the Year Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Middle.Earth.2.Shadows.of.War.png" data-src="./icon_games/Middle.Earth.2.Shadows.of.War.png" alt="" loading="lazy"></div>
-      <div class="game-name">Middle-earth™ Shadow of War™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Minecraft.Dungeons_CUSA18779.png" data-src="./icon_games/Minecraft.Dungeons_CUSA18779.png" alt="" loading="lazy"></div>
-      <div class="game-name">Minecraft Dungeons</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Minecraft PlayStation 4 Edition game.png" data-src="./icon_games/Minecraft PlayStation 4 Edition game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Minecraft PlayStation®4 Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Miraculous Rise of the Sphinx game.png" data-src="./icon_games/Miraculous Rise of the Sphinx game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Miraculous: Rise of the Sphinx</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MONOPOLY.FAMILY.FUN.PACK.836.MB..png" data-src="./icon_games/MONOPOLY.FAMILY.FUN.PACK.836.MB..png" alt="" loading="lazy"></div>
-      <div class="game-name">MONOPOLY FAMILY FUN PACK</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mortal.Kombat.11.Ultimate..(01).game.png" data-src="./icon_games/Mortal.Kombat.11.Ultimate..(01).game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mortal Kombat 11 Ultimate</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mount.&.Blade.Warband.png" data-src="./icon_games/Mount.&.Blade.Warband.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mount and Blade Warband</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MudRunner A Spintires game.png" data-src="./icon_games/MudRunner A Spintires game.png" alt="" loading="lazy"></div>
-      <div class="game-name">MudRunner A Spintires game</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Murdered Soul Suspect 8.50 GB .png" data-src="./icon_games/Murdered Soul Suspect 8.50 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">Murdered Soul Suspect</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/My.Life.Pet.Vet.game.png" data-src="./icon_games/My.Life.Pet.Vet.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">My Life Pet Vet</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MY LITTLE PONY Aventura en Bahía Yeguamar game.png" data-src="./icon_games/MY LITTLE PONY Aventura en Bahía Yeguamar game.png" alt="" loading="lazy"></div>
-      <div class="game-name">MY LITTLE PONY Aventura en Bahía Yeguamar</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NARUTO.STORM.4.ROAD.TO.BORUTO.36.8.GB.png" data-src="./icon_games/NARUTO.STORM.4.ROAD.TO.BORUTO.36.8.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">NARUTO SHIPPUDEN™ Ultimate Ninja® STORM 4 ROAD TO BORUTO</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Need.for.Speed.Heat.png" data-src="./icon_games/Need.for.Speed.Heat.png" alt="" loading="lazy"></div>
-      <div class="game-name">Need for Speed™ Heat</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Need.For.Speed.Hot.Pursuit.Remastered.game.png" data-src="./icon_games/Need.For.Speed.Hot.Pursuit.Remastered.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Need For Speed™ Hot Pursuit Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Need for Speed Payback game.png" data-src="./icon_games/Need for Speed Payback game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Need For Speed™ Payback</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Nickelodeon All-Star Brawl game.png" data-src="./icon_games/Nickelodeon All-Star Brawl game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Nickelodeon All-Star Brawl</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NieR Replicant.png" data-src="./icon_games/NieR Replicant.png" alt="" loading="lazy"></div>
-      <div class="game-name">NieR Replicant ver.1.22474487139</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NieR-Automata 32.5 GB.png" data-src="./icon_games/NieR-Automata 32.5 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">NieRAutomata</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Nioh 2.png" data-src="./icon_games/Nioh 2.png" alt="" loading="lazy"></div>
-      <div class="game-name">Nioh 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Olympic.Games.Tokyo.2020.game.png" data-src="./icon_games/Olympic.Games.Tokyo.2020.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">OLYMPIC GAMES TOKYO 2020™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/ONE PIECE BURNING BLOOD 8.01 GB .png" data-src="./icon_games/ONE PIECE BURNING BLOOD 8.01 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">ONE PIECE BURNING BLOOD</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/ONE PIECE WARRIORS 3 - (10.3GB).png" data-src="./icon_games/ONE PIECE WARRIORS 3 - (10.3GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">ONE PIECE PIRATE WARRIORS 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Outlast.2.17.4.GB.png" data-src="./icon_games/Outlast.2.17.4.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Outlast 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Outlast.Trinity.6.82.GB..png" data-src="./icon_games/Outlast.Trinity.6.82.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Outlast Trinity Outlast &amp; Outlast Whistleblower</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Overcooked.2.png" data-src="./icon_games/Overcooked.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">Overcooked 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PT.1.25.GB..png" data-src="./icon_games/PT.1.25.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">P.T</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PAW.Patrol.The.Movie-Adventure.City.Calls_CUSA25489_v1.00_[8.00]_OPOISSO893.png" data-src="./icon_games/PAW.Patrol.The.Movie-Adventure.City.Calls_CUSA25489_v1.00_[8.00]_OPOISSO893.png" alt="" loading="lazy"></div>
-      <div class="game-name">PAW Patrol The Movie - Adventure City Calls</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PAYDAY.2.THE.BIG.SCORE.-.(14.2GB).png" data-src="./icon_games/PAYDAY.2.THE.BIG.SCORE.-.(14.2GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">PAYDAY 2 The Big Score</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PC Building Simulator game.png" data-src="./icon_games/PC Building Simulator game.png" alt="" loading="lazy"></div>
-      <div class="game-name">PC Building Simulator</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Persona 5 Royal.png" data-src="./icon_games/Persona 5 Royal.png" alt="" loading="lazy"></div>
-      <div class="game-name">Persona 5 Royal</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Police Simulator Patrol Officers game.png" data-src="./icon_games/Police Simulator Patrol Officers game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Police Simulator Patrol Officers</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Portal_Knights_1.74GB.png" data-src="./icon_games/Portal_Knights_1.74GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Portal Knights</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PREY.png" data-src="./icon_games/PREY.png" alt="" loading="lazy"></div>
-      <div class="game-name">Prey</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Prison.Architect.PlayStation.4.Edition.png" data-src="./icon_games/Prison.Architect.PlayStation.4.Edition.png" alt="" loading="lazy"></div>
-      <div class="game-name">Prison Architect PlayStation 4 Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/PROTOTYPE.BIOHAZARD.BUNDLE.-.(14.6GB).png" data-src="./icon_games/PROTOTYPE.BIOHAZARD.BUNDLE.-.(14.6GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">PROTOTYPE® BIOHAZARD BUNDLE</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Pure.Pool.507.MB..png" data-src="./icon_games/Pure.Pool.507.MB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Pure Pool™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RAGE.2.png" data-src="./icon_games/RAGE.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">RAGE2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Ratchet.and.Clank.png" data-src="./icon_games/Ratchet.and.Clank.png" alt="" loading="lazy"></div>
-      <div class="game-name">Ratchet &amp; Clank™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Rayman.Legends.7.72.GB.png" data-src="./icon_games/Rayman.Legends.7.72.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Rayman® Legends</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Red.dead.Redemption.2.png" data-src="./icon_games/Red.dead.Redemption.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">Red Dead Redemption 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Remnant.From.the.Ashes.PS4-DUPLEX.png" data-src="./icon_games/Remnant.From.the.Ashes.PS4-DUPLEX.png" alt="" loading="lazy"></div>
-      <div class="game-name">Remnant From the Ashes</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT.EVIL.2.REMAKE.game.png" data-src="./icon_games/RESIDENT.EVIL.2.REMAKE.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 2 Remake</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT.EVIL.3.Remake.game.png" data-src="./icon_games/RESIDENT.EVIL.3.Remake.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 3 Remake</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Resident.Evil.4.8.36.GB.png" data-src="./icon_games/Resident.Evil.4.8.36.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT EVIL5 game.png" data-src="./icon_games/RESIDENT EVIL5 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 5</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT.EVIL.6.-.(15.0GB).png" data-src="./icon_games/RESIDENT.EVIL.6.-.(15.0GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 6</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT.EVIL.7.biohazard.Gold.Edition.28.2.GB..png" data-src="./icon_games/RESIDENT.EVIL.7.biohazard.Gold.Edition.28.2.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL 7 biohazard Gold Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Resident Evil Origins Collection 24.00 GB .png" data-src="./icon_games/Resident Evil Origins Collection 24.00 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">Resident Evil Origins Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT EVIL REVELATIONS - (16.2GB).png" data-src="./icon_games/RESIDENT EVIL REVELATIONS - (16.2GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL REVELATIONS</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/RESIDENT EVIL REVELATIONS 2 20.0 GB.png" data-src="./icon_games/RESIDENT EVIL REVELATIONS 2 20.0 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">RESIDENT EVIL REVELATIONS 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Resident.Evil.Village.VIII.game.png" data-src="./icon_games/Resident.Evil.Village.VIII.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Resident Evil Village</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Rise of the Tomb Raider.png" data-src="./icon_games/Rise of the Tomb Raider.png" alt="" loading="lazy"></div>
-      <div class="game-name">Rise of the Tomb Raider</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Saints.Row.game.png" data-src="./icon_games/Saints.Row.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Saints Row</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sega.Classics.Collection.966.MB..png" data-src="./icon_games/Sega.Classics.Collection.966.MB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Sega Classics Collection</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sekiro.Shadows.Die.Twice.PS4.FPKG.[CUSA13801].png" data-src="./icon_games/Sekiro.Shadows.Die.Twice.PS4.FPKG.[CUSA13801].png" alt="" loading="lazy"></div>
-      <div class="game-name">Sekiro™ Shadows Die Twice</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SHADOW.OF.THE.COLOSSUS.12.6.GB..png" data-src="./icon_games/SHADOW.OF.THE.COLOSSUS.12.6.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">SHADOW OF THE COLOSSUS</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Shadow.of.the.Tomb.Raider.png" data-src="./icon_games/Shadow.of.the.Tomb.Raider.png" alt="" loading="lazy"></div>
-      <div class="game-name">Shadow of the Tomb Raider</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SIFU.game.png" data-src="./icon_games/SIFU.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">SIFU</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SLEEPING.DOGS.DEFINITIVE.EDITION.-.(16.3GB)-ESP.png" data-src="./icon_games/SLEEPING.DOGS.DEFINITIVE.EDITION.-.(16.3GB)-ESP.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sleeping Dogs Definitive Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SNES STATION.png" data-src="./icon_games/SNES STATION.png" alt="" loading="lazy"></div>
-      <div class="game-name">SNES STATION</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SNIPER ELITE 3 - (14.5GB).png" data-src="./icon_games/SNIPER ELITE 3 - (14.5GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Elite 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SNIPER ELITE 4 - (30.1GB).png" data-src="./icon_games/SNIPER ELITE 4 - (30.1GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Elite 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sniper Elite 5 game.png" data-src="./icon_games/Sniper Elite 5 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Elite 5</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sniper.Elite.V2.Remastered.PS4-DUPLEX.png" data-src="./icon_games/Sniper.Elite.V2.Remastered.PS4-DUPLEX.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Elite V2 Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sniper Ghost Warrior 3 36.8 GB.png" data-src="./icon_games/Sniper Ghost Warrior 3 36.8 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Ghost Warrior 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sniper.Ghost.Warrior.Contracts.png" data-src="./icon_games/Sniper.Ghost.Warrior.Contracts.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Ghost Warrior Contracts</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sniper.Ghost.Warrior.Contracts.2.game.png" data-src="./icon_games/Sniper.Ghost.Warrior.Contracts.2.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sniper Ghost Warrior Contracts 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SNOOPY'S.GRAND.ADVENTURE.-.(874MB).png" data-src="./icon_games/SNOOPY'S.GRAND.ADVENTURE.-.(874MB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Snoopy&#39;s Grand Adventure</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SONIC FORCES 16.1 GB.png" data-src="./icon_games/SONIC FORCES 16.1 GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">SONIC FORCES</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SONIC FRONTIERS game.png" data-src="./icon_games/SONIC FRONTIERS game.png" alt="" loading="lazy"></div>
-      <div class="game-name">SONIC FRONTIERS</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Spyro.Reignited.Trilogy.png" data-src="./icon_games/Spyro.Reignited.Trilogy.png" alt="" loading="lazy"></div>
-      <div class="game-name">Spyro Reignited Trilogy</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/STAR.WARS.Jedi.Fallen.Order.[PS4][DUPLEX][CUSA12529].png" data-src="./icon_games/STAR.WARS.Jedi.Fallen.Order.[PS4][DUPLEX][CUSA12529].png" alt="" loading="lazy"></div>
-      <div class="game-name">STAR WARS Jedi Fallen Order™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/STAR.WARS-Battlefront.II.44.2.GB.png" data-src="./icon_games/STAR.WARS-Battlefront.II.44.2.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">STAR WARS™ Battlefront™ II</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/STAR.WARS.-.Squadrons.[CUSA15080].[v01.00].png" data-src="./icon_games/STAR.WARS.-.Squadrons.[CUSA15080].[v01.00].png" alt="" loading="lazy"></div>
-      <div class="game-name">STAR WARS™ Squadrons</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Stranded.Deep.game.png" data-src="./icon_games/Stranded.Deep.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Stranded Deep</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Stray CUSA24899 game.png" data-src="./icon_games/Stray CUSA24899 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Stray</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Street Fighter 6 game.png" data-src="./icon_games/Street Fighter 6 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Street Fighter 6</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Subnautica.game.png" data-src="./icon_games/Subnautica.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Subnautica</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Super Mario 64 por TheWizWiki.png" data-src="./icon_games/Super Mario 64 por TheWizWiki.png" alt="" loading="lazy"></div>
-      <div class="game-name">Super Mario 64</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/TALES FROM THE BORDERLANDS A TELLTALE GAME SERIES - (8.64GB).png" data-src="./icon_games/TALES FROM THE BORDERLANDS A TELLTALE GAME SERIES - (8.64GB).png" alt="" loading="lazy"></div>
-      <div class="game-name">Tales from the Borderlands</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Team.Sonic.Racing.png" data-src="./icon_games/Team.Sonic.Racing.png" alt="" loading="lazy"></div>
-      <div class="game-name">Team Sonic Racing</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tekken 7.png" data-src="./icon_games/Tekken 7.png" alt="" loading="lazy"></div>
-      <div class="game-name">TEKKEN™7</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Terraria.game.png" data-src="./icon_games/Terraria.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Terraria</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tetris.Effect.game.png" data-src="./icon_games/Tetris.Effect.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tetris Effect</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Callisto Protocol game.png" data-src="./icon_games/The Callisto Protocol game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Callisto Protocol™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Dark.Pictures.Anthology.House.Of.Ashes.game.png" data-src="./icon_games/The.Dark.Pictures.Anthology.House.Of.Ashes.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Dark Pictures Anthology House Of Ashes</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Dark Pictures Anthology Little Hope.png" data-src="./icon_games/The Dark Pictures Anthology Little Hope.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Dark Pictures Anthology Little Hope</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Dark Pictures Anthology Man of Medan game.png" data-src="./icon_games/The Dark Pictures Anthology Man of Medan game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Dark Pictures Anthology Man of Medan</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Dark Pictures Anthology The Devil in Me game.png" data-src="./icon_games/The Dark Pictures Anthology The Devil in Me game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Dark Pictures Anthology The Devil in Me</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Evil.Within.33.7.GB.png" data-src="./icon_games/The.Evil.Within.33.7.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Evil Within</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Evil.Within.2.27.6.GB.png" data-src="./icon_games/The.Evil.Within.2.27.6.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Evil Within® 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Forest.png" data-src="./icon_games/The.Forest.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Forest</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Last.Guardian.11.8.GB..png" data-src="./icon_games/The.Last.Guardian.11.8.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">The Last Guardian™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Lord of the Rings Gollum game.png" data-src="./icon_games/The Lord of the Rings Gollum game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Lord of the Rings Gollum</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Quarry game.png" data-src="./icon_games/The Quarry game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Quarry</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Surge.png" data-src="./icon_games/The.Surge.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Surge</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Surge 2.png" data-src="./icon_games/The Surge 2.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Surge 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Wolf.Among.Us.4.40.GB..png" data-src="./icon_games/The.Wolf.Among.Us.4.40.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">The Wolf Among Us</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Titanfall.2.31.8.GB.png" data-src="./icon_games/Titanfall.2.31.8.GB.png" alt="" loading="lazy"></div>
-      <div class="game-name">Titanfall™ 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tokyo.Ghoul.Call.of.Exit.png" data-src="./icon_games/Tokyo.Ghoul.Call.of.Exit.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tokyo Ghoul 【CALL to EXIST】 東京喰種トーキョーグールre</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tony.Hawk's.Pro.Skater.5.6.76.GB..png" data-src="./icon_games/Tony.Hawk's.Pro.Skater.5.6.76.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Tony Hawk&#39;s® Pro Skater™ 5</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tony.Hawks.ProS.kater.1.y.2.png" data-src="./icon_games/Tony.Hawks.ProS.kater.1.y.2.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tony Hawk&#39;s™ Pro Skater™ 1 + 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Toy.Story.3.png" data-src="./icon_games/Toy.Story.3.png" alt="" loading="lazy"></div>
-      <div class="game-name">TOY STORY 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Trials.Fusion.4.75.GB..png" data-src="./icon_games/Trials.Fusion.4.75.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Trials Fusion™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tropico 6.game.png" data-src="./icon_games/Tropico 6.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tropico 6</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Truck Driver game.png" data-src="./icon_games/Truck Driver game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Truck Driver</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Uncharted.4.44.1.GB..png" data-src="./icon_games/Uncharted.4.44.1.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Uncharted 4 A Thief’s End™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Uncharted.The.Lost.Legacy.42.7.GB..png" data-src="./icon_games/Uncharted.The.Lost.Legacy.42.7.GB..png" alt="" loading="lazy"></div>
-      <div class="game-name">Uncharted The Lost Legacy™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Uncharted.The.Nathan.Drake.Collection.png" data-src="./icon_games/Uncharted.The.Nathan.Drake.Collection.png" alt="" loading="lazy"></div>
-      <div class="game-name">Uncharted The Nathan Drake Collection™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Unravel ONE.png" data-src="./icon_games/Unravel ONE.png" alt="" loading="lazy"></div>
-      <div class="game-name">Unravel</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Unravel.TWO.png" data-src="./icon_games/Unravel.TWO.png" alt="" loading="lazy"></div>
-      <div class="game-name">Unravel TWO</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Until Dawn 35.7 GB .png" data-src="./icon_games/Until Dawn 35.7 GB .png" alt="" loading="lazy"></div>
-      <div class="game-name">Until Dawn™</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Vampyr.game.png" data-src="./icon_games/Vampyr.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Vampyr</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/WATCH DOGS 3 Legion game.png" data-src="./icon_games/WATCH DOGS 3 Legion game.png" alt="" loading="lazy"></div>
-      <div class="game-name">WATCH DOGS 3 Legion</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/WATCH DOGS 2 game.png" data-src="./icon_games/WATCH DOGS 2 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">WATCH DOGS 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Werewolf the Apocalipse game.png" data-src="./icon_games/Werewolf the Apocalipse game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Werewolf The Apocalypse - Earthblood</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Wolfenstein-Young Blood.png" data-src="./icon_games/Wolfenstein-Young Blood.png" alt="" loading="lazy"></div>
-      <div class="game-name">Wolfenstein Youngblood</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/WORLD.WAR.Z..png" data-src="./icon_games/WORLD.WAR.Z..png" alt="" loading="lazy"></div>
-      <div class="game-name">World War Z</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/XCOM 2 - (18.9GB)-ESP.png" data-src="./icon_games/XCOM 2 - (18.9GB)-ESP.png" alt="" loading="lazy"></div>
-      <div class="game-name">XCOM 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Cities Skylines game.png" data-src="./icon_games/Cities Skylines game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Cities Skylines</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Project CARS 3 game + update 1.12.png" data-src="./icon_games/Project CARS 3 game + update 1.12.png" alt="" loading="lazy"></div>
-      <div class="game-name">Project CARS 3</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GreedFall game.png" data-src="./icon_games/GreedFall game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Greedfall</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/GRID Legends game.png" data-src="./icon_games/GRID Legends game.png" alt="" loading="lazy"></div>
-      <div class="game-name">GRID Legends</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Jurassic World Evolution 2 game.png" data-src="./icon_games/Jurassic World Evolution 2 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Jurassic World Evolution 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SpongeBob Battle For Bikini Bottom game.png" data-src="./icon_games/SpongeBob Battle For Bikini Bottom game.png" alt="" loading="lazy"></div>
-      <div class="game-name">SpongeBob Battle For Bikini Bottom</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MX vs ATV Legends game.png" data-src="./icon_games/MX vs ATV Legends game.png" alt="" loading="lazy"></div>
-      <div class="game-name">MX vs ATV Legends</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Lost Judgment game.png" data-src="./icon_games/Lost Judgment game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Lost Judgment</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Ben 10 Power Trip game.png" data-src="./icon_games/Ben 10 Power Trip game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Ben 10 Power Trip</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Human Fall Flat game.png" data-src="./icon_games/Human Fall Flat game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Human Fall Flat</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Blaze and the Monster Machines Axle City Racers game.png" data-src="./icon_games/Blaze and the Monster Machines Axle City Racers game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Blaze and the Monster Machines Axle City Racers</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The King of Fighters XV game.png" data-src="./icon_games/The King of Fighters XV game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The King of Fighters XV</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Concrete Genie game.png" data-src="./icon_games/Concrete Genie game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Concrete Genie</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty Modern Warfare 2019 game.png" data-src="./icon_games/Call of Duty Modern Warfare 2019 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty Modern Warfare</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Cult of the Lamb game.png" data-src="./icon_games/Cult of the Lamb game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Cult of The Lamb Heretic Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/SnowRunner game.png" data-src="./icon_games/SnowRunner game.png" alt="" loading="lazy"></div>
-      <div class="game-name">SnowRunner</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/No Mans Sky game v4.42.png" data-src="./icon_games/No Mans Sky game v4.42.png" alt="" loading="lazy"></div>
-      <div class="game-name">No Mans Sky</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Need for Speed Rivals game.png" data-src="./icon_games/Need for Speed Rivals game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Need for Speed Rivals</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Minecraft Legends game.png" data-src="./icon_games/Minecraft Legends game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Minecraft Legends</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Marvel's.Guardians.of.the.Galaxy.game.png" data-src="./icon_games/Marvel's.Guardians.of.the.Galaxy.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Marvel&#39;s Guardians of the Galaxy</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/CAPTAIN TSUBASA RISE OF NEW CHAMPIONS game.png" data-src="./icon_games/CAPTAIN TSUBASA RISE OF NEW CHAMPIONS game.png" alt="" loading="lazy"></div>
-      <div class="game-name">CAPTAIN TSUBASA RISE OF NEW CHAMPIONS</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tiny Tina's Wonderlands game.png" data-src="./icon_games/Tiny Tina's Wonderlands game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tiny Tina's Wonderlands</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Farming Simulator 22 game.png" data-src="./icon_games/Farming Simulator 22 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Farming Simulator 22</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Moving Out 2 game.png" data-src="./icon_games/Moving Out 2 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Moving Out 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Smurfs Kart game.png" data-src="./icon_games/Smurfs Kart game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Smurfs Kart <br> [Pitufos Kart]</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call.of.Duty.Vanguard.01.game.png" data-src="./icon_games/Call.of.Duty.Vanguard.01.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Vanguard</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty Black Ops 4 game.png" data-src="./icon_games/Call of Duty Black Ops 4 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Black Ops 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/HITMAN game.png" data-src="./icon_games/HITMAN game.png" alt="" loading="lazy"></div>
-      <div class="game-name">HITMAN 1 <br> Game of the Year Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty Black Ops Cold War game.png" data-src="./icon_games/Call of Duty Black Ops Cold War game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty® Black Ops Cold War</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Alan Wake Remastered game.png" data-src="./icon_games/Alan Wake Remastered game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Alan Wake Remastered</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mount and Blade II Bannerlord game v1.13.png" data-src="./icon_games/Mount and Blade II Bannerlord game v1.13.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mount and Blade II Bannerlord</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Subnautica Below Zero game.png" data-src="./icon_games/Subnautica Below Zero game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Subnautica Below Zero</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Far Cry 3 Blood Dragon Classic Edition game.png" data-src="./icon_games/Far Cry 3 Blood Dragon Classic Edition game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® 3 Blood Dragon Classic Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The Grand Tour Game game.png" data-src="./icon_games/The Grand Tour Game game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Grand Tour Game</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/ARK Survival Evolved game.png" data-src="./icon_games/ARK Survival Evolved game.png" alt="" loading="lazy"></div>
-      <div class="game-name">ARK Survival Evolved</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Lost Ember game.png" data-src="./icon_games/Lost Ember game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Lost Ember</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NARUTO SHIPPUDEN Ultimate Ninja STORM TRILOGY game.png" data-src="./icon_games/NARUTO SHIPPUDEN Ultimate Ninja STORM TRILOGY game.png" alt="" loading="lazy"></div>
-      <div class="game-name">NARUTO SHIPPUDEN™ Ultimate Ninja® STORM TRILOGY</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Monster.Hunter.World.Iceborne.game.png" data-src="./icon_games/Monster.Hunter.World.Iceborne.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Monster Hunter World Iceborne</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Horizon Forbidden West.game.png" data-src="./icon_games/Horizon Forbidden West.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Horizon Forbidden West</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Witcher.3.Wild.Hunt-Complete.Edition.37.3.Gb.png" data-src="./icon_games/The.Witcher.3.Wild.Hunt-Complete.Edition.37.3.Gb.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Witcher 3 Wild Hunt – Complete Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Lies of P game.png" data-src="./icon_games/Lies of P game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Lies of P</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Red Dead Redemption game.png" data-src="./icon_games/Red Dead Redemption game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Red Dead Redemption</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Cyberpunk.2077.game.png" data-src="./icon_games/Cyberpunk.2077.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Cyberpunk 2077</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty Modern Warfare III game.png" data-src="./icon_games/Call of Duty Modern Warfare III game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty Modern Warfare III</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/WATCH DOGS Complete Edition game.png" data-src="./icon_games/WATCH DOGS Complete Edition game.png" alt="" loading="lazy"></div>
-      <div class="game-name">WATCH DOGS 1 Complete Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Outer Wilds game.png" data-src="./icon_games/Outer Wilds game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Outer Wilds</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Far Cry 3 Classic Edition game.png" data-src="./icon_games/Far Cry 3 Classic Edition game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Far Cry® 3 Classic Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Wo Long Fallen Dynasty game.png" data-src="./icon_games/Wo Long Fallen Dynasty game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Wo Long: Fallen Dynasty</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Bully game.png" data-src="./icon_games/Bully game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Bully <br>[PS2toPS4]</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Firewatch game.png" data-src="./icon_games/Firewatch game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Firewatch</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Call of Duty Advanced Warfare game.png" data-src="./icon_games/Call of Duty Advanced Warfare game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Call of Duty Advanced Warfare Atlas Limited Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Assassin's Creed Mirage game.png" data-src="./icon_games/Assassin's Creed Mirage game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Assassin’s Creed Mirage</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Like a Dragon Gaiden The Man Who Erased His Name game.png" data-src="./icon_games/Like a Dragon Gaiden The Man Who Erased His Name game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Like a Dragon Gaiden: The Man Who Erased His Name</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Sherlock Holmes Chapter One game.png" data-src="./icon_games/Sherlock Holmes Chapter One game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Sherlock Holmes Chapter One</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS game.png" data-src="./icon_games/NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Naruto x Boruto Ultimate Ninja Storm Connections</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Prince Of Persia The Lost Crown game.png" data-src="./icon_games/Prince Of Persia The Lost Crown game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Prince of Persia The Lost Crown</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Persona 3 Reload game.png" data-src="./icon_games/Persona 3 Reload game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Persona 3 Reload</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Like a Dragon Infinite Wealth game.png" data-src="./icon_games/Like a Dragon Infinite Wealth game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Like a Dragon Infinite Wealth</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Atomic.Heart.game.png" data-src="./icon_games/Atomic.Heart.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Atomic Heart</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/METAL GEAR SOLID 3 Snake Eater - Master Collection Version game.png" data-src="./icon_games/METAL GEAR SOLID 3 Snake Eater - Master Collection Version game.png" alt="" loading="lazy"></div>
-      <div class="game-name">METAL GEAR SOLID 3 Snake Eater - Master Collection Version</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/EA-SPORTS-UFC-4_game.png" data-src="./icon_games/EA-SPORTS-UFC-4_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">EA SPORTS™ UFC® 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/NBA 2K24 game.png" data-src="./icon_games/NBA 2K24 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">NBA 2K24</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Fortnite game.png" data-src="./icon_games/Fortnite game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Fortnite <br>[Requiere internet]<div class="online">online</div></td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/God.of.War.Ragnarok.game.png" data-src="./icon_games/God.of.War.Ragnarok.game.png" alt="" loading="lazy"></div>
-      <div class="game-name">God of War Ragnarök: Valhala</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MLB The Show 23 game.png" data-src="./icon_games/MLB The Show 23 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">MLB The Show 23</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Skyrim_game.png" data-src="./icon_games/Skyrim_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Elder Scrolls V Skyrim <br>Special Edition</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dying Light 2 Stay Human game.png" data-src="./icon_games/Dying Light 2 Stay Human game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Dying Light 2 Stay Human </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/WWE 2K24 game.png" data-src="./icon_games/WWE 2K24 game.png" alt="" loading="lazy"></div>
-      <div class="game-name">WWE 2K24</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The-Sims-4_game.png" data-src="./icon_games/The-Sims-4_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Sims™ 4</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dead-Island-2_game.png" data-src="./icon_games/Dead-Island-2_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Dead Island 2</td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Tom.Clancys.Ghost.Recon.Wildlands_game.png" data-src="./icon_games/Tom.Clancys.Ghost.Recon.Wildlands_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Tom Clancy&#39;s Ghost Recon® Wildlands <br>Ultimate Edition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Rocket.League_game.png" data-src="./icon_games/Rocket.League_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Rocket League®<br>Ultimate Edition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Metro.Exodus_game.png" data-src="./icon_games/Metro.Exodus_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Metro Exodus <br>Gold Edition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Mass.Effect.Legendary.Edition_game.png" data-src="./icon_games/Mass.Effect.Legendary.Edition_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Mass Effect <br>Legendary Edition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/ON.THE.ROAD-The.Truck.Simulator_game.png" data-src="./icon_games/ON.THE.ROAD-The.Truck.Simulator_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">ON THE ROAD - The Truck Simulator </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Last.of.Us.Part.I_game.png" data-src="./icon_games/The.Last.of.Us.Part.I_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Last of Us™ Remastered </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/The.Last.of.Us.Part.II_game.png" data-src="./icon_games/The.Last.of.Us.Part.II_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">The Last of Us™ Part II </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Fallout.4_game.png" data-src="./icon_games/Fallout.4_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Fallout 4 <br> Game of the Year Edition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Life.is.Strange.Remastered_game.png" data-src="./icon_games/Life.is.Strange.Remastered_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Life is Strange Remastered </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Life.is.Strange.Before.the.Storm.Remastered_game.png" data-src="./icon_games/Life.is.Strange.Before.the.Storm.Remastered_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Life is Strange Before the Storm Remastered </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Resident.Evil.4.Remake_game.png" data-src="./icon_games/Resident.Evil.4.Remake_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Resident Evil 4 REMAKE </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Under.The.Waves_game.png" data-src="./icon_games/Under.The.Waves_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Under The Waves </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Dragon.Age.Inquisition_game.png" data-src="./icon_games/Dragon.Age.Inquisition_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Dragon Age Inquisition </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Monster.Hunter.Rise.Sunbreak_game.png" data-src="./icon_games/Monster.Hunter.Rise.Sunbreak_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Monster Hunter Rise Sunbreak </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/MotoGP24_game.png" data-src="./icon_games/MotoGP24_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">MotoGP24 </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/Formula.1.24_game.png" data-src="./icon_games/Formula.1.24_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">Formula 1 2024 </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/TopSpin.2K25_game.png" data-src="./icon_games/TopSpin.2K25_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">TopSpin 2K25 <br>(TENIS 25) </td></div>
-    </div>
-    <div class="game-card">
-      <div class="game-cover"><img class="icon" src="./icon_games/EA SPORTS FC 25_game.png" data-src="./icon_games/EA SPORTS FC 25_game.png" alt="" loading="lazy"></div>
-      <div class="game-name">EA SPORTS FC25 <br>(FIFA 25)<div class="new">new</div></td></div>
-    </div>
-  </section>
-</main>
-<footer class="footer">GAME SHOP ORAN • كتالوج ألعاب PS4</footer>
-<script src="./script.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script>
-  let map = L.map('mi_mapa').setView([21.3820,-77.9128], 13)
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        L.marker([21.39306, -77.93315]).addTo(map).bindPopup("CopyStation: Calle E #12 entre Cupey y 3ra. Reparto Agramonte. Camagüey.")
-</script>
 
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">🎮</div>
+      <div>
+        <div class="brand-name">GAME SHOP ORAN</div>
+        <div class="brand-sub">كتالوج ألعاب PS4</div>
+      </div>
+    </div>
+    <div class="search-wrap" id="searchWrap">
+      <span class="search-ico">🔎</span>
+      <input id="search" class="search" type="search" placeholder="ابحث عن لعبة..." autocomplete="off" aria-label="ابحث عن لعبة">
+      <button class="search-clear" id="searchClear" type="button" aria-label="مسح البحث">&times;</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="toolbar">
+    <div>
+      <h1>ألعاب PS4</h1>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="sorts" role="group" aria-label="ترتيب">
+      <button class="sort-btn" id="sortAz"  type="button" aria-pressed="true">أبجدي</button>
+      <button class="sort-btn" id="sortNew" type="button" aria-pressed="false">الأحدث</button>
+    </div>
+  </div>
+
+  <section class="game-grid" id="grid"></section>
+
+  <div class="empty" id="empty">
+    <div class="empty-ico">🔍</div>
+    <h2>لا توجد نتيجة</h2>
+    <p>جرّب كلمة أخرى أو تحقّق من الإملاء.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  GAME SHOP ORAN • كتالوج ألعاب PS4<br>
+  <span id="footCount"></span>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="العودة إلى الأعلى">↑</button>
+
+<script>
+/* =========================================================================
+   GAME SHOP ORAN — كتالوج الألعاب
+   -------------------------------------------------------------------------
+   لإضافة لعبة جديدة: أضف سطراً واحداً في القائمة GAMES أسفله.
+     n = اسم اللعبة      (إجباري)
+     i = اسم ملف الصورة داخل مجلد icon_games   (اختياري)
+     s = الحجم           (اختياري، مثال: "12.4 GB")
+     new: 1              (اختياري — يضع شارة "جديد" ويرفع اللعبة إلى الأعلى)
+   مثال:
+     {n:"EA SPORTS FC 26", i:"EA SPORTS FC 26.png", s:"45 GB", new:1},
+   ========================================================================= */
+
+const GAMES = [
+  {n:"7 Days To Die", i:"7 Days To Die.png"},
+  {n:"A Plague Tale Innocence", i:"A.Plague.Tale.Innocence.png"},
+  {n:"A Way Out", i:"A.Way.Out.game.png"},
+  {n:"Alan Wake Remastered", i:"Alan Wake Remastered game.png"},
+  {n:"ARK Survival Evolved", i:"ARK Survival Evolved game.png"},
+  {n:"Assassin's Creed Origins", i:"Assassin's.Creed.Origins.CUSA05625.EUR.v1.00-v1.41.png"},
+  {n:"Assassin's Creed The Ezio Collection", i:"Assassin's Creed Ezio Collection (34.8GB).png", s:"34.8 GB"},
+  {n:"Assassin's Creed® III Remastered", i:"Assassin's.Creed.III.Remastered.png"},
+  {n:"Assassin's Creed® IV Black Flag", i:"Assassin's.Creed.IV-Black.Flag.17.1.GB.png"},
+  {n:"Assassin's Creed® Odyssey", i:"Assassins.Creed.Odyssey.game.png"},
+  {n:"Assassin's Creed® Rogue Remastered", i:"Assassin's.Creed.Rogue.Remastered.png"},
+  {n:"Assassin's Creed® Syndicate", i:"Assassin's Creed Syndicate 37.5 GB.png", s:"37.5 GB"},
+  {n:"Assassin's Creed® Unity", i:"Assassin's Creed Unity 36.6 GB.png", s:"36.6 GB"},
+  {n:"Assassin's Creed® Valhalla", i:"Assassins.Creed.Valhalla.game.png"},
+  {n:"Assassin’s Creed Mirage", i:"Assassin's Creed Mirage game.png"},
+  {n:"Assassin’s Creed® Chronicles Trilogy Pack", i:"Assassins.Creed.Chronicles.Trilogy.Pack.10.6.GB.png"},
+  {n:"Atack of Titan 2", i:"Attack.on.Titan.2.png"},
+  {n:"Atomic Heart", i:"Atomic.Heart.game.png"},
+  {n:"BATMAN™ ARKHAM KNIGHT ΩΩ", i:"BATMAN.ARKHAM.KNIGHT.-.(43.4GB).png", s:"43.4 GB"},
+  {n:"Battlefield 4™", i:"BATTLEFIELD 4 - (30.0GB).png", s:"30.0 GB"},
+  {n:"Battlefield™ 1", i:"Battlefield.1.png"},
+  {n:"Battlefield™ Hardline", i:"Battlefield Hardline.png"},
+  {n:"Battlefield™ V", i:"Battlefield.V.png"},
+  {n:"Ben 10 Power Trip", i:"Ben 10 Power Trip game.png"},
+  {n:"Beyond Two Souls™", i:"Beyond.Two.Souls.34.7.GB.png"},
+  {n:"Biomutant", i:"BiomutantGame.png"},
+  {n:"Blaze and the Monster Machines Axle City Racers", i:"Blaze and the Monster Machines Axle City Racers game.png"},
+  {n:"Bloodborne™", i:"Bloodborne.game.png"},
+  {n:"Borderlands® 3", i:"BORDERLANDS.3.png"},
+  {n:"Bratz Flaunt your Fashion", i:"Bratz.Flaunt.your.Fashion.game.png"},
+  {n:"Bully [PS2toPS4]", i:"Bully game.png"},
+  {n:"Call of Duty Advanced Warfare Atlas Limited Edition", i:"Call of Duty Advanced Warfare game.png"},
+  {n:"Call of Duty Black Ops 4", i:"Call.of.Duty.Black.Ops.4.png"},
+  {n:"Call of Duty Modern Warfare", i:"Call of Duty Modern Warfare 2019 game.png"},
+  {n:"Call of Duty Modern Warfare II", i:"Call.of.Duty.Modern.Warfare.II.game.png"},
+  {n:"Call of Duty Modern Warfare III", i:"Call of Duty Modern Warfare III game.png"},
+  {n:"Call of Duty® Black Ops 4", i:"Call of Duty Black Ops 4 game.png"},
+  {n:"Call of Duty® Black Ops Cold War", i:"Call of Duty Black Ops Cold War game.png"},
+  {n:"Call of Duty® Black Ops III", i:"Call.of.Duty.Black.Ops.III.png"},
+  {n:"Call of Duty® Ghosts", i:"Call of Duty#U00ae Ghosts.png"},
+  {n:"Call of Duty® Infinite Warfare", i:"Call.of.Duty.Infinite.Warfare.44.5.GB.png"},
+  {n:"Call of Duty® Modern Warfare® 2 Campaign Remastered", i:"Call_of_Duty_Modern_Warfare_2_Campaign_Remastered_PS4-CAF.png"},
+  {n:"Call of Duty® Modern Warfare® Remastered", i:"Call.of.Duty.Modern.Warfare.Remastered.png"},
+  {n:"Call of Duty® Vanguard", i:"Call.of.Duty.Vanguard.01.game.png"},
+  {n:"Call of Duty® WWII", i:"CODWWII.png"},
+  {n:"CAPTAIN TSUBASA RISE OF NEW CHAMPIONS", i:"CAPTAIN TSUBASA RISE OF NEW CHAMPIONS game.png"},
+  {n:"Cars 3 Hacia la victoria", i:"Cars.3.Driven.to.Win.png"},
+  {n:"Cities Skylines", i:"Cities Skylines game.png"},
+  {n:"Concrete Genie", i:"Concrete Genie game.png"},
+  {n:"Contra Anniversary Collection", i:"Contra.Anniversary.Collection.game.png"},
+  {n:"Control", i:"Control.png"},
+  {n:"Crash Bandicoot N Sane Trilogy", i:"Crash.Bandicoot.N..Sane.Trilogy.21.1.GB..png"},
+  {n:"Crash Bandicoot™ 4 It's About Time", i:"Crash.Bandicoot.4.It's.About.Time.png"},
+  {n:"Crash™ Team Racing Nitro-Fueled", i:"Crash.Team.Racing.Nitro-Fueled.png"},
+  {n:"Crysis2® Remastered", i:"Crysis 2 Remastered.png"},
+  {n:"Crysis3® Remastered", i:"Crysis 3 Remastered.png"},
+  {n:"Crysis® Remastered", i:"Crysis Remastered.png"},
+  {n:"Cult of The Lamb Heretic Edition", i:"Cult of the Lamb game.png"},
+  {n:"Cuphead", i:"Cuphead.png"},
+  {n:"Cyberpunk 2077", i:"Cyberpunk.2077.game.png"},
+  {n:"DARK SOULS™ II Scholar of the First Sin", i:"DARK.SOULSll10.6.GB.png", s:"10.6 GB"},
+  {n:"DARK SOULS™ III The Fire Fades™ Edition", i:"DARK.SOULS.III.The.Fire.Fades.Edition.game.png"},
+  {n:"DARK SOULS™ REMASTERED", i:"DARK.SOULS.REMASTERED.png"},
+  {n:"Darksiders III", i:"Darksiders.III.png"},
+  {n:"DAYS GONE", i:"DAYSGONE.game.png"},
+  {n:"Dead Island - Definitive Edition", i:"Dead.Island-Definitive.Edition.4.38.GB..png"},
+  {n:"Dead Island 2", i:"Dead-Island-2_game.png"},
+  {n:"Deadpool", i:"Deadpool.png"},
+  {n:"DEATH STRANDING™", i:"Death.Stranding.[PS4][DUPLEX][CUSA12605].png"},
+  {n:"Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles", i:"Demon.Slayer.Kimetsu.no.Yaiba.The.Hinokami.Chronicles.game.png"},
+  {n:"Detroit Become Human™", i:"Detroit.Become.Human.png"},
+  {n:"Devil May Cry 5", i:"Devil.May.Cry.5.game.[PS4][DUPLEX][CUSA8161].png"},
+  {n:"Devil May Cry® HD Collection", i:"Deivil may Cray HD collection 11.1 GB.png", s:"11.1 GB"},
+  {n:"Devil May Cry™ Definitive Edition", i:"DMC DEVIL MAY CRY DEFINITIVE EDITION - (16.9GB).png", s:"16.9 GB"},
+  {n:"Diablo III Reaper of Souls – Ultimate Evil Edition", i:"Diablo.III.Reaper.of.SoulsUltimate.Evil.Edition.32.2.GB.png"},
+  {n:"Don't Starve Together Console Edition", i:"Don't.Starve.Together.Console.Edition.game.png"},
+  {n:"DOOM Eternal", i:"DOOM.Eternal.EUR.Game.png"},
+  {n:"Dragon Age Inquisition", i:"Dragon.Age.Inquisition_game.png"},
+  {n:"DRAGON BALL FighterZ", i:"DRAGON.BALL.FighterZ.3.86.GB.png"},
+  {n:"DRAGON BALL XENOVERSE", i:"DRAGONBALL XENOVERSE - (9.12GB).png", s:"9.12 GB"},
+  {n:"DRAGON BALL XENOVERSE 2", i:"DRAGONBALL.XENOVERSE.2.-.(11.3GB).png", s:"11.3 GB"},
+  {n:"DRAGON BALL Z KAKAROT", i:"Dragogn-Ball-Z-Kakarot.png"},
+  {n:"DRIVECLUB™", i:"DRIVECLUB.png"},
+  {n:"Duck Hunt Remake", i:"Duck Hunt Remake.png"},
+  {n:"Dying Light 2 Stay Human", i:"Dying Light 2 Stay Human game.png"},
+  {n:"Dying Light The Following – Enhanced Edition", i:"Dying.Light.The.Following.Enhanced.Edition.13.6.Gb.png"},
+  {n:"EA SPORT FC27"},
+  {n:"EA SPORTS FC25 (FIFA 25)", i:"EA SPORTS FC 25_game.png", new:1},
+  {n:"EA SPORTS™ UFC® 4", i:"EA-SPORTS-UFC-4_game.png"},
+  {n:"ELDEN RING™", i:"ELDEN.RING.game.png"},
+  {n:"Evil West", i:"Evil.West.game.png"},
+  {n:"F1 23", i:"F1 23 game.png"},
+  {n:"Fallout 4 Game of the Year Edition", i:"Fallout.4_game.png"},
+  {n:"Far Cry® 3 Blood Dragon Classic Edition", i:"Far Cry 3 Blood Dragon Classic Edition game.png"},
+  {n:"Far Cry® 3 Classic Edition", i:"Far Cry 3 Classic Edition game.png"},
+  {n:"Far Cry® 4", i:"Far.Cry.4.20.6.GB.png"},
+  {n:"Far Cry® 5", i:"Far.Cry.5.33.8.GB.png"},
+  {n:"Far Cry® 6", i:"FARCRY.6.game.png"},
+  {n:"Far Cry® New Dawn", i:"FARCRY.New.Dawn.png"},
+  {n:"Far Cry® Primal", i:"Far.Cry.Primal.10.5.GB..png"},
+  {n:"Farming Simulator 22", i:"Farming Simulator 22 game.png"},
+  {n:"Firewatch", i:"Firewatch game.png"},
+  {n:"Formula 1 2024", i:"Formula.1.24_game.png"},
+  {n:"Fortnite [Online]", i:"Fortnite game.png"},
+  {n:"Game of Thrones", i:"GAME OF THRONES A TALLTALE GAMES SERIES - (9.78GB).png", s:"9.78 GB"},
+  {n:"Gang Beasts", i:"Gang.Beasts.game.png"},
+  {n:"Ghost of Tsushima - Director's Cut", i:"Ghost.of.Tsushima.game.png"},
+  {n:"God of War I [PS2toPS4]", i:"God of War I game.png"},
+  {n:"God of War II [PS2toPS4]", i:"GOD OF WAR 2 Multi CUSA00002_00-.png"},
+  {n:"God of War III Remastered", i:"God.of.War.III.Remastered.png"},
+  {n:"God of War IV [2018]", i:"God.of.War.game.png"},
+  {n:"God of War Ragnarök: Valhala", i:"God.of.War.Ragnarok.game.png"},
+  {n:"Grand Theft Auto III – The Definitive Edition", i:"GTA.3.Definitive.Edition.png"},
+  {n:"Grand Theft Auto San Andreas", i:"Grand Theft Auto - San Andreas.png"},
+  {n:"Grand Theft Auto San Andreas – The Definitive Edition", i:"GTA.San.Andreas.Definitive.Edition.png"},
+  {n:"Grand Theft Auto V", i:"Grand.Theft.Auto.V.png"},
+  {n:"Grand Theft Auto Vice City – The Definitive Edition", i:"GTA.Vice.City.Definitive.Edition.png"},
+  {n:"GRAVITY RUSH™ 2", i:"GRAVITY.RUSH.2.15.9.GB..png"},
+  {n:"Gravity Rush™ Remastered", i:"Gravity Rush#U2122 Remastered 9.19 GB-ESP.png", s:"9.19 GB"},
+  {n:"Greedfall", i:"GreedFall game.png"},
+  {n:"GRID Legends", i:"GRID Legends game.png"},
+  {n:"Hasbro Family Fun Pack", i:"Hasbro.Family.Fun.Pack.3.13.GB...png"},
+  {n:"HEAVY RAIN™", i:"HEAVY.RAIN.-.(30.0GB)-ESP.png", s:"30.0 GB"},
+  {n:"Hellblade", i:"Hellblade Senuas Sacrifice game.png"},
+  {n:"HITMAN 1 Game of the Year Edition", i:"HITMAN game.png"},
+  {n:"HITMAN 2", i:"HITMAN.2.png"},
+  {n:"HITMAN 3", i:"HITMAN.3.game.png"},
+  {n:"Hogwarts Legacy", i:"Hogwarts.Legacy.game.png"},
+  {n:"Hollow Knight", i:"Hollow.Knight.game.png"},
+  {n:"Horizon Forbidden West", i:"Horizon Forbidden West.game.png"},
+  {n:"Horizon Zero Dawn Complete Edition", i:"Horizon.Zero.Dawn.Complete.Edition.44.5.GB.png"},
+  {n:"HOT WHEELS UNLEASHED", i:"HOT.WHEELS.UNLEASHED.game.png"},
+  {n:"Human Fall Flat", i:"Human Fall Flat game.png"},
+  {n:"Immortals Fenyx Rising ™", i:"Immortals.Fenyx.Rising.game.png"},
+  {n:"inFAMOUS Second Son™", i:"inFAMOUS.Second.Son.20.00.GB..png"},
+  {n:"inFAMOUS™ First Light", i:"inFAMOUS.First.Light.9.34.GB..png"},
+  {n:"Injustice 2 Legendary Edition", i:"INJUSTICE.2.Legendry.Edition.0000-A0100-V0100.png"},
+  {n:"It Takes Two", i:"It.takes.two.1.02.png"},
+  {n:"Journey™ Collector’s Edition", i:"Journey Collector#U2019s Edition 1.91 GB .png", s:"1.91 GB"},
+  {n:"Judgment", i:"Judgment game.png"},
+  {n:"JUMP FORCE", i:"JUMP.FORCE.game.png"},
+  {n:"Jurassic World Evolution 2", i:"Jurassic World Evolution 2 game.png"},
+  {n:"Just Cause 4", i:"JUST.CAUSE.4..png"},
+  {n:"Kena Bridge of Spirits", i:"Kena.Bridge.of.Spirits.png"},
+  {n:"Kingdom Come Deliverance Royal Edition", i:"Kingdom Come Deliverance Royal Edition game.png"},
+  {n:"KINGDOM HEARTS Ⅲ", i:"Kingdom.Hearts.III.game.CUSA12025.png"},
+  {n:"Kung Fu Panda Confrontación de leyendas legendarias", i:"KUNGFU.PANDA.4.12.GB.png"},
+  {n:"L A Noire", i:"L.A.Noire.PS4-DUPLEX.png"},
+  {n:"LEGO® Batman™ 3 Beyond Gotham ΩΩΩ", i:"LEGO.Batman.3.Beyond.Gotham-[PS4-J][CUSA00580][ESP][HEN-4.05][V1.0].png"},
+  {n:"LEGO® Jurassic World™", i:"LEGO Jurassic World 11.7 GB .png", s:"11.7 GB"},
+  {n:"LEGO® MARVEL Super Heroes 2", i:"LEGO.Marvel.Super.Heroes.2.png"},
+  {n:"LEGO® MARVEL's Avengers", i:"LEGO.MARVEL.AVENGE.12.03.GB..png"},
+  {n:"LEGO® Movie - Videogame", i:"LEGO Movie - Videogame.png"},
+  {n:"LEGO® STAR WARS™ The Force Awakens", i:"LEGO STAR WARS The Force Awakens-[PS4-J][CUSA03372][ESP][HEN-4.05][V1.0].png"},
+  {n:"Lies of P", i:"Lies of P game.png"},
+  {n:"Life is Strange 2", i:"Life.is.Trange.2..1.game.Episode.1.PS4-DUPLEX.png"},
+  {n:"Life is Strange Before the Storm Remastered", i:"Life.is.Strange.Before.the.Storm.Remastered_game.png"},
+  {n:"Life is Strange Remastered", i:"Life.is.Strange.Remastered_game.png"},
+  {n:"Life is Strange True Colors™", i:"Life.is.Strange.True.Colors.game.png"},
+  {n:"Like a Dragon Gaiden: The Man Who Erased His Name", i:"Like a Dragon Gaiden The Man Who Erased His Name game.png"},
+  {n:"Like a Dragon Infinite Wealth", i:"Like a Dragon Infinite Wealth game.png"},
+  {n:"Little Nightmares", i:"Little.Nightmares.1.png"},
+  {n:"Little Nightmares II", i:"Little.Nightmare.II..png"},
+  {n:"Lost Ember", i:"Lost Ember game.png"},
+  {n:"Lost Judgment", i:"Lost Judgment game.png"},
+  {n:"Mad Max", i:"MAD.MAX.-.(30.8GB)-ESP.png", s:"30.8 GB"},
+  {n:"Mafia Definitive Edition", i:"Mafia Definitive Edition.png"},
+  {n:"Mafia III", i:"Mafia.lll.42.8.GB.png"},
+  {n:"Maneater", i:"Maneater.game.png"},
+  {n:"Mario Mania", i:"Mario.Mania.png"},
+  {n:"MARVEL VS CAPCOM INFINITE", i:"MARVEL.VS..CAPCOM.INFINITE..35.5.GB.png"},
+  {n:"Marvel's Avengers", i:"Marvel's.Avengers.png"},
+  {n:"Marvel's Guardians of the Galaxy", i:"Marvel's.Guardians.of.the.Galaxy.game.png"},
+  {n:"Marvel's Spider-Man", i:"Marvels.SpiderMan.png"},
+  {n:"Marvel's Spider-Man Miles Morales", i:"Marvels Spider.Man Miles Morales game.png"},
+  {n:"Mass Effect Legendary Edition", i:"Mass.Effect.Legendary.Edition_game.png"},
+  {n:"Mass Effect™ Andromeda", i:"Mass.Effect.Andromeda.39.2.GB..png"},
+  {n:"Mega Man Legacy Collection", i:"Mega.Man.Legacy.Collection.275.MB..png"},
+  {n:"METAL GEAR SOLID 3 Snake Eater - Master Collection Version", i:"METAL GEAR SOLID 3 Snake Eater - Master Collection Version game.png"},
+  {n:"METAL GEAR SOLID V THE PHANTOM PAIN", i:"METAL.GEAR.SOLID.V.THE.PHANTOM.PAIN.png"},
+  {n:"Metro Exodus Gold Edition", i:"Metro.Exodus_game.png"},
+  {n:"Metro Redux", i:"Mertro.REDUX-.2033Last.Light.png"},
+  {n:"Middle-earth™ Shadow of Mordor™ - Game of the Year Edition", i:"MIDDLE.EARTH.SHADOW.OF.MORDOR.GOTY.-.(34.1GB).png", s:"34.1 GB"},
+  {n:"Middle-earth™ Shadow of War™", i:"Middle.Earth.2.Shadows.of.War.png"},
+  {n:"Minecraft Dungeons", i:"Minecraft.Dungeons_CUSA18779.png"},
+  {n:"Minecraft Legends", i:"Minecraft Legends game.png"},
+  {n:"Minecraft PlayStation®4 Edition", i:"Minecraft PlayStation 4 Edition game.png"},
+  {n:"Miraculous: Rise of the Sphinx", i:"Miraculous Rise of the Sphinx game.png"},
+  {n:"MLB The Show 23", i:"MLB The Show 23 game.png"},
+  {n:"MONOPOLY FAMILY FUN PACK", i:"MONOPOLY.FAMILY.FUN.PACK.836.MB..png"},
+  {n:"Monster Hunter Rise Sunbreak", i:"Monster.Hunter.Rise.Sunbreak_game.png"},
+  {n:"Monster Hunter World Iceborne", i:"Monster.Hunter.World.Iceborne.game.png"},
+  {n:"Mortal Kombat 11 Ultimate", i:"Mortal.Kombat.11.Ultimate..(01).game.png"},
+  {n:"MotoGP24", i:"MotoGP24_game.png"},
+  {n:"Mount and Blade II Bannerlord", i:"Mount and Blade II Bannerlord game v1.13.png"},
+  {n:"Mount and Blade Warband", i:"Mount.&.Blade.Warband.png"},
+  {n:"Moving Out 2", i:"Moving Out 2 game.png"},
+  {n:"MudRunner A Spintires", i:"MudRunner A Spintires game.png"},
+  {n:"Murdered Soul Suspect", i:"Murdered Soul Suspect 8.50 GB .png", s:"8.50 GB"},
+  {n:"MX vs ATV Legends", i:"MX vs ATV Legends game.png"},
+  {n:"My Life Pet Vet", i:"My.Life.Pet.Vet.game.png"},
+  {n:"MY LITTLE PONY Aventura en Bahía Yeguamar", i:"MY LITTLE PONY Aventura en Bah#U00eda Yeguamar game.png"},
+  {n:"NARUTO SHIPPUDEN™ Ultimate Ninja® STORM 4 ROAD TO BORUTO", i:"NARUTO.STORM.4.ROAD.TO.BORUTO.36.8.GB.png"},
+  {n:"NARUTO SHIPPUDEN™ Ultimate Ninja® STORM TRILOGY", i:"NARUTO SHIPPUDEN Ultimate Ninja STORM TRILOGY game.png"},
+  {n:"Naruto x Boruto Ultimate Ninja Storm Connections", i:"NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS game.png"},
+  {n:"NBA 2K24", i:"NBA 2K24 game.png"},
+  {n:"Need for Speed Rivals", i:"Need for Speed Rivals game.png"},
+  {n:"Need for Speed™ Heat", i:"Need.for.Speed.Heat.png"},
+  {n:"Need For Speed™ Hot Pursuit Remastered", i:"Need.For.Speed.Hot.Pursuit.Remastered.game.png"},
+  {n:"Need For Speed™ Payback", i:"Need for Speed Payback game.png"},
+  {n:"Nickelodeon All-Star Brawl", i:"Nickelodeon All-Star Brawl game.png"},
+  {n:"NieR Replicant ver 1 22474487139", i:"NieR Replicant.png"},
+  {n:"NieRAutomata", i:"NieR-Automata 32.5 GB.png", s:"32.5 GB"},
+  {n:"Nioh 2", i:"Nioh 2.png"},
+  {n:"No Mans Sky", i:"No Mans Sky game v4.42.png"},
+  {n:"OLYMPIC GAMES TOKYO 2020™", i:"Olympic.Games.Tokyo.2020.game.png"},
+  {n:"ON THE ROAD - The Truck Simulator", i:"ON.THE.ROAD-The.Truck.Simulator_game.png"},
+  {n:"ONE PIECE BURNING BLOOD", i:"ONE PIECE BURNING BLOOD 8.01 GB .png", s:"8.01 GB"},
+  {n:"ONE PIECE PIRATE WARRIORS 3", i:"ONE PIECE WARRIORS 3 - (10.3GB).png", s:"10.3 GB"},
+  {n:"Outer Wilds", i:"Outer Wilds game.png"},
+  {n:"Outlast 2", i:"Outlast.2.17.4.GB.png"},
+  {n:"Outlast Trinity Outlast & Outlast Whistleblower", i:"Outlast.Trinity.6.82.GB..png"},
+  {n:"Overcooked 2", i:"Overcooked.2.png"},
+  {n:"P T", i:"PT.1.25.GB..png"},
+  {n:"PAW Patrol The Movie - Adventure City Calls", i:"PAW.Patrol.The.Movie-Adventure.City.Calls_CUSA25489_v1.00_[8.00]_OPOISSO893.png"},
+  {n:"PAYDAY 2 The Big Score", i:"PAYDAY.2.THE.BIG.SCORE.-.(14.2GB).png", s:"14.2 GB"},
+  {n:"PC Building Simulator", i:"PC Building Simulator game.png"},
+  {n:"Persona 3 Reload", i:"Persona 3 Reload game.png"},
+  {n:"Persona 5 Royal", i:"Persona 5 Royal.png"},
+  {n:"Police Simulator Patrol Officers", i:"Police Simulator Patrol Officers game.png"},
+  {n:"Portal Knights", i:"Portal_Knights_1.74GB.png", s:"1.74 GB"},
+  {n:"Prey", i:"PREY.png"},
+  {n:"Prince of Persia The Lost Crown", i:"Prince Of Persia The Lost Crown game.png"},
+  {n:"Prison Architect PlayStation 4 Edition", i:"Prison.Architect.PlayStation.4.Edition.png"},
+  {n:"Project CARS 3", i:"Project CARS 3 game + update 1.12.png"},
+  {n:"PROTOTYPE® BIOHAZARD BUNDLE", i:"PROTOTYPE.BIOHAZARD.BUNDLE.-.(14.6GB).png", s:"14.6 GB"},
+  {n:"Pure Pool™", i:"Pure.Pool.507.MB..png"},
+  {n:"RAGE2", i:"RAGE.2.png"},
+  {n:"Ratchet & Clank™", i:"Ratchet.and.Clank.png"},
+  {n:"Rayman® Legends", i:"Rayman.Legends.7.72.GB.png"},
+  {n:"Red Dead Redemption", i:"Red Dead Redemption game.png"},
+  {n:"Red Dead Redemption 2", i:"Red.dead.Redemption.2.png"},
+  {n:"Remnant From the Ashes", i:"Remnant.From.the.Ashes.PS4-DUPLEX.png"},
+  {n:"RESIDENT EVIL 2 Remake", i:"RESIDENT.EVIL.2.REMAKE.game.png"},
+  {n:"RESIDENT EVIL 3 Remake", i:"RESIDENT.EVIL.3.Remake.game.png"},
+  {n:"RESIDENT EVIL 4", i:"Resident.Evil.4.8.36.GB.png"},
+  {n:"Resident Evil 4 REMAKE", i:"Resident.Evil.4.Remake_game.png"},
+  {n:"RESIDENT EVIL 5", i:"RESIDENT EVIL5 game.png"},
+  {n:"RESIDENT EVIL 6", i:"RESIDENT.EVIL.6.-.(15.0GB).png", s:"15.0 GB"},
+  {n:"RESIDENT EVIL 7 biohazard Gold Edition", i:"RESIDENT.EVIL.7.biohazard.Gold.Edition.28.2.GB..png"},
+  {n:"Resident Evil Origins Collection", i:"Resident Evil Origins Collection 24.00 GB .png", s:"24.00 GB"},
+  {n:"RESIDENT EVIL REVELATIONS", i:"RESIDENT EVIL REVELATIONS - (16.2GB).png", s:"16.2 GB"},
+  {n:"RESIDENT EVIL REVELATIONS 2", i:"RESIDENT EVIL REVELATIONS 2 20.0 GB.png", s:"20.0 GB"},
+  {n:"Resident Evil Village", i:"Resident.Evil.Village.VIII.game.png"},
+  {n:"Rise of the Tomb Raider", i:"Rise of the Tomb Raider.png"},
+  {n:"Rocket League® Ultimate Edition", i:"Rocket.League_game.png"},
+  {n:"Saints Row", i:"Saints.Row.game.png"},
+  {n:"Sega Classics Collection", i:"Sega.Classics.Collection.966.MB..png"},
+  {n:"Sekiro™ Shadows Die Twice", i:"Sekiro.Shadows.Die.Twice.PS4.FPKG.[CUSA13801].png"},
+  {n:"SHADOW OF THE COLOSSUS", i:"SHADOW.OF.THE.COLOSSUS.12.6.GB..png"},
+  {n:"Shadow of the Tomb Raider", i:"Shadow.of.the.Tomb.Raider.png"},
+  {n:"Sherlock Holmes Chapter One", i:"Sherlock Holmes Chapter One game.png"},
+  {n:"SIFU", i:"SIFU.game.png"},
+  {n:"Sleeping Dogs Definitive Edition", i:"SLEEPING.DOGS.DEFINITIVE.EDITION.-.(16.3GB)-ESP.png", s:"16.3 GB"},
+  {n:"Smurfs Kart [Pitufos Kart]", i:"Smurfs Kart game.png"},
+  {n:"SNES STATION", i:"SNES STATION.png"},
+  {n:"Sniper Elite 3", i:"SNIPER ELITE 3 - (14.5GB).png", s:"14.5 GB"},
+  {n:"Sniper Elite 4", i:"SNIPER ELITE 4 - (30.1GB).png", s:"30.1 GB"},
+  {n:"Sniper Elite 5", i:"Sniper Elite 5 game.png"},
+  {n:"Sniper Elite V2 Remastered", i:"Sniper.Elite.V2.Remastered.PS4-DUPLEX.png"},
+  {n:"Sniper Ghost Warrior 3", i:"Sniper Ghost Warrior 3 36.8 GB.png", s:"36.8 GB"},
+  {n:"Sniper Ghost Warrior Contracts", i:"Sniper.Ghost.Warrior.Contracts.png"},
+  {n:"Sniper Ghost Warrior Contracts 2", i:"Sniper.Ghost.Warrior.Contracts.2.game.png"},
+  {n:"Snoopy's Grand Adventure", i:"SNOOPY'S.GRAND.ADVENTURE.-.(874MB).png", s:"874 MB"},
+  {n:"SnowRunner", i:"SnowRunner game.png"},
+  {n:"SONIC FORCES", i:"SONIC FORCES 16.1 GB.png", s:"16.1 GB"},
+  {n:"SONIC FRONTIERS", i:"SONIC FRONTIERS game.png"},
+  {n:"SpongeBob Battle For Bikini Bottom", i:"SpongeBob Battle For Bikini Bottom game.png"},
+  {n:"Spyro Reignited Trilogy", i:"Spyro.Reignited.Trilogy.png"},
+  {n:"STAR WARS Jedi Fallen Order™", i:"STAR.WARS.Jedi.Fallen.Order.[PS4][DUPLEX][CUSA12529].png"},
+  {n:"STAR WARS™ Battlefront™ II", i:"STAR.WARS-Battlefront.II.44.2.GB.png"},
+  {n:"STAR WARS™ Squadrons", i:"STAR.WARS.-.Squadrons.[CUSA15080].[v01.00].png"},
+  {n:"Stranded Deep", i:"Stranded.Deep.game.png"},
+  {n:"Stray", i:"Stray CUSA24899 game.png"},
+  {n:"Street Fighter 6", i:"Street Fighter 6 game.png"},
+  {n:"Subnautica", i:"Subnautica.game.png"},
+  {n:"Subnautica Below Zero", i:"Subnautica Below Zero game.png"},
+  {n:"Super Mario 64", i:"Super Mario 64 por TheWizWiki.png"},
+  {n:"Tales from the Borderlands", i:"TALES FROM THE BORDERLANDS A TELLTALE GAME SERIES - (8.64GB).png", s:"8.64 GB"},
+  {n:"Team Sonic Racing", i:"Team.Sonic.Racing.png"},
+  {n:"TEKKEN™7", i:"Tekken 7.png"},
+  {n:"Terraria", i:"Terraria.game.png"},
+  {n:"Tetris Effect", i:"Tetris.Effect.game.png"},
+  {n:"The Callisto Protocol™", i:"The Callisto Protocol game.png"},
+  {n:"The Dark Pictures Anthology House Of Ashes", i:"The.Dark.Pictures.Anthology.House.Of.Ashes.game.png"},
+  {n:"The Dark Pictures Anthology Little Hope", i:"The Dark Pictures Anthology Little Hope.png"},
+  {n:"The Dark Pictures Anthology Man of Medan", i:"The Dark Pictures Anthology Man of Medan game.png"},
+  {n:"The Dark Pictures Anthology The Devil in Me", i:"The Dark Pictures Anthology The Devil in Me game.png"},
+  {n:"The Elder Scrolls V Skyrim Special Edition", i:"Skyrim_game.png"},
+  {n:"The Evil Within", i:"The.Evil.Within.33.7.GB.png"},
+  {n:"The Evil Within® 2", i:"The.Evil.Within.2.27.6.GB.png"},
+  {n:"The Forest", i:"The.Forest.png"},
+  {n:"The Grand Tour", i:"The Grand Tour Game game.png"},
+  {n:"The King of Fighters XV", i:"The King of Fighters XV game.png"},
+  {n:"The Last Guardian™", i:"The.Last.Guardian.11.8.GB..png"},
+  {n:"The Last of Us™ Part II", i:"The.Last.of.Us.Part.II_game.png"},
+  {n:"The Last of Us™ Remastered", i:"The.Last.of.Us.Part.I_game.png"},
+  {n:"The Lord of the Rings Gollum", i:"The Lord of the Rings Gollum game.png"},
+  {n:"The Quarry", i:"The Quarry game.png"},
+  {n:"The Sims™ 4", i:"The-Sims-4_game.png"},
+  {n:"The Surge", i:"The.Surge.png"},
+  {n:"The Surge 2", i:"The Surge 2.png"},
+  {n:"The Witcher 3 Wild Hunt – Complete Edition", i:"The.Witcher.3.Wild.Hunt-Complete.Edition.37.3.Gb.png"},
+  {n:"The Wolf Among Us", i:"The.Wolf.Among.Us.4.40.GB..png"},
+  {n:"Tiny Tina's Wonderlands", i:"Tiny Tina's Wonderlands game.png"},
+  {n:"Titanfall™ 2", i:"Titanfall.2.31.8.GB.png"},
+  {n:"Tokyo Ghoul 【CALL to EXIST】 東京喰種トーキョーグールre", i:"Tokyo.Ghoul.Call.of.Exit.png"},
+  {n:"Tom Clancy's Ghost Recon® Wildlands Ultimate Edition", i:"Tom.Clancys.Ghost.Recon.Wildlands_game.png"},
+  {n:"Tony Hawk's® Pro Skater™ 5", i:"Tony.Hawk's.Pro.Skater.5.6.76.GB..png"},
+  {n:"Tony Hawk's™ Pro Skater™ 1 + 2", i:"Tony.Hawks.ProS.kater.1.y.2.png"},
+  {n:"TopSpin 2K25 (TENIS 25)", i:"TopSpin.2K25_game.png"},
+  {n:"TOY STORY 3", i:"Toy.Story.3.png"},
+  {n:"Trials Fusion™", i:"Trials.Fusion.4.75.GB..png"},
+  {n:"Tropico 6", i:"Tropico 6.game.png"},
+  {n:"Truck Driver", i:"Truck Driver game.png"},
+  {n:"Uncharted 4 A Thief’s End™", i:"Uncharted.4.44.1.GB..png"},
+  {n:"Uncharted The Lost Legacy™", i:"Uncharted.The.Lost.Legacy.42.7.GB..png"},
+  {n:"Uncharted The Nathan Drake Collection™", i:"Uncharted.The.Nathan.Drake.Collection.png"},
+  {n:"Under The Waves", i:"Under.The.Waves_game.png"},
+  {n:"Unravel", i:"Unravel ONE.png"},
+  {n:"Unravel TWO", i:"Unravel.TWO.png"},
+  {n:"Until Dawn™", i:"Until Dawn 35.7 GB .png", s:"35.7 GB"},
+  {n:"Vampyr", i:"Vampyr.game.png"},
+  {n:"WATCH DOGS 1 Complete Edition", i:"WATCH DOGS Complete Edition game.png"},
+  {n:"WATCH DOGS 2", i:"WATCH DOGS 2 game.png"},
+  {n:"WATCH DOGS 3 Legion", i:"WATCH DOGS 3 Legion game.png"},
+  {n:"Werewolf The Apocalypse - Earthblood", i:"Werewolf the Apocalipse game.png"},
+  {n:"Wo Long: Fallen Dynasty", i:"Wo Long Fallen Dynasty game.png"},
+  {n:"Wolfenstein Youngblood", i:"Wolfenstein-Young Blood.png"},
+  {n:"World War Z", i:"WORLD.WAR.Z..png"},
+  {n:"WWE 2K24", i:"WWE 2K24 game.png"},
+  {n:"XCOM 2", i:"XCOM 2 - (18.9GB)-ESP.png", s:"18.9 GB"}
+];
+
+/* ---- أدوات ---- */
+const $ = id => document.getElementById(id);
+const grid = $('grid'), empty = $('empty'), countEl = $('count'), searchEl = $('search');
+
+// تطبيع النص: حروف صغيرة، بلا تشكيل ولا فواصل ولا رموز.
+// هكذا يجد البحث "assassins creed" النتيجة "Assassin's Creed® Syndicate".
+const norm = s => s.toLowerCase()
+  .normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9؀-ۿ]+/g,'');
+
+// كلمات البحث، للعثور على النتيجة مهما كان ترتيب الكلمات
+const words = s => s.toLowerCase()
+  .normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9؀-ۿ]+/g,' ')
+  .trim().split(' ').filter(Boolean);
+
+/* اختصارات البحث: الكلمة التي يكتبها الزبون -> الألعاب المعنية.
+   لإضافة اختصار جديد، أضف سطراً هنا.                                        */
+const ALIASES = [
+  [/grand theft auto/i,            "gta قراند جاتا"],
+  [/call of duty/i,                "cod كود كول اوف ديوتي"],
+  [/\bfc\s?2\d|fifa/i,             "fifa فيفا"],
+  [/need for speed/i,              "nfs نيد فور سبيد"],
+  [/god of war/i,                  "gow جود اوف وور"],
+  [/assassin/i,                    "ac اساسنز كريد"],
+  [/mortal kombat/i,               "mk مورتال كومبات"],
+  [/resident evil/i,               "re ريزيدنت ايفل"],
+  [/spider-?man/i,                 "سبايدرمان سبايدر مان"],
+  [/last of us/i,                  "tlou لاست اوف اس"],
+  [/red dead/i,                    "rdr ريد ديد"],
+  [/battlefield/i,                 "bf باتلفيلد"],
+  [/street fighter/i,              "sf ستريت فايتر"],
+  [/tekken/i,                      "تيكن"],
+  [/minecraft/i,                   "ماين كرافت"],
+  [/far cry/i,                     "فار كراي"],
+  [/naruto/i,                      "ناروتو"],
+  [/dragon ball/i,                 "dbz دراغون بول"],
+  [/one piece/i,                   "ون بيس"],
+  [/\bwwe\b/i,                     "مصارعة"],
+  [/formula|\bf1\b/i,              "f1 فورمولا"],
+  [/gran turismo/i,                "gt جران توريزمو"],
+  [/watch dogs/i,                  "watchdogs ووتش دوقز"],
+  [/uncharted/i,                   "انشارتد"],
+  [/batman/i,                      "باتمان"],
+  [/\bps2\s?to\s?ps4|\[PS2toPS4\]/i, "ps2 بلايستيشن2"],
+];
+
+GAMES.forEach(g => {
+  let k = norm(g.n);
+  for (const [re, extra] of ALIASES) if (re.test(g.n)) k += norm(extra);
+  g._k = k;
+});
+
+// تطابق إذا وُجدت العبارة كاملة أو وُجدت كل كلمة على حدة
+const matches = (g, q, qw) => g._k.includes(q) || qw.every(w => g._k.includes(w));
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let sortMode = 'az';
+
+/* ---- الرسم ---- */
+function cardHTML(g){
+  const cover = g.i
+    ? `<div class="game-cover"><img src="./icon_games/${esc(g.i)}" alt="${esc(g.n)}" loading="lazy" decoding="async"
+         onerror="this.parentNode.classList.add('no-img')"></div>`
+    : `<div class="game-cover no-img"></div>`;
+  const size = g.s   ? `<span class="badge badge-size" dir="ltr">${esc(g.s)}</span>` : '';
+  const isNew = g.new ? `<span class="badge badge-new">جديد</span>` : '';
+  return `<article class="game-card">${cover}${size}${isNew}<div class="game-name" dir="auto">${esc(g.n)}</div></article>`;
+}
+
+function render(){
+  const q = norm(searchEl.value), qw = words(searchEl.value);
+  let list = q ? GAMES.filter(g => matches(g, q, qw)) : GAMES.slice();
+
+  list.sort(sortMode === 'new'
+    ? (a,b) => (b.new||0)-(a.new||0) || a.n.localeCompare(b.n,'en',{sensitivity:'base'})
+    : (a,b) => a.n.localeCompare(b.n,'en',{sensitivity:'base'}));
+
+  grid.innerHTML = list.map(cardHTML).join('');
+  empty.classList.toggle('show', list.length === 0);
+
+  countEl.innerHTML = q
+    ? `<b>${list.length}</b> نتيجة من أصل ${GAMES.length} لعبة`
+    : `<b>${GAMES.length}</b> لعبة متوفّرة`;
+
+  $('searchWrap').classList.toggle('filled', searchEl.value !== '');
+}
+
+/* ---- الأحداث ---- */
+searchEl.addEventListener('input', render);
+searchEl.addEventListener('keydown', e => { if(e.key === 'Escape'){ searchEl.value=''; render(); } });
+$('searchClear').addEventListener('click', () => { searchEl.value=''; render(); searchEl.focus(); });
+
+function setSort(mode){
+  sortMode = mode;
+  $('sortAz').setAttribute('aria-pressed',  mode === 'az');
+  $('sortNew').setAttribute('aria-pressed', mode === 'new');
+  render();
+}
+$('sortAz').addEventListener('click',  () => setSort('az'));
+$('sortNew').addEventListener('click', () => setSort('new'));
+
+// اختصار: اضغط "/" للبحث مباشرة
+document.addEventListener('keydown', e => {
+  if(e.key === '/' && document.activeElement !== searchEl){ e.preventDefault(); searchEl.focus(); }
+});
+
+// العودة إلى الأعلى
+const toTop = $('toTop');
+addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 600), {passive:true});
+toTop.addEventListener('click', () => scrollTo({top:0, behavior:'smooth'}));
+
+/* ---- الإقلاع ---- */
+$('footCount').textContent = GAMES.length + ' لعبة';
+render();
+</script>
 </body>
 </html>
