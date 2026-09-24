@@ -1,0 +1,400 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(./img_ps_icons_background.jfif);
+}
+
+@media screen and (max-width: 600px) {
+    /* Nuevos estilos */
+    body{
+        font-size:18px; /* Aumentar tamaño de letra */
+    }
+    table.tabla thead.header-1 tr.gradient-row th{
+        position: sticky;
+        top: 60px; /* Aumentar el valor de top */
+        z-index: 2;
+    }
+    table.tabla thead.header-1 tr.colnames th{
+        position: sticky;
+        top: 180px; /* Aumentar el valor de top */
+        z-index: 1;
+    }
+    table.tabla tr.d td{
+        font-size:28px; /* Aumentar tamaño de letra */
+    }
+    table.tabla, table.tabla thead, table.tabla tbody, table.tabla th, table.tabla td, table.tabla tr {
+        display:block;
+    }
+    
+}
+
+table.tabla {
+    border-collapse: collapse;
+    width: 100%;
+}
+table.tabla td, table.tabla th {
+    padding: 8px;
+}
+table.tabla tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+table.tabla tr:hover {
+    background-color: #ddd;
+}
+table.tabla th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: white;
+}
+#buscador {
+    box-sizing: border-box;
+    width: 92%;
+    background-color: transparent;
+    font-size: 1.17em;
+	color:white; /* Cambiar color de texto */
+	font-size:24px; /* Aumentar tamaño de letra */
+    margin: 10px 0;
+    padding: 10px 5%;
+    background-image: url(./img_lupa.png);
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: center left 5px;
+}
+#clear {
+    display: none; /* Ocultar la x por defecto */
+    position: absolute; /* Posicionar la x de forma absoluta */
+    right: 15px; /* Alinear la x a la derecha */
+    top: 50%; /* Centrar la x verticalmente */
+    transform: translateY(-50%); /* Ajustar la posición de la x */
+    color: white; /* Cambiar el color de la x */
+    font-weight: bold; /* Hacer la x más gruesa */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre la x */
+    background-color: red; /* Cambiar el color de fondo de la x */
+    border-radius: 50%; /* Hacer que la x tenga una forma circular */
+    padding: 5px;
+    animation: blink 1s infinite; /* Aplicar una animación llamada blink que dura un segundo y se repite indefinidamente */
+}
+
+@keyframes blink {
+    0% { opacity: 0.8; } /* La opacidad es 0.8 al principio */
+    50% { opacity: 1; } /* La opacidad es 1 a la mitad */
+    100% { opacity: 0.8; } /* La opacidad vuelve a ser 0.8 al final */
+}
+
+.banner {
+    color: white;
+    background-color: #310083;
+    background-image: url(./img_banner.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Barra de Busqueda */
+table.tabla thead tr:nth-child(1) td {
+    background-color: #310083;
+}
+
+/* Juegos | Ver pedido */
+table.tabla thead.header-1 .gradient-row th {
+    background-color: #310083;
+}
+
+/* 0Mn | # / Nombre / Iconos / Tamaño (Gb) / Costo (Mn) */
+table.tabla thead th {
+    background-color: #310083;
+}
+
+/*Top fijo de Barra de Busqueda*/
+table.tabla thead.header-1 tr:nth-child(1) td{
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+
+/*tamaño de letra JUEGOS PS4*/
+table.tabla thead.header-2 th,
+table.tabla thead.header-1 .gradient-row th{
+	text-align:center;
+	font-size:35px;
+}
+
+/*Tamaño de letra de Nombre Juegos Tamaño Costo*/
+table.tabla thead.header-1 .colnames th{
+	font-size:35px;
+}
+
+/*tamaño de letra de juegos*/
+table.tabla tr.d td{
+	font-size: 32px;
+}
+
+table.tabla tr.d td:nth-child(1) {
+	cursor: pointer;
+}
+table.tabla tr.d td:nth-child(2) {
+	cursor: pointer;
+}
+table.tabla tr.d td:nth-child(3) {
+	cursor: pointer;
+}
+table.tabla tr.d td:nth-child(4) {
+	cursor: pointer;
+}
+
+#comprar {
+    background-color: #310083;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#comprar:hover {
+    background-color: #22015c;
+}
+#comprar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#comprar {
+    font-size: 16px;
+    padding: 10px 7px;
+}
+
+/*Top fijo de Juegos Ver Pedido*/
+table.tabla thead.header-1 tr.gradient-row th{
+    position: sticky;
+    top: 70px;
+    z-index: 1;
+}
+
+/*Top fijo de Nombre Iconos Tamaño Costo*/
+table.tabla thead.header-1 tr.colnames th{
+    position: sticky;
+    top: 140px; 
+    z-index: 1;
+}
+#back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    display: none;
+}
+.back-to-top{
+    width: 210px; 
+}
+.icon{
+    width: 250px;
+}
+#toggle-images:not(:checked) ~ table .icon {
+    display: none;
+}
+td:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.lbl-switch{
+display: inline-block;
+width: 55px;
+height: 30px;
+background: #aaa;
+border-radius: 100px;
+position: relative;
+cursor: pointer;
+}
+.lbl-switch:after{
+    position: absolute;
+    content: '';
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 100px;
+    top: 4px;
+    left: 5px;
+    transition: 0.3s;
+}
+#btn-switch{
+    display: none; 
+}
+
+/* Color activo del switch */
+#btn-switch:checked~ .lbl-switch{
+    background: #18CCDD;
+}
+#btn-switch:checked~ .lbl-switch:after{
+    left: 28px;
+}
+
+/* Estilo para los botones "Ver pedido" */
+#ver-pedido{
+    background-image: linear-gradient(to bottom, #FC1948, #FFB300);
+    color: #333;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+#ver-pedido:active{
+    background-image: linear-gradient(to bottom, #ff0033, #FFB300);
+}
+
+/* Estilo para los botones "Ver pedido" cuando se pasa el mouse por encima */
+#ver-pedido:hover{
+    box-shadow: 0px 0px 15px black;
+}
+
+/* Estilo para los botones "+" */
+.add-game{
+    background-color: #310083;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Estilo para los botones "+" cuando se pasa el mouse por encima */
+.add-game:hover{
+    background-color: #280269;
+}
+
+/* Estilo para los botones "+" y "Ver pedido" cuando están deshabilitados */
+.add-game:disabled, #ver-pedido:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#selected-games li {
+    list-style-type: none; /* Eliminar el marcador de lista */
+}  
+
+#popup {
+    font-size: 18px;
+    display: none;
+    position: fixed;
+    background: white; /* Cambiar el color de fondo a blanco con una opacidad del 80% para crear un efecto semitransparente */
+    border: 1px solid #ddd; /* Cambiar el color del borde a un gris claro */
+    overflow: auto; /* Permitir el desplazamiento si es necesario, pero ocultar la barra de desplazamiento */
+    border-radius: 15px; /* Añadir bordes redondeados */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Añadir sombra para crear un efecto de relieve */
+    z-index: 3; /*Mostrar popup por encima de todos los elementos*/
+
+    /* Centrar el popup */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center{
+    text-align: center;
+}
+
+#popup img{
+    width: 90px;
+}
+
+#popup h2{
+    font-size: 20px;
+}
+
+#popup th{
+    font-size: 18px;
+}
+
+#close-popup {
+    position: sticky;
+    right: 10px;
+    top: 10px;
+    background-color: #ff0000;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#selected-games table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#selected-games th, #selected-games td {
+    border-top: 1px solid #ddd;
+    padding: 8px;
+}
+
+#selected-games th {
+    background-color: #310083;
+    color: white;
+}
+
+.new {
+    width: 40px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 18px;
+    color: white;
+    background-color: #F77C22;
+    padding: 0.001vh 0.003vw;
+    animation: newText 1.5s infinite;
+}
+@keyframes newText {
+    0%, 100% { background-color: #F77C22; }
+    50% { background-color: #E8410E; }
+}
+
+.online {
+    width: 50px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 18px;
+    color: white;
+    background-color: #F77C22;
+    padding: 1px 3px;
+    animation: onlineText 1.5s infinite;
+}
+
+@keyframes onlineText {
+    0%, 100% { background-color: #310083; }
+    50% { background-color: #18CCDD; }
+}
+
+.contacto{
+    max-width: 600px;
+    margin: auto;
+}
+
+fieldset{
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+legend{
+    padding: 0 10px;
+}
+
+.contacto a{
+    text-decoration: none;
+    color: white;
+}
+
+/* Footer */
+table.tabla thead.header-2 th {
+    background-image: linear-gradient(to right, #310083, #552BD3);
+}
