@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GAME SHOP ORAN | ألعاب PS4</title>
-<meta name="description" content="GAME SHOP ORAN — كتالوج ألعاب PS4، أكثر من 340 لعبة.">
+<meta name="description" content="GAME SHOP ORAN — كتالوج ألعاب PS4، 264 لعبة.">
 <meta name="theme-color" content="#070a10">
 <meta property="og:title" content="GAME SHOP ORAN | ألعاب PS4">
-<meta property="og:description" content="كتالوج ألعاب PS4 — أكثر من 340 لعبة.">
+<meta property="og:description" content="كتالوج ألعاب PS4 — 264 لعبة.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8E%AE</text></svg>">
 <style>
@@ -111,11 +111,19 @@ body{
 
 .badge-ar{
   inset-inline-end:10px;
-  top:45px;
+  top:10px;
   background:rgba(7,10,16,.85);
   border:1px solid var(--accent);
   color:var(--accent);
 }
+.game-loc{flex-wrap:wrap;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px 11px;font-size:12px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.05)}
+.game-loc.none{opacity:.45}
+.game-loc span{color:var(--accent2);direction:ltr;unicode-bidi:isolate;background:rgba(109,124,255,.12);padding:3px 9px;border-radius:999px}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.loc-select{background:#0b1018;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:10px 14px;font:inherit;font-size:13px;font-weight:700;outline:none;cursor:pointer;max-width:100%}
+.loc-select:focus{border-color:var(--accent2)}
+.only-ar{background:#0b1018;border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:10px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.only-ar[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:rgba(53,224,161,.08)}
 </style>
 </head>
 <body>
@@ -143,9 +151,14 @@ body{
       <h1>ألعاب PS4</h1>
       <div class="count" id="count"></div>
     </div>
-    <div class="sorts" role="group" aria-label="ترتيب">
-      <button class="sort-btn" id="sortAz"  type="button" aria-pressed="true">أبجدي</button>
-      <button class="sort-btn" id="sortNew" type="button" aria-pressed="false">الأحدث</button>
+    <div class="filters">
+      <div class="sorts" role="group" aria-label="ترتيب">
+        <button class="sort-btn" id="sortAz"  type="button" aria-pressed="true">أبجدي</button>
+        <button class="sort-btn" id="sortAr"  type="button" aria-pressed="false">عربية أولاً</button>
+        <button class="sort-btn" id="sortLoc" type="button" aria-pressed="false">حسب القرص</button>
+      </div>
+      <button class="only-ar" id="onlyAr" type="button" aria-pressed="false">عربية فقط</button>
+      <select class="loc-select" id="locSel" aria-label="المكان"></select>
     </div>
   </div>
 
@@ -170,360 +183,279 @@ body{
    GAME SHOP ORAN — كتالوج الألعاب
    -------------------------------------------------------------------------
    لإضافة لعبة جديدة: أضف سطراً واحداً في القائمة GAMES أسفله.
-     n = اسم اللعبة      (إجباري)
-     i = اسم ملف الصورة داخل مجلد icon_games   (اختياري)
-     s = الحجم           (اختياري، مثال: "12.4 GB")
-     new: 1              (اختياري — يضع شارة "جديد" ويرفع اللعبة إلى الأعلى)
+     n = اسم اللعبة                          (إجباري)
+     l = الأماكن [[القرص,1=عربية]]            (اختياري، مثال: [["disque 2 TB",1],["Noir"]])
+     i = اسم ملف الصورة داخل مجلد icon_games (اختياري)
+     ar: 1                                   (اختياري — لعبة بالعربية)
    مثال:
-     {n:"EA SPORTS FC 26", i:"EA SPORTS FC 26.png", s:"45 GB", new:1},
+     {n:"God of War", l:[["disque 2 TB",1],["disque 60 G"]], i:"God.of.War.game.png", ar:1},
    ========================================================================= */
 
 const GAMES = [
-  {n:"7 Days To Die", i:"7 Days To Die.png"},
-  {n:"A Plague Tale Innocence", i:"A.Plague.Tale.Innocence.png",ar:1},
-  {n:"A Way Out", i:"A.Way.Out.game.png"},
-  {n:"Alan Wake Remastered", i:"Alan Wake Remastered game.png"},
-  {n:"ARK Survival Evolved", i:"ARK Survival Evolved game.png"},
-  {n:"Assassin's Creed Origins", i:"Assassin's.Creed.Origins.CUSA05625.EUR.v1.00-v1.41.png"},
-  {n:"Assassin's Creed The Ezio Collection", i:"Assassin's Creed Ezio Collection (34.8GB).png", s:"34.8 GB"},
-  {n:"Assassin's Creed® III Remastered", i:"Assassin's.Creed.III.Remastered.png"},
-  {n:"Assassin's Creed® IV Black Flag", i:"Assassin's.Creed.IV-Black.Flag.17.1.GB.png"},
-  {n:"Assassin's Creed® Odyssey", i:"Assassins.Creed.Odyssey.game.png"},
-  {n:"Assassin's Creed® Rogue Remastered", i:"Assassin's.Creed.Rogue.Remastered.png"},
-  {n:"Assassin's Creed® Syndicate", i:"Assassin's Creed Syndicate 37.5 GB.png", s:"37.5 GB"},
-  {n:"Assassin's Creed® Unity", i:"Assassin's Creed Unity 36.6 GB.png", s:"36.6 GB"},
-  {n:"Assassin's Creed® Valhalla", i:"Assassins.Creed.Valhalla.game.png"},
-  {n:"Assassin’s Creed Mirage", i:"Assassin's Creed Mirage game.png",ar:1},
-  {n:"Assassin’s Creed® Chronicles Trilogy Pack", i:"Assassins.Creed.Chronicles.Trilogy.Pack.10.6.GB.png"},
-  {n:"Atack of Titan 2", i:"Attack.on.Titan.2.png"},
-  {n:"Atomic Heart", i:"Atomic.Heart.game.png"},
-  {n:"BATMAN™ ARKHAM KNIGHT ΩΩ", i:"BATMAN.ARKHAM.KNIGHT.-.(43.4GB).png", s:"43.4 GB"},
-  {n:"Battlefield 4™", i:"BATTLEFIELD 4 - (30.0GB).png", s:"30.0 GB"},
-  {n:"Battlefield™ 1", i:"Battlefield.1.png",ar:1},
-  {n:"Battlefield™ Hardline", i:"Battlefield Hardline.png"},
-  {n:"Battlefield™ V", i:"Battlefield.V.png",ar:1},
-  {n:"Ben 10 Power Trip", i:"Ben 10 Power Trip game.png"},
-  {n:"Beyond Two Souls™", i:"Beyond.Two.Souls.34.7.GB.png"},
-  {n:"Biomutant", i:"BiomutantGame.png"},
-  {n:"Blaze and the Monster Machines Axle City Racers", i:"Blaze and the Monster Machines Axle City Racers game.png"},
-  {n:"Bloodborne™", i:"Bloodborne.game.png"},
-  {n:"Borderlands® 3", i:"BORDERLANDS.3.png"},
-  {n:"Bratz Flaunt your Fashion", i:"Bratz.Flaunt.your.Fashion.game.png"},
-  {n:"Bully [PS2toPS4]", i:"Bully game.png"},
-  {n:"Call of Duty Advanced Warfare Atlas Limited Edition", i:"Call of Duty Advanced Warfare game.png"},
-  {n:"Call of Duty Black Ops 4", i:"Call.of.Duty.Black.Ops.4.png"},
-  {n:"Call of Duty Modern Warfare", i:"Call of Duty Modern Warfare 2019 game.png"},
-  {n:"Call of Duty Modern Warfare II", i:"Call.of.Duty.Modern.Warfare.II.game.png"},
-  {n:"Call of Duty Modern Warfare III", i:"Call of Duty Modern Warfare III game.png"},
-  {n:"Call of Duty® Black Ops 4", i:"Call of Duty Black Ops 4 game.png"},
-  {n:"Call of Duty® Black Ops Cold War", i:"Call of Duty Black Ops Cold War game.png"},
-  {n:"Call of Duty® Black Ops III", i:"Call.of.Duty.Black.Ops.III.png"},
-  {n:"Call of Duty® Ghosts", i:"Call of Duty® Ghosts.png"},
-  {n:"Call of Duty® Infinite Warfare", i:"Call.of.Duty.Infinite.Warfare.44.5.GB.png"},
-  {n:"Call of Duty® Modern Warfare® 2 Campaign Remastered", i:"Call_of_Duty_Modern_Warfare_2_Campaign_Remastered_PS4-CAF.png"},
-  {n:"Call of Duty® Modern Warfare® Remastered", i:"Call.of.Duty.Modern.Warfare.Remastered.png"},
-  {n:"Call of Duty® Vanguard", i:"Call.of.Duty.Vanguard.01.game.png"},
-  {n:"Call of Duty® WWII", i:"CODWWII.png"},
-  {n:"CAPTAIN TSUBASA RISE OF NEW CHAMPIONS", i:"CAPTAIN TSUBASA RISE OF NEW CHAMPIONS game.png"},
-  {n:"Cars 3 Hacia la victoria", i:"Cars.3.Driven.to.Win.png"},
-  {n:"Cities Skylines", i:"Cities Skylines game.png"},
-  {n:"Concrete Genie", i:"Concrete Genie game.png"},
-  {n:"Contra Anniversary Collection", i:"Contra.Anniversary.Collection.game.png"},
-  {n:"Control", i:"Control.png"},
-  {n:"Crash Bandicoot N Sane Trilogy", i:"Crash.Bandicoot.N..Sane.Trilogy.21.1.GB..png",ar:1},
-  {n:"Crash Bandicoot™ 4 It's About Time", i:"Crash.Bandicoot.4.It's.About.Time.png",ar:1},
-  {n:"Crash™ Team Racing Nitro-Fueled", i:"Crash.Team.Racing.Nitro-Fueled.png",ar:1},
-  {n:"Crysis2® Remastered", i:"Crysis 2 Remastered.png"},
-  {n:"Crysis3® Remastered", i:"Crysis 3 Remastered.png"},
-  {n:"Crysis® Remastered", i:"Crysis Remastered.png"},
-  {n:"Cult of The Lamb Heretic Edition", i:"Cult of the Lamb game.png"},
-  {n:"Cuphead", i:"Cuphead.png"},
-  {n:"Cyberpunk 2077", i:"Cyberpunk.2077.game.png"},
-  {n:"DARK SOULS™ II Scholar of the First Sin", i:"DARK.SOULSll10.6.GB.png", s:"10.6 GB"},
-  {n:"DARK SOULS™ III The Fire Fades™ Edition", i:"DARK.SOULS.III.The.Fire.Fades.Edition.game.png"},
-  {n:"DARK SOULS™ REMASTERED", i:"DARK.SOULS.REMASTERED.png"},
-  {n:"Darksiders III", i:"Darksiders.III.png"},
-  {n:"DAYS GONE", i:"DAYSGONE.game.png"},
-  {n:"Dead Island - Definitive Edition", i:"Dead.Island-Definitive.Edition.4.38.GB..png"},
-  {n:"Dead Island 2", i:"Dead-Island-2_game.png"},
-  {n:"Deadpool", i:"Deadpool.png"},
-  {n:"DEATH STRANDING™", i:"Death.Stranding.[PS4][DUPLEX][CUSA12605].png"},
-  {n:"Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles", i:"Demon.Slayer.Kimetsu.no.Yaiba.The.Hinokami.Chronicles.game.png"},
-  {n:"Detroit Become Human™", i:"Detroit.Become.Human.png"},
-  {n:"Devil May Cry 5", i:"Devil.May.Cry.5.game.[PS4][DUPLEX][CUSA8161].png"},
-  {n:"Devil May Cry® HD Collection", i:"Deivil may Cray HD collection 11.1 GB.png", s:"11.1 GB"},
-  {n:"Devil May Cry™ Definitive Edition", i:"DMC DEVIL MAY CRY DEFINITIVE EDITION - (16.9GB).png", s:"16.9 GB"},
-  {n:"Diablo III Reaper of Souls – Ultimate Evil Edition", i:"Diablo.III.Reaper.of.SoulsUltimate.Evil.Edition.32.2.GB.png"},
-  {n:"Don't Starve Together Console Edition", i:"Don't.Starve.Together.Console.Edition.game.png"},
-  {n:"DOOM Eternal", i:"DOOM.Eternal.EUR.Game.png"},
-  {n:"Dragon Age Inquisition", i:"Dragon.Age.Inquisition_game.png"},
-  {n:"DRAGON BALL FighterZ", i:"DRAGON.BALL.FighterZ.3.86.GB.png"},
-  {n:"DRAGON BALL XENOVERSE", i:"DRAGONBALL XENOVERSE - (9.12GB).png", s:"9.12 GB"},
-  {n:"DRAGON BALL XENOVERSE 2", i:"DRAGONBALL.XENOVERSE.2.-.(11.3GB).png", s:"11.3 GB"},
-  {n:"DRAGON BALL Z KAKAROT", i:"Dragogn-Ball-Z-Kakarot.png",ar:1},
-  {n:"DRIVECLUB™", i:"DRIVECLUB.png"},
-  {n:"Duck Hunt Remake", i:"Duck Hunt Remake.png"},
-  {n:"Dying Light 2 Stay Human", i:"Dying Light 2 Stay Human game.png"},
-  {n:"Dying Light The Following – Enhanced Edition", i:"Dying.Light.The.Following.Enhanced.Edition.13.6.Gb.png"},
-  {n:"EA SPORT FC27",i:"EA SPORT FC27.png", new:1,ar:1},
-  {n:"PES 2027 Monster Patch",i:"PES 2027 Monster Patch.jpg", new:1, ar:1,},
-  {n:"Call of Duty Black Ops II",i:"CoD Black Ops II.png", new:1},
-  {n:"Call of Duty Black Ops",i:"CoD Black Ops.png", new:1},
-  {n:"EA SPORTS FC25 (FIFA 25)", i:"EA SPORTS FC 25_game.png",ar:1},
-  {n:"EA SPORTS™ UFC® 4", i:"EA-SPORTS-UFC-4_game.png"},
-  {n:"ELDEN RING™", i:"ELDEN.RING.game.png"},
-  {n:"Evil West", i:"Evil.West.game.png"},
-  {n:"F1 23", i:"F1 23 game.png"},
-  {n:"Fallout 4 Game of the Year Edition", i:"Fallout.4_game.png"},
-  {n:"Far Cry® 3 Blood Dragon Classic Edition", i:"Far Cry 3 Blood Dragon Classic Edition game.png"},
-  {n:"Far Cry® 3 Classic Edition", i:"Far Cry 3 Classic Edition game.png"},
-  {n:"Far Cry® 4", i:"Far.Cry.4.20.6.GB.png"},
-  {n:"Far Cry® 5", i:"Far.Cry.5.33.8.GB.png"},
-  {n:"Far Cry® 6", i:"FARCRY.6.game.png"},
-  {n:"Far Cry® New Dawn", i:"FARCRY.New.Dawn.png"},
-  {n:"Far Cry® Primal", i:"Far.Cry.Primal.10.5.GB..png"},
-  {n:"Farming Simulator 22", i:"Farming Simulator 22 game.png"},
-  {n:"Firewatch", i:"Firewatch game.png"},
-  {n:"Formula 1 2024", i:"Formula.1.24_game.png"},
-  {n:"Fortnite [Online]", i:"Fortnite game.png"},
-  {n:"Game of Thrones", i:"GAME OF THRONES A TALLTALE GAMES SERIES - (9.78GB).png", s:"9.78 GB"},
-  {n:"Gang Beasts", i:"Gang.Beasts.game.png"},
-  {n:"Ghost of Tsushima - Director's Cut", i:"Ghost.of.Tsushima.game.png",ar:1},
-  {n:"God of War I [PS2toPS4]", i:"God of War I game.png"},
-  {n:"God of War II [PS2toPS4]", i:"GOD OF WAR 2 Multi CUSA00002_00-.png"},
-  {n:"God of War III Remastered", i:"God.of.War.III.Remastered.png"},
-  {n:"God of War IV [2018]", i:"God.of.War.game.png",ar:1},
-  {n:"God of War Ragnarök: Valhala", i:"God.of.War.Ragnarok.game.png",ar:1},
-  {n:"Grand Theft Auto III – The Definitive Edition", i:"GTA.3.Definitive.Edition.png"},
-  {n:"Grand Theft Auto San Andreas", i:"Grand Theft Auto - San Andreas.png"},
-  {n:"Grand Theft Auto San Andreas – The Definitive Edition", i:"GTA.San.Andreas.Definitive.Edition.png"},
-  {n:"Grand Theft Auto V", i:"Grand.Theft.Auto.V.png"},
-  {n:"Grand Theft Auto Vice City – The Definitive Edition", i:"GTA.Vice.City.Definitive.Edition.png"},
-  {n:"GRAVITY RUSH™ 2", i:"GRAVITY.RUSH.2.15.9.GB..png"},
-  {n:"The Grand Tour", i:"The Grand Tour.jpg"},
-  {n:"Greedfall", i:"GreedFall game.png"},
-  {n:"GRID Legends", i:"GRID Legends game.png"},
-  {n:"Hasbro Family Fun Pack", i:"Hasbro.Family.Fun.Pack.3.13.GB...png"},
-  {n:"HEAVY RAIN™", i:"HEAVY.RAIN.-.(30.0GB)-ESP.png", s:"30.0 GB"},
-  {n:"Hellblade", i:"Hellblade Senuas Sacrifice game.png"},
-  {n:"HITMAN 1 Game of the Year Edition", i:"HITMAN game.png"},
-  {n:"HITMAN 2", i:"HITMAN.2.png"},
-  {n:"HITMAN 3", i:"HITMAN.3.game.png"},
-  {n:"Hogwarts Legacy", i:"Hogwarts.Legacy.game.png"},
-  {n:"Hollow Knight", i:"Hollow.Knight.game.png"},
-  {n:"Horizon Forbidden West", i:"Horizon Forbidden West.game.png"},
-  {n:"Horizon Zero Dawn Complete Edition", i:"Horizon.Zero.Dawn.Complete.Edition.44.5.GB.png"},
-  {n:"HOT WHEELS UNLEASHED", i:"HOT.WHEELS.UNLEASHED.game.png"},
-  {n:"Human Fall Flat", i:"Human Fall Flat game.png"},
-  {n:"Immortals Fenyx Rising ™", i:"Immortals.Fenyx.Rising.game.png"},
-  {n:"inFAMOUS Second Son™", i:"inFAMOUS.Second.Son.20.00.GB..png"},
-  {n:"inFAMOUS™ First Light", i:"inFAMOUS.First.Light.9.34.GB..png"},
-  {n:"Injustice 2 Legendary Edition", i:"INJUSTICE.2.Legendry.Edition.0000-A0100-V0100.png"},
-  {n:"It Takes Two", i:"It.takes.two.1.02.png",ar:1},
-  {n:"Journey™ Collector’s Edition", i:"Journey Collector#U2019s Edition 1.91 GB .png", s:"1.91 GB"},
-  {n:"Judgment", i:"Judgment game.png"},
-  {n:"JUMP FORCE", i:"JUMP.FORCE.game.png"},
-  {n:"Jurassic World Evolution 2", i:"Jurassic World Evolution 2 game.png"},
-  {n:"Just Cause 4", i:"JUST.CAUSE.4..png"},
-  {n:"Kena Bridge of Spirits", i:"Kena.Bridge.of.Spirits.png"},
-  {n:"Kingdom Come Deliverance Royal Edition", i:"Kingdom Come Deliverance Royal Edition game.png"},
-  {n:"KINGDOM HEARTS Ⅲ", i:"Kingdom.Hearts.III.game.CUSA12025.png"},
-  {n:"Kung Fu Panda Confrontación de leyendas legendarias", i:"KUNGFU.PANDA.4.12.GB.png"},
-  {n:"L A Noire", i:"L.A.Noire.PS4-DUPLEX.png"},
-  {n:"LEGO® Batman™ 3 Beyond Gotham ΩΩΩ", i:"LEGO.Batman.3.Beyond.Gotham-[PS4-J][CUSA00580][ESP][HEN-4.05][V1.0].png"},
-  {n:"LEGO® Jurassic World™", i:"LEGO Jurassic World 11.7 GB .png", s:"11.7 GB"},
-  {n:"LEGO® MARVEL Super Heroes 2", i:"LEGO.Marvel.Super.Heroes.2.png"},
-  {n:"LEGO® MARVEL's Avengers", i:"LEGO.MARVEL.AVENGE.12.03.GB..png"},
-  {n:"LEGO® Movie - Videogame", i:"LEGO Movie - Videogame.png"},
-  {n:"LEGO® STAR WARS™ The Force Awakens", i:"LEGO STAR WARS The Force Awakens-[PS4-J][CUSA03372][ESP][HEN-4.05][V1.0].png"},
-  {n:"Lies of P", i:"Lies of P game.png"},
-  {n:"Life is Strange 2", i:"Life.is.Trange.2..1.game.Episode.1.PS4-DUPLEX.png"},
-  {n:"Life is Strange Before the Storm Remastered", i:"Life.is.Strange.Before.the.Storm.Remastered_game.png"},
-  {n:"Life is Strange Remastered", i:"Life.is.Strange.Remastered_game.png"},
-  {n:"Life is Strange True Colors™", i:"Life.is.Strange.True.Colors.game.png"},
-  {n:"Like a Dragon Gaiden: The Man Who Erased His Name", i:"Like a Dragon Gaiden The Man Who Erased His Name game.png"},
-  {n:"Like a Dragon Infinite Wealth", i:"Like a Dragon Infinite Wealth game.png"},
-  {n:"Little Nightmares", i:"Little.Nightmares.1.png"},
-  {n:"Little Nightmares II", i:"Little.Nightmare.II..png"},
-  {n:"Lost Ember", i:"Lost Ember game.png"},
-  {n:"Lost Judgment", i:"Lost Judgment game.png"},
-  {n:"Mad Max", i:"MAD.MAX.-.(30.8GB)-ESP.png", s:"30.8 GB"},
-  {n:"Mafia Definitive Edition", i:"Mafia Definitive Edition.png"},
-  {n:"Mafia III", i:"Mafia.lll.42.8.GB.png"},
-  {n:"Maneater", i:"Maneater.game.png"},
-  {n:"Mario Mania", i:"Mario.Mania.png"},
-  {n:"MARVEL VS CAPCOM INFINITE", i:"MARVEL.VS..CAPCOM.INFINITE..35.5.GB.png"},
-  {n:"Marvel's Avengers", i:"Marvel's.Avengers.png"},
-  {n:"Marvel's Guardians of the Galaxy", i:"Marvel's.Guardians.of.the.Galaxy.game.png"},
-  {n:"Marvel's Spider-Man", i:"Marvels.SpiderMan.png",ar:1},
-  {n:"Marvel's Spider-Man Miles Morales", i:"Marvels Spider.Man Miles Morales game.png"},
-  {n:"Mass Effect Legendary Edition", i:"Mass.Effect.Legendary.Edition_game.png"},
-  {n:"Mass Effect™ Andromeda", i:"Mass.Effect.Andromeda.39.2.GB..png"},
-  {n:"Mega Man Legacy Collection", i:"Mega.Man.Legacy.Collection.275.MB..png"},
-  {n:"METAL GEAR SOLID 3 Snake Eater - Master Collection Version", i:"METAL GEAR SOLID 3 Snake Eater - Master Collection Version game.png"},
-  {n:"METAL GEAR SOLID V THE PHANTOM PAIN", i:"METAL.GEAR.SOLID.V.THE.PHANTOM.PAIN.png"},
-  {n:"Metro Exodus Gold Edition", i:"Metro.Exodus_game.png"},
-  {n:"Metro Redux", i:"Mertro.REDUX-.2033Last.Light.png"},
-  {n:"Middle-earth™ Shadow of Mordor™ - Game of the Year Edition", i:"MIDDLE.EARTH.SHADOW.OF.MORDOR.GOTY.-.(34.1GB).png", s:"34.1 GB"},
-  {n:"Middle-earth™ Shadow of War™", i:"Middle.Earth.2.Shadows.of.War.png"},
-  {n:"Minecraft Dungeons", i:"Minecraft.Dungeons_CUSA18779.png"},
-  {n:"Minecraft Legends", i:"Minecraft Legends game.png"},
-  {n:"Minecraft PlayStation®4 Edition", i:"Minecraft PlayStation 4 Edition game.png"},
-  {n:"Miraculous: Rise of the Sphinx", i:"Miraculous Rise of the Sphinx game.png"},
-  {n:"MLB The Show 23", i:"MLB The Show 23 game.png"},
-  {n:"MONOPOLY FAMILY FUN PACK", i:"MONOPOLY.FAMILY.FUN.PACK.836.MB..png"},
-  {n:"Monster Hunter Rise Sunbreak", i:"Monster.Hunter.Rise.Sunbreak_game.png"},
-  {n:"Monster Hunter World Iceborne", i:"Monster.Hunter.World.Iceborne.game.png"},
-  {n:"Mortal Kombat 11 Ultimate", i:"Mortal.Kombat.11.Ultimate..(01).game.png"},
-  {n:"MotoGP24", i:"MotoGP24_game.png"},
-  {n:"Mount and Blade II Bannerlord", i:"Mount and Blade II Bannerlord game v1.13.png"},
-  {n:"Mount and Blade Warband", i:"Mount.&.Blade.Warband.png"},
-  {n:"Moving Out 2", i:"Moving Out 2 game.png"},
-  {n:"MudRunner A Spintires", i:"MudRunner A Spintires game.png"},
-  {n:"Murdered Soul Suspect", i:"Murdered Soul Suspect 8.50 GB .png", s:"8.50 GB"},
-  {n:"MX vs ATV Legends", i:"MX vs ATV Legends game.png"},
-  {n:"My Life Pet Vet", i:"My.Life.Pet.Vet.game.png"},
-  {n:"MY LITTLE PONY Aventura en Bahía Yeguamar", i:"MY LITTLE PONY Aventura en Bah#U00eda Yeguamar game.png"},
-  {n:"NARUTO SHIPPUDEN™ Ultimate Ninja® STORM 4 ROAD TO BORUTO", i:"NARUTO.STORM.4.ROAD.TO.BORUTO.36.8.GB.png"},
-  {n:"NARUTO SHIPPUDEN™ Ultimate Ninja® STORM TRILOGY", i:"NARUTO SHIPPUDEN Ultimate Ninja STORM TRILOGY game.png"},
-  {n:"Naruto x Boruto Ultimate Ninja Storm Connections", i:"NARUTO X BORUTO Ultimate Ninja STORM CONNECTIONS game.png"},
-  {n:"NBA 2K24", i:"NBA 2K24 game.png"},
-  {n:"Need for Speed Rivals", i:"Need for Speed Rivals game.png"},
-  {n:"Need for Speed™ Heat", i:"Need.for.Speed.Heat.png",ar:1},
-  {n:"Need For Speed™ Hot Pursuit Remastered", i:"Need.For.Speed.Hot.Pursuit.Remastered.game.png"},
-  {n:"Need For Speed™ Payback", i:"Need for Speed Payback game.png"},
-  {n:"Nickelodeon All-Star Brawl", i:"Nickelodeon All-Star Brawl game.png"},
-  {n:"NieR Replicant ver 1 22474487139", i:"NieR Replicant.png"},
-  {n:"NieRAutomata", i:"NieR-Automata 32.5 GB.png", s:"32.5 GB"},
-  {n:"Nioh 2", i:"Nioh 2.png"},
-  {n:"No Mans Sky", i:"No Mans Sky game v4.42.png"},
-  {n:"OLYMPIC GAMES TOKYO 2020™", i:"Olympic.Games.Tokyo.2020.game.png"},
-  {n:"ON THE ROAD - The Truck Simulator", i:"ON.THE.ROAD-The.Truck.Simulator_game.png"},
-  {n:"ONE PIECE BURNING BLOOD", i:"ONE PIECE BURNING BLOOD 8.01 GB .png", s:"8.01 GB"},
-  {n:"ONE PIECE PIRATE WARRIORS 3", i:"ONE PIECE WARRIORS 3 - (10.3GB).png", s:"10.3 GB"},
-  {n:"Outer Wilds", i:"Outer Wilds game.png"},
-  {n:"Outlast 2", i:"Outlast.2.17.4.GB.png"},
-  {n:"Outlast Trinity Outlast & Outlast Whistleblower", i:"Outlast.Trinity.6.82.GB..png"},
-  {n:"Overcooked 2", i:"Overcooked.2.png"},
-  {n:"P T", i:"PT.1.25.GB..png"},
-  {n:"PAW Patrol The Movie - Adventure City Calls", i:"PAW.Patrol.The.Movie-Adventure.City.Calls_CUSA25489_v1.00_[8.00]_OPOISSO893.png"},
-  {n:"PAYDAY 2 The Big Score", i:"PAYDAY.2.THE.BIG.SCORE.-.(14.2GB).png", s:"14.2 GB"},
-  {n:"PC Building Simulator", i:"PC Building Simulator game.png"},
-  {n:"Persona 3 Reload", i:"Persona 3 Reload game.png"},
-  {n:"Persona 5 Royal", i:"Persona 5 Royal.png"},
-  {n:"Police Simulator Patrol Officers", i:"Police Simulator Patrol Officers game.png"},
-  {n:"Portal Knights", i:"Portal_Knights_1.74GB.png", s:"1.74 GB"},
-  {n:"Prey", i:"PREY.png"},
-  {n:"Prince of Persia The Lost Crown", i:"Prince Of Persia The Lost Crown game.png"},
-  {n:"Prison Architect PlayStation 4 Edition", i:"Prison.Architect.PlayStation.4.Edition.png"},
-  {n:"Project CARS 3", i:"Project CARS 3 game + update 1.12.png"},
-  {n:"PROTOTYPE® BIOHAZARD BUNDLE", i:"PROTOTYPE.BIOHAZARD.BUNDLE.-.(14.6GB).png", s:"14.6 GB"},
-  {n:"Pure Pool™", i:"Pure.Pool.507.MB..png"},
-  {n:"RAGE2", i:"RAGE.2.png"},
-  {n:"Ratchet & Clank™", i:"Ratchet.and.Clank.png"},
-  {n:"Rayman® Legends", i:"Rayman.Legends.7.72.GB.png"},
-  {n:"Red Dead Redemption", i:"Red Dead Redemption game.png"},
-  {n:"Red Dead Redemption 2", i:"Red.dead.Redemption.2.png"},
-  {n:"Remnant From the Ashes", i:"Remnant.From.the.Ashes.PS4-DUPLEX.png"},
-  {n:"RESIDENT EVIL 2 Remake", i:"RESIDENT.EVIL.2.REMAKE.game.png",ar:1},
-  {n:"RESIDENT EVIL 3 Remake", i:"RESIDENT.EVIL.3.Remake.game.png",ar:1},
-  {n:"RESIDENT EVIL 4", i:"Resident.Evil.4.8.36.GB.png"},
-  {n:"Resident Evil 4 REMAKE", i:"Resident.Evil.4.Remake_game.png",ar:1},
-  {n:"RESIDENT EVIL 5", i:"RESIDENT EVIL5 game.png"},
-  {n:"RESIDENT EVIL 6", i:"RESIDENT.EVIL.6.-.(15.0GB).png", s:"15.0 GB"},
-  {n:"RESIDENT EVIL 7 biohazard Gold Edition", i:"RESIDENT.EVIL.7.biohazard.Gold.Edition.28.2.GB..png"},
-  {n:"Resident Evil Origins Collection", i:"Resident Evil Origins Collection 24.00 GB .png", s:"24.00 GB"},
-  {n:"RESIDENT EVIL REVELATIONS", i:"RESIDENT EVIL REVELATIONS - (16.2GB).png", s:"16.2 GB"},
-  {n:"RESIDENT EVIL REVELATIONS 2", i:"RESIDENT EVIL REVELATIONS 2 20.0 GB.png", s:"20.0 GB"},
-  {n:"Resident Evil Village", i:"Resident.Evil.Village.VIII.game.png",ar:1},
-  {n:"Rise of the Tomb Raider", i:"Rise of the Tomb Raider.png"},
-  {n:"Rocket League® Ultimate Edition", i:"Rocket.League_game.png"},
-  {n:"Saints Row", i:"Saints.Row.game.png"},
-  {n:"Sega Classics Collection", i:"Sega.Classics.Collection.966.MB..png"},
-  {n:"Sekiro™ Shadows Die Twice", i:"Sekiro.Shadows.Die.Twice.PS4.FPKG.[CUSA13801].png"},
-  {n:"SHADOW OF THE COLOSSUS", i:"SHADOW.OF.THE.COLOSSUS.12.6.GB..png"},
-  {n:"Shadow of the Tomb Raider", i:"Shadow.of.the.Tomb.Raider.png"},
-  {n:"Sherlock Holmes Chapter One", i:"Sherlock Holmes Chapter One game.png"},
-  {n:"SIFU", i:"SIFU.game.png"},
-  {n:"Sleeping Dogs Definitive Edition", i:"SLEEPING.DOGS.DEFINITIVE.EDITION.-.(16.3GB)-ESP.png", s:"16.3 GB"},
-  {n:"Smurfs Kart [Pitufos Kart]", i:"Smurfs Kart game.png"},
-  {n:"SNES STATION", i:"SNES STATION.png"},
-  {n:"Sniper Elite 3", i:"SNIPER ELITE 3 - (14.5GB).png", s:"14.5 GB"},
-  {n:"Sniper Elite 4", i:"SNIPER ELITE 4 - (30.1GB).png", s:"30.1 GB"},
-  {n:"Sniper Elite 5", i:"Sniper Elite 5 game.png"},
-  {n:"Sniper Elite V2 Remastered", i:"Sniper.Elite.V2.Remastered.PS4-DUPLEX.png"},
-  {n:"Sniper Ghost Warrior 3", i:"Sniper Ghost Warrior 3 36.8 GB.png", s:"36.8 GB"},
-  {n:"Sniper Ghost Warrior Contracts", i:"Sniper.Ghost.Warrior.Contracts.png"},
-  {n:"Sniper Ghost Warrior Contracts 2", i:"Sniper.Ghost.Warrior.Contracts.2.game.png"},
-  {n:"Snoopy's Grand Adventure", i:"SNOOPY'S.GRAND.ADVENTURE.-.(874MB).png", s:"874 MB"},
-  {n:"SnowRunner", i:"SnowRunner game.png"},
-  {n:"SONIC FORCES", i:"SONIC FORCES 16.1 GB.png", s:"16.1 GB"},
-  {n:"SONIC FRONTIERS", i:"SONIC FRONTIERS game.png"},
-  {n:"SpongeBob Battle For Bikini Bottom", i:"SpongeBob Battle For Bikini Bottom game.png"},
-  {n:"Spyro Reignited Trilogy", i:"Spyro.Reignited.Trilogy.png"},
-  {n:"STAR WARS Jedi Fallen Order™", i:"STAR.WARS.Jedi.Fallen.Order.[PS4][DUPLEX][CUSA12529].png",ar:1},
-  {n:"STAR WARS™ Battlefront™ II", i:"STAR.WARS-Battlefront.II.44.2.GB.png"},
-  {n:"STAR WARS™ Squadrons", i:"STAR.WARS.-.Squadrons.[CUSA15080].[v01.00].png"},
-  {n:"Stranded Deep", i:"Stranded.Deep.game.png"},
-  {n:"Stray", i:"Stray CUSA24899 game.png"},
-  {n:"Street Fighter 6", i:"Street Fighter 6 game.png"},
-  {n:"Subnautica", i:"Subnautica.game.png"},
-  {n:"Subnautica Below Zero", i:"Subnautica Below Zero game.png"},
-  {n:"Super Mario 64", i:"Super Mario 64 por TheWizWiki.png"},
-  {n:"Tales from the Borderlands", i:"TALES FROM THE BORDERLANDS A TELLTALE GAME SERIES - (8.64GB).png", s:"8.64 GB"},
-  {n:"Team Sonic Racing", i:"Team.Sonic.Racing.png"},
-  {n:"TEKKEN™7", i:"Tekken 7.png"},
-  {n:"Terraria", i:"Terraria.game.png"},
-  {n:"Tetris Effect", i:"Tetris.Effect.game.png"},
-  {n:"The Callisto Protocol™", i:"The Callisto Protocol game.png"},
-  {n:"The Dark Pictures Anthology House Of Ashes", i:"The.Dark.Pictures.Anthology.House.Of.Ashes.game.png"},
-  {n:"The Dark Pictures Anthology Little Hope", i:"The Dark Pictures Anthology Little Hope.png"},
-  {n:"The Dark Pictures Anthology Man of Medan", i:"The Dark Pictures Anthology Man of Medan game.png"},
-  {n:"The Dark Pictures Anthology The Devil in Me", i:"The Dark Pictures Anthology The Devil in Me game.png"},
-  {n:"The Elder Scrolls V Skyrim Special Edition", i:"Skyrim_game.png"},
-  {n:"The Evil Within", i:"The.Evil.Within.33.7.GB.png"},
-  {n:"The Evil Within® 2", i:"The.Evil.Within.2.27.6.GB.png"},
-  {n:"The Forest", i:"The.Forest.png"},
-  {n:"The Grand Tour", i:"The Grand Tour Game game.png"},
-  {n:"The King of Fighters XV", i:"The King of Fighters XV game.png"},
-  {n:"The Last Guardian™", i:"The.Last.Guardian.11.8.GB..png"},
-  {n:"The Last of Us™ Part II", i:"The.Last.of.Us.Part.II_game.png"},
-  {n:"The Last of Us™ Remastered", i:"The.Last.of.Us.Part.I_game.png"},
-  {n:"The Lord of the Rings Gollum", i:"The Lord of the Rings Gollum game.png"},
-  {n:"The Quarry", i:"The Quarry game.png"},
-  {n:"The Sims™ 4", i:"The-Sims-4_game.png"},
-  {n:"The Surge", i:"The.Surge.png"},
-  {n:"The Surge 2", i:"The Surge 2.png"},
-  {n:"The Witcher 3 Wild Hunt – Complete Edition", i:"The.Witcher.3.Wild.Hunt-Complete.Edition.37.3.Gb.png"},
-  {n:"The Wolf Among Us", i:"The.Wolf.Among.Us.4.40.GB..png"},
-  {n:"Tiny Tina's Wonderlands", i:"Tiny Tina's Wonderlands game.png"},
-  {n:"Titanfall™ 2", i:"Titanfall.2.31.8.GB.png"},
-  {n:"Tokyo Ghoul 【CALL to EXIST】 東京喰種トーキョーグールre", i:"Tokyo.Ghoul.Call.of.Exit.png"},
-  {n:"Tom Clancy's Ghost Recon® Wildlands Ultimate Edition", i:"Tom.Clancys.Ghost.Recon.Wildlands_game.png"},
-  {n:"Tony Hawk's® Pro Skater™ 5", i:"Tony.Hawk's.Pro.Skater.5.6.76.GB..png"},
-  {n:"Tony Hawk's™ Pro Skater™ 1 + 2", i:"Tony.Hawks.ProS.kater.1.y.2.png"},
-  {n:"TopSpin 2K25 (TENIS 25)", i:"TopSpin.2K25_game.png"},
-  {n:"TOY STORY 3", i:"Toy.Story.3.png"},
-  {n:"Trials Fusion™", i:"Trials.Fusion.4.75.GB..png"},
-  {n:"Tropico 6", i:"Tropico 6.game.png"},
-  {n:"Truck Driver", i:"Truck Driver game.png"},
-  {n:"Uncharted 4 A Thief’s End™", i:"Uncharted.4.44.1.GB..png"},
-  {n:"Uncharted The Lost Legacy™", i:"Uncharted.The.Lost.Legacy.42.7.GB..png"},
-  {n:"Uncharted The Nathan Drake Collection™", i:"Uncharted.The.Nathan.Drake.Collection.png"},
-  {n:"Under The Waves", i:"Under.The.Waves_game.png"},
-  {n:"Unravel", i:"Unravel ONE.png"},
-  {n:"Unravel TWO", i:"Unravel.TWO.png"},
-  {n:"Until Dawn™", i:"Until Dawn 35.7 GB .png", s:"35.7 GB"},
-  {n:"Vampyr", i:"Vampyr.game.png"},
-  {n:"WATCH DOGS 1 Complete Edition", i:"WATCH DOGS Complete Edition game.png"},
-  {n:"WATCH DOGS 2", i:"WATCH DOGS 2 game.png"},
-  {n:"WATCH DOGS 3 Legion", i:"WATCH DOGS 3 Legion game.png"},
-  {n:"Werewolf The Apocalypse - Earthblood", i:"Werewolf the Apocalipse game.png"},
-  {n:"Wo Long: Fallen Dynasty", i:"Wo Long Fallen Dynasty game.png"},
-  {n:"Wolfenstein Youngblood", i:"Wolfenstein-Young Blood.png"},
-  {n:"World War Z", i:"WORLD.WAR.Z..png"},
-  {n:"WWE 2K24", i:"WWE 2K24 game.png"},
-  {n:"XCOM 2", i:"XCOM 2 - (18.9GB)-ESP.png", s:"18.9 GB"}
+  {n:"A WAY OUT", l:[["Rouge",1]], i:"A.Way.Out.game.png", ar:1},
+  {n:"Back 4 Blood", l:[["Rouge"]]},
+  {n:"Callisto Protocol", l:[["Rouge"]], i:"The Callisto Protocol game.png"},
+  {n:"Cuphead", l:[["Rouge"]], i:"Cuphead.png"},
+  {n:"Detroit: Become Human", l:[["Rouge",1]], i:"Detroit.Become.Human.png", ar:1},
+  {n:"DRIVECLUB", l:[["Rouge"]], i:"DRIVECLUB.png"},
+  {n:"Dynamite Fishing World Games", l:[["Rouge"]], i:"Dynamite Fishing World Games"},
+  {n:"ELEX 2", l:[["Rouge"]], i:"ELEX 2"},
+  {n:"Evil West", l:[["Rouge"]], i:"Evil.West.game.png"},
+  {n:"Handball 21", l:[["Rouge"]], i:"Handball 21"},
+  {n:"Hogwarts Legacy", l:[["Rouge"]], i:"Hogwarts.Legacy.game.png"},
+  {n:"Horizon Forbidden West", l:[["Rouge"]], i:"Horizon Forbidden West.game.png"},
+  {n:"HOT WHEELS UNLEASHED", l:[["Rouge"]], i:"HOT.WHEELS.UNLEASHED.game.png"},
+  {n:"Kaze and the Wild Masks", l:[["Rouge"]], i:"Kaze and the Wild Masks"},
+  {n:"Marvel's Spider-Man", l:[["Rouge",1]], i:"Marvels.SpiderMan.png", ar:1},
+  {n:"Mickey: Storm and the Cursed Mask", l:[["Rouge"]], i:"Mickey Storm and the Cursed Mask"},
+  {n:"MX vs. ATV Legends", l:[["Rouge"]], i:"MX vs ATV Legends game.png"},
+  {n:"Override 2: Super Mech League", l:[["Rouge"]], i:"Override 2"},
+  {n:"SNIPER ELITE 5", l:[["Rouge"]], i:"Sniper Elite 5 game.png"},
+  {n:"Sniper Elite Resistance", l:[["Rouge"]], i:"Sniper Elite Resistance"},
+  {n:"Sniper Ghost Warrior Contracts 2", l:[["Rouge"]], i:"Sniper.Ghost.Warrior.Contracts.2.game.png"},
+  {n:"SONIC FRONTIERS", l:[["Rouge"]], i:"SONIC FRONTIERS game.png"},
+  {n:"STAR WARS Jedi", l:[["Rouge",1]], i:"STAR.WARS.Jedi.Fallen.Order.[PS4][DUPLEX][CUSA12529].png", ar:1},
+  {n:"STRAY", l:[["Rouge"]], i:"Stray CUSA24899 game.png"},
+  {n:"The Walking Dead - The Telltale Definitive Series", l:[["Rouge"]], i:"The Walking Dead"},
+  {n:"The Evil Within 2", l:[["Rouge"]], i:"The.Evil.Within.2.27.6.GB.png"},
+  {n:"Call of Duty: Ghosts", l:[["Rouge"]], i:"Call of Duty® Ghosts.png"},
+  {n:"GRID", l:[["Rouge"]], i:"GRID"},
+  {n:"STRANGER OF PARADISE FINAL FANTASY ORIGIN", l:[["Rouge"]], i:"STRANGER OF PARADISE FINAL FANTASY ORIGIN"},
+  {n:"Tiny Tina's Wonderlands", l:[["Rouge"]], i:"Tiny Tina's Wonderlands game.png"},
+  {n:"SONIC RACING", l:[["Rouge"]]},
+  {n:"SHADOW WARRIOR 3", l:[["Rouge"]], i:"SHADOW WARRIOR 3"},
+  {n:"ROAD REDEMPTION", l:[["Rouge",1]], i:"ROAD REDEMPTION", ar:1},
+  {n:"Metal Slug Anthology", l:[["Rouge"]], i:"Metal Slug Anthology"},
+  {n:"ABZÛ", l:[["Rouge"]], i:"Abzu"},
+  {n:"OLYMPIC GAMES TOKYO 2020", l:[["Rouge"]], i:"Olympic.Games.Tokyo.2020.game.png"},
+  {n:"Alan Wake Remastered", l:[["Toshiba",1],["disque 5"]], i:"Alan Wake Remastered game.png", ar:1},
+  {n:"Call of Duty: Black Ops Cold War", l:[["Toshiba",1]], i:"Call of Duty Black Ops Cold War game.png", ar:1},
+  {n:"Call of Duty: Vanguard", l:[["Toshiba",1]], i:"Call.of.Duty.Vanguard.01.game.png", ar:1},
+  {n:"Crash Bandicoot 4: It's About Time", l:[["Toshiba",1]], i:"Crash.Bandicoot.4.It's.About.Time.png", ar:1},
+  {n:"Crash Team Racing Nitro-Fueled", l:[["Toshiba",1],["disque Noir",1]], i:"Crash.Team.Racing.Nitro-Fueled.png", ar:1},
+  {n:"Dragon Ball Z: Kakarot", l:[["Toshiba",1]], i:"Dragogn-Ball-Z-Kakarot.png", ar:1},
+  {n:"eFootball Monster Patch 2027", l:[["Toshiba",1],["disque 2",1],["disque 5",1],["disque 750 G",1],["disque Noir",1]], i:"PES 2027 Monster Patch.jpg", ar:1},
+  {n:"EA SPORTS FC 27", l:[["Toshiba",1],["disque 750 G"],["disque Noir",1]], i:"EA SPORT FC27.png", ar:1},
+  {n:"Ghostrunner", l:[["Toshiba"]], i:"Ghostrunner"},
+  {n:"High On Life (avec DLC High On Knife)", l:[["Toshiba"]], i:"High On Life (avec DLC High On Knife)"},
+  {n:"Insurgency: Sandstorm", l:[["Toshiba"]], i:"Insurgency"},
+  {n:"Jujutsu Kaisen Cursed Clash", l:[["Toshiba"]], i:"Jujutsu Kaisen Cursed Clash"},
+  {n:"Marvel vs. Capcom: Infinite", l:[["Toshiba"]], i:"MARVEL.VS..CAPCOM.INFINITE..35.5.GB.png"},
+  {n:"Minecraft Dungeons Ultimate Edition", l:[["Toshiba"],["disque 5"]], i:"Minecraft.Dungeons_CUSA18779.png"},
+  {n:"Neva", l:[["Toshiba"]]},
+  {n:"Resident Evil 2 Remake", l:[["Toshiba",1]], i:"RESIDENT.EVIL.2.REMAKE.game.png", ar:1},
+  {n:"Resident Evil 3 Remake", l:[["Toshiba",1]], i:"RESIDENT.EVIL.3.Remake.game.png", ar:1},
+  {n:"SnowRunner", l:[["Toshiba"]], i:"SnowRunner game.png"},
+  {n:"Sonic Forces", l:[["Toshiba"],["disque 5"]], i:"SONIC FORCES 16.1 GB.png"},
+  {n:"Sonic x Shadow Generations", l:[["Toshiba"],["disque 5"]], i:"Sonic x Shadow Generations"},
+  {n:"STAR WARS (2024)", l:[["Toshiba",1],["disque 5"]], i:"STAR WARS (2024)", ar:1},
+  {n:"The Last of Us", l:[["Toshiba",1]], i:"The.Last.of.Us.Part.I_game.png", ar:1},
+  {n:"Unbound: Worlds Apart", l:[["Toshiba"],["disque 5"]]},
+  {n:"Weird West", l:[["Toshiba"]]},
+  {n:"Control", l:[["disque 2",1]], i:"Control.png", ar:1},
+  {n:"Days Gone", l:[["disque 2",1]], i:"DAYSGONE.game.png", ar:1},
+  {n:"Devil May Cry 4 Special Edition", l:[["disque 2"]], i:"Devil May Cry 4 Special Edition"},
+  {n:"Far Cry New Dawn", l:[["disque 2"]], i:"FARCRY.New.Dawn.png"},
+  {n:"God of War", l:[["disque 2",1],["disque 60 G"],["disque 2 TB",1]], i:"God.of.War.game.png", ar:1},
+  {n:"Hitman 3", l:[["disque 2"]], i:"HITMAN.3.game.png"},
+  {n:"Mafia 1", i:"Mafia Definitive Edition.png", ar:1},
+  {n:"Mafia 2", l:[["disque 2",1]], i:"Mafia 2", ar:1},
+  {n:"Mafia 3", l:[["disque 2"]], i:"Mafia.lll.42.8.GB.png"},
+  {n:"Monster Hunter Rise: Sunbreak", l:[["disque 2"]], i:"Monster.Hunter.Rise.Sunbreak_game.png"},
+  {n:"NBA 2K23", l:[["disque 2"],["disque 4"]], i:"NBA 2K23"},
+  {n:"One Piece: World Seeker", l:[["disque 2"]], i:"One Piece World Seeker"},
+  {n:"Remnant: From the Ashes", l:[["disque 2"]], i:"Remnant.From.the.Ashes.PS4-DUPLEX.png"},
+  {n:"Sifu", l:[["disque 2"]], i:"SIFU.game.png"},
+  {n:"Spider-Man: Miles Morales", l:[["disque 2"]], i:"Marvels Spider.Man Miles Morales game.png"},
+  {n:"The Crew 2", l:[["disque 2"]], i:"The Crew 2"},
+  {n:"The Last of Us Part II", l:[["disque 2",1]], i:"The.Last.of.Us.Part.II_game.png", ar:1},
+  {n:"UFC 4", l:[["disque 2"]], i:"EA-SPORTS-UFC-4_game.png"},
+  {n:"Uncharted 4: A Thief's End", l:[["disque 2",1]], i:"Uncharted.4.44.1.GB..png", ar:1},
+  {n:"Uncharted: The Lost Legacy", l:[["disque 2",1]], i:"Uncharted.The.Lost.Legacy.42.7.GB..png", ar:1},
+  {n:"Wanted: Dead", l:[["disque 2"]]},
+  {n:"Bloodborne", l:[["disque 3"]], i:"Bloodborne.game.png"},
+  {n:"Call of Duty: WWII", l:[["disque 3"]], i:"CODWWII.png"},
+  {n:"Crysis 3 Remastered", l:[["disque 3"]], i:"Crysis 3 Remastered.png"},
+  {n:"Darksiders III", l:[["disque 3"]], i:"Darksiders.III.png"},
+  {n:"Dying Light 2", l:[["disque 3"]], i:"Dying Light 2 Stay Human game.png"},
+  {n:"FIFA Street 2", l:[["disque 3"]], i:"FIFA Street 2"},
+  {n:"Gran Turismo Sport", l:[["disque 3",1]], i:"Gran Turismo Sport", ar:1},
+  {n:"Grounded", l:[["disque 3"]], i:"Grounded"},
+  {n:"Horizon Zero Dawn", l:[["disque 3",1]], i:"Horizon.Zero.Dawn.Complete.Edition.44.5.GB.png", ar:1},
+  {n:"Max: The Curse of Brotherhood", l:[["disque 3"]], i:"Max The Curse of Brotherhood"},
+  {n:"Metro Exodus", l:[["disque 3"],["disque 8"]], i:"Metro.Exodus_game.png"},
+  {n:"Naruto Shippuden: Ultimate Ninja Storm 4", l:[["disque 3"]], i:"Naruto Shippuden Ultimate Ninja Storm 4"},
+  {n:"Ratchet & Clank", l:[["disque 3"]], i:"Ratchet.and.Clank.png"},
+  {n:"Resident Evil 7: Biohazard", l:[["disque 3"]], i:"RESIDENT.EVIL.7.biohazard.Gold.Edition.28.2.GB..png"},
+  {n:"Sleeping Dogs Definitive Edition", l:[["disque 3"]], i:"SLEEPING.DOGS.DEFINITIVE.EDITION.-.(16.3GB)-ESP.png"},
+  {n:"Titanfall 2", l:[["disque 3"]], i:"Titanfall.2.31.8.GB.png"},
+  {n:"Burnout Paradise Remastered", l:[["disque 4"]], i:"Burnout Paradise Remastered"},
+  {n:"Call of Duty: Modern Warfare", l:[["disque 4",1]], i:"Call of Duty Modern Warfare 2019 game.png", ar:1},
+  {n:"Fighting EX Layer", l:[["disque 4"]], i:"Fighting EX Layer"},
+  {n:"Final Fantasy X-2", l:[["disque 4"]], i:"Final Fantasy X-2"},
+  {n:"Grand Theft Auto: San Andreas – The Definitive Edition", l:[["disque 4"]], i:"GTA.San.Andreas.Definitive.Edition.png"},
+  {n:"Gungrave G.O.R.E", l:[["disque 4"]], i:"Gungrave G.O.R.E"},
+  {n:"Ico", l:[["disque 4"]], i:"Ico"},
+  {n:"Injustice 2", l:[["disque 4"]], i:"INJUSTICE.2.Legendry.Edition.0000-A0100-V0100.png"},
+  {n:"Just Cause 4", l:[["disque 4"]], i:"JUST.CAUSE.4..png"},
+  {n:"Minecraft: PlayStation 4 Edition", l:[["disque 4"]], i:"Minecraft PlayStation 4 Edition game.png"},
+  {n:"One Piece Odyssey", l:[["disque 4"]], i:"One Piece Odyssey"},
+  {n:"Outlast", l:[["disque 4"]], i:"Outlast"},
+  {n:"République", l:[["disque 4"]], i:"République"},
+  {n:"Saints Row", l:[["disque 4"]], i:"Saints.Row.game.png"},
+  {n:"Taxi Chaos", l:[["disque 4"]], i:"Taxi Chaos"},
+  {n:"Atomic Heart Premium Edition", l:[["disque 5"]], i:"Atomic.Heart.game.png"},
+  {n:"Darksiders Warmastered Edition", l:[["disque 5"]], i:"Darksiders Warmastered Edition"},
+  {n:"Dead Island 2", l:[["disque 5"]], i:"Dead-Island-2_game.png"},
+  {n:"Lies of P", l:[["disque 5"]], i:"Lies of P game.png"},
+  {n:"Need for Speed Payback (Deluxe Edition)", l:[["disque 5"]], i:"Need for Speed Payback game.png"},
+  {n:"Nickelodeon Kart Racers 3: Slime Speedway", l:[["disque 5"]], i:"Nickelodeon Kart Racers 3"},
+  {n:"Street Fighter 6", l:[["disque 5"]], i:"Street Fighter 6 game.png"},
+  {n:"God of War III", l:[["disque 5"]], i:"God.of.War.III.Remastered.png"},
+  {n:"A Plague Tale: Innocence", l:[["disque 7",1]], i:"A.Plague.Tale.Innocence.png", ar:1},
+  {n:"Assassin's Creed Origins", l:[["disque 7"]], i:"Assassin's.Creed.Origins.CUSA05625.EUR.v1.00-v1.41.png"},
+  {n:"Attack on Titan 2", l:[["disque 7"]], i:"Attack.on.Titan.2.png"},
+  {n:"Batman 1 & 2", l:[["disque 7"]], i:"BATMAN Retourn To arkham"},
+  {n:"Batman 2", l:[["disque 7"]]},
+  {n:"Battlefield 1", l:[["disque 7",1]], i:"Battlefield.1.png", ar:1},
+  {n:"Battlefield 5", l:[["disque 7",1]], i:"Battlefield.V.png", ar:1},
+  {n:"Biomutant", l:[["disque 7"]], i:"BiomutantGame.png"},
+  {n:"Citadel: Forged with Fire", l:[["disque 7"]], i:"Citadel Forged with Fire"},
+  {n:"Death Stranding", l:[["disque 7"]], i:"Death.Stranding.[PS4][DUPLEX][CUSA12605].png"},
+  {n:"Far Cry 5", l:[["disque 7"]], i:"Far.Cry.5.33.8.GB.png"},
+  {n:"Far Cry 6", l:[["disque 7"]], i:"FARCRY.6.game.png"},
+  {n:"Hades", l:[["disque 7"]], i:"Hades"},
+  {n:"Hellblade: Senua's Sacrifice", l:[["disque 7"]], i:"Hellblade Senuas Sacrifice game.png"},
+  {n:"Miraculous: Paris Under Siege", l:[["disque 7"]], i:"Miraculous Paris Under Siege"},
+  {n:"Nioh 2", l:[["disque 7"]], i:"Nioh 2.png"},
+  {n:"Rayman Legends", l:[["disque 7"]], i:"Rayman.Legends.7.72.GB.png"},
+  {n:"Resident Evil 1", l:[["disque 7"]], i:"Resident Evil 1"},
+  {n:"Resident Evil 3", l:[["disque 7"]], i:"Resident Evil 3"},
+  {n:"Resident Evil 5", l:[["disque 7"]], i:"RESIDENT EVIL5 game.png"},
+  {n:"Les Schtroumpfs : Mission Malfeuille", l:[["disque 7"]]},
+  {n:"Watch Dogs: Legion", l:[["disque 7"]], i:"WATCH DOGS 3 Legion game.png"},
+  {n:"Wo Long: Fallen Dynasty", l:[["disque 7"]], i:"Wo Long Fallen Dynasty game.png"},
+  {n:"Ghost Recon Wildlands", l:[["disque 7"]], i:"Tom.Clancys.Ghost.Recon.Wildlands_game.png"},
+  {n:"Dakar", l:[["disque 7"]], i:"Dakar"},
+  {n:"Tekken 7", l:[["disque 7"]], i:"Tekken 7.png"},
+  {n:"The Evil Within", l:[["disque 7"]], i:"The.Evil.Within.33.7.GB.png"},
+  {n:"Shadow of the Tomb Raider", l:[["disque 7"]], i:"Shadow.of.the.Tomb.Raider.png"},
+  {n:"Little Nightmares 1", l:[["disque 7"]], i:"Little.Nightmares.1.png"},
+  {n:"Little Nightmares 2", i:"Little.Nightmare.II..png", ar:1},
+  {n:"Devil May Cry 5", l:[["disque 7"]], i:"Devil.May.Cry.5.game.[PS4][DUPLEX][CUSA8161].png"},
+  {n:"Street Fighter V: Champion Edition", l:[["disque 7"]], i:"Street Fighter V"},
+  {n:"Infamous Second Son", l:[["disque 7"]], i:"inFAMOUS.Second.Son.20.00.GB..png"},
+  {n:"Kena: Bridge of Spirits", l:[["disque 7",1]], i:"Kena.Bridge.of.Spirits.png", ar:1},
+  {n:"The Dark Pictures Anthology: Man of Medan", l:[["disque 7"]], i:"The Dark Pictures Anthology Man of Medan game.png"},
+  {n:"Metro Redux", l:[["disque 7"]], i:"Mertro.REDUX-.2033Last.Light.png"},
+  {n:"NieR Replicant", l:[["disque 7"]], i:"NieR Replicant"},
+  {n:"Disney Pixar Cars", l:[["disque 7"]], i:"Disney Pixar Cars"},
+  {n:"Samurai Jack: Battle Through Time", l:[["disque 7"]], i:"Samurai Jack"},
+  {n:"Werewolf: The Apocalypse – Earthblood", l:[["disque 7"]], i:"Werewolf the Apocalipse game.png"},
+  {n:"Assassin's Creed Valhalla", l:[["disque 8",1]], i:"Assassins.Creed.Valhalla.game.png", ar:1},
+  {n:"Batman: Arkham Knight (All DLC Premium)", l:[["disque 8",1]], i:"BATMAN.ARKHAM.KNIGHT.-.(43.4GB).png", ar:1},
+  {n:"Call of Duty: Black Ops 6", l:[["disque 8"]], i:"Call of Duty Black Ops 6"},
+  {n:"Hitman: Absolution HD", l:[["disque 8"]], i:"Hitman Absolution HD"},
+  {n:"It Takes Two", l:[["disque 8",1]], i:"It.takes.two.1.02.png", ar:1},
+  {n:"Little Nightmares 3 (Deluxe Edition)", l:[["disque 8",1]], i:"Little Nightmares 3 (Deluxe Edition)", ar:1},
+  {n:"PES 2018", l:[["disque 8",1]], i:"pes 2018", ar:1},
+  {n:"Poppy Playtime", l:[["disque 8"]], i:"Poppy Playtime"},
+  {n:"Trials Rising", l:[["disque 8"]]},
+  {n:"Resident Evil Village", l:[["disque 8",1]], i:"Resident.Evil.Village.VIII.game.png", ar:1},
+  {n:"F1 24", l:[["disque 9"]], i:"F1 24"},
+  {n:"Hitman", l:[["disque 9"]], i:"HITMAN game.png"},
+  {n:"Lost Judgment / Stranger of Paradise (Lost Paradis)", l:[["disque 9"]], i:"Lost Judgment game.png"},
+  {n:"Metro: Last Light", l:[["disque 9"]], i:"Mertro.REDUX-.2033Last.Light.png"},
+  {n:"Metro 2033 Redux", l:[["disque 9"]], i:"Mertro.REDUX-.2033Last.Light.png"},
+  {n:"One Piece: Burning Blood", l:[["disque 9"]], i:"ONE PIECE BURNING BLOOD 8.01 GB .png"},
+  {n:"ONEPIECE PROJECT", l:[["disque 9"]]},
+  {n:"Assassin's Creed IV: Black Flag (Gold Edition)", l:[["disque 60 G",1],["disque 2 TB"]], i:"Assassin's.Creed.IV-Black.Flag.17.1.GB.png", ar:1},
+  {n:"Silent Hill 1 & 2", l:[["disque 60 G"]], i:"Silent Hill 1 & 2"},
+  {n:"Assassin's Creed Odyssey", l:[["disque 160 G"]], i:"Assassins.Creed.Odyssey.game.png"},
+  {n:"Devil May Cry HD Collection", l:[["disque 160 G"]], i:"Deivil may Cray HD collection 11.1 GB.png"},
+  {n:"MAD MAX", l:[["disque 160 G"]], i:"MAD.MAX.-.(30.8GB)-ESP.png"},
+  {n:"MotoGP 21", l:[["disque 160 G"]], i:"MotoGP 21"},
+  {n:"Predator: Hunting Grounds", l:[["disque 160 G"]], i:"Predator"},
+  {n:"Prince of Persia 3", l:[["disque 160 G"]], i:"Prince of Persia 3"},
+  {n:"Resident Evil 6", l:[["disque 160 G"]], i:"RESIDENT.EVIL.6.-.(15.0GB).png"},
+  {n:"Scott Pilgrim vs. The World", l:[["disque 160 G"]], i:"Scott Pilgrim vs. The World"},
+  {n:"Tennis World Tour 2", l:[["disque 160 G"]], i:"Tennis World Tour 2"},
+  {n:"Homefront: The Revolution", l:[["disque 750 G"]], i:"Homefront The Revolution"},
+  {n:"The Dark Pictures Anthology: The Devil in Me", l:[["disque 750 G"]], i:"The Dark Pictures Anthology The Devil in Me game.png"},
+  {n:"Call of Duty: Black Ops", l:[["disque 750 G"]], i:"CoD Black Ops.png"},
+  {n:"Call of Duty: Black Ops II", l:[["disque 750 G"]], i:"CoD Black Ops II.png"},
+  {n:"Call of Duty: Black Ops 4", l:[["disque 750 G"]], i:"Call of Duty Black Ops 4 game.png"},
+  {n:"DOOM (2016)", l:[["disque 750 G"]], i:"DOOM (2016)"},
+  {n:"eFootball 2027", l:[["disque 750 G",1]], i:"PES 2027 Monster Patch.jpg", ar:1},
+  {n:"Poppy Playtime (Chapitres 2 à 5)", l:[["disque 750 G"]], i:"Poppy Playtime (Chapitres 2 à 5)"},
+  {n:"Bramble: The Mountain King", l:[["disque Noir"],["disque 2 TB"]], i:"Bramble The Mountain King"},
+  {n:"Brothers: A Tale of Two Sons", l:[["disque Noir"]], i:"Brothers A Tale of Two Sons"},
+  {n:"Bully", l:[["disque Noir"]], i:"Bully game.png"},
+  {n:"Daymare: 1998", l:[["disque Noir"]]},
+  {n:"Far Cry Primal", l:[["disque Noir"]], i:"Far.Cry.Primal.10.5.GB..png"},
+  {n:"Limbo", l:[["disque Noir"]], i:"Limbo"},
+  {n:"Marvel's Avengers (Deluxe Edition)", l:[["disque Noir"]], i:"Marvel's.Avengers.png"},
+  {n:"Mortal Kombat 11 Ultimate", l:[["disque Noir"]], i:"Mortal.Kombat.11.Ultimate..(01).game.png"},
+  {n:"Mortal Kombat XL", l:[["disque Noir"]], i:"Mortal Kombat XL"},
+  {n:"Paperman: Adventure Delivered", l:[["disque Noir"],["disque 2 TB"]], i:"Paperman Adventure Delivered"},
+  {n:"Ride 4", l:[["disque Noir"]], i:"Ride 4"},
+  {n:"Aliens: Fireteam Elite", l:[["disque 2 TB"]], i:"Aliens Fireteam Elite"},
+  {n:"Assassin's Creed Chronicles", l:[["disque 2 TB"]], i:"Assassins.Creed.Chronicles.Trilogy.Pack.10.6.GB.png"},
+  {n:"Assassin's Creed Unity", l:[["disque 2 TB"]], i:"Assassin's Creed Unity 36.6 GB.png"},
+  {n:"Beyond: Two Souls", l:[["disque 2 TB"]], i:"Beyond.Two.Souls.34.7.GB.png"},
+  {n:"Blair Witch", l:[["disque 2 TB"]], i:"Blair Witch"},
+  {n:"Call of Duty: Modern Warfare 2", l:[["disque 2 TB",1]], i:"Call.of.Duty.Modern.Warfare.II.game.png", ar:1},
+  {n:"Call of Duty: Modern Warfare 3", l:[["disque 2 TB",1]], i:"Call of Duty Modern Warfare III game.png", ar:1},
+  {n:"Cyberpunk 2077", l:[["disque 2 TB",1]], i:"Cyberpunk.2077.game.png", ar:1},
+  {n:"Dark Souls Remastered", l:[["disque 2 TB"]], i:"DARK.SOULS.REMASTERED.png"},
+  {n:"Dark Souls II: Scholar of the First Sin", l:[["disque 2 TB"]], i:"DARK.SOULSll10.6.GB.png"},
+  {n:"Dark Souls III: Game of the Year Edition", l:[["disque 2 TB"]], i:"DARK.SOULS.III.The.Fire.Fades.Edition.game.png"},
+  {n:"Daymare: 1994 Sandcastle", l:[["disque 2 TB"]]},
+  {n:"Don't Starve: Console Edition", l:[["disque 2 TB"]], i:"Don't.Starve.Together.Console.Edition.game.png"},
+  {n:"Elden Ring", l:[["disque 2 TB"]], i:"ELDEN.RING.game.png"},
+  {n:"Fobia - St. Dinfna Hotel", l:[["disque 2 TB"]], i:"Fobia - St. Dinfna Hotel"},
+  {n:"Fortnite", l:[["disque 2 TB"]], i:"Fortnite game.png"},
+  {n:"God of War II", l:[["disque 2 TB"]], i:"GOD OF WAR 2 Multi CUSA00002_00-.png"},
+  {n:"God of War Ragnarök", l:[["disque 2 TB",1]], i:"God.of.War.Ragnarok.game.png", ar:1},
+  {n:"Ghost of Tsushima", l:[["disque 2 TB",1]], i:"Ghost.of.Tsushima.game.png", ar:1},
+  {n:"Green Hell", l:[["disque 2 TB"]], i:"Green Hell"},
+  {n:"Goldorak (Grendizer): The Feast of the Wolves", l:[["disque 2 TB"]], i:"Goldorak (Grendizer) The Feast of the Wolves"},
+  {n:"GTA V", l:[["disque 2 TB"]], i:"Grand.Theft.Auto.V.png"},
+  {n:"Marvel's Guardians of the Galaxy", l:[["disque 2 TB"]], i:"Marvel's.Guardians.of.the.Galaxy.game.png"},
+  {n:"Hollow Knight: Silksong", l:[["disque 2 TB"]], i:"Hollow Knight Silksong"},
+  {n:"Hot Wheels Unleashed 2", l:[["disque 2 TB"]]},
+  {n:"Jumanji (2024)", l:[["disque 2 TB"]], i:"Jumanji (2024)"},
+  {n:"Jump Force", l:[["disque 2 TB"]], i:"JUMP.FORCE.game.png"},
+  {n:"LEGO Movie / Games", l:[["disque 2 TB"]], i:"LEGO Movie - Videogame.png"},
+  {n:"Metal Gear Solid V: The Phantom Pain", l:[["disque 2 TB"]], i:"METAL.GEAR.SOLID.V.THE.PHANTOM.PAIN.png"},
+  {n:"Middle-earth: Shadow of Mordor (GOTY)", l:[["disque 2 TB",1]], i:"MIDDLE.EARTH.SHADOW.OF.MORDOR.GOTY.-.(34.1GB).png", ar:1},
+  {n:"Middle-earth: Shadow of War", l:[["disque 2 TB",1]], i:"Middle.Earth.2.Shadows.of.War.png", ar:1},
+  {n:"Minecraft (2024)", l:[["disque 2 TB"]], i:"Minecraft (2024)"},
+  {n:"Assassin's Creed Mirage", l:[["disque 2 TB",1]], i:"Assassin's Creed Mirage game.png", ar:1},
+  {n:"Naruto x Boruto Ultimate Ninja Storm Connections", l:[["disque 2 TB"]], i:"NARUTO.STORM.4.ROAD.TO.BORUTO.36.8.GB.png"},
+  {n:"Need for Speed Heat", l:[["disque 2 TB"]], i:"Need.for.Speed.Heat.png"},
+  {n:"Prince of Persia: The Lost Crown", l:[["disque 2 TB"]], i:"Prince Of Persia The Lost Crown game.png"},
+  {n:"Red Dead Redemption", l:[["disque 2 TB"]], i:"Red Dead Redemption game.png"},
+  {n:"Red Dead Redemption 2", l:[["disque 2 TB",1]], i:"Red.dead.Redemption.2.png", ar:1},
+  {n:"Resident Evil 4", l:[["disque 2 TB",1]], i:"Resident.Evil.4.8.36.GB.png", ar:1},
+  {n:"Rise of the Tomb Raider", l:[["disque 2 TB",1]], i:"Rise of the Tomb Raider.png", ar:1},
+  {n:"The Walking Dead: Saints & Sinners", l:[["disque 2 TB"]]},
+  {n:"Song of Horror", l:[["disque 2 TB"]], i:"Song of Horror"},
+  {n:"Sonic Superstars / Origins", l:[["disque 2 TB"]], i:"Sonic Superstars Origins"},
+  {n:"Stranded Deep", l:[["disque 2 TB"]], i:"Stranded.Deep.game.png"},
+  {n:"The Grand Tour Game", l:[["disque 2 TB"]], i:"The Grand Tour Game game.png"},
+  {n:"The Order: 1886", l:[["disque 2 TB"]], i:"The Order"},
+  {n:"Les Aventures de Tintin", l:[["disque 2 TB"]], i:"Les Aventures de Tintin"},
+  {n:"TopSpin 2K25", l:[["disque 2 TB"]], i:"TopSpin.2K25_game.png"},
+  {n:"Trine 4: The Nightmare Prince", l:[["disque 2 TB"]]},
+  {n:"Uncharted: The Nathan Drake Collection", l:[["disque 2 TB"]], i:"Uncharted.The.Nathan.Drake.Collection.png"},
+  {n:"Unknown 9: Awakening", l:[["disque 2 TB"]]},
+  {n:"Unravel Two", l:[["disque 2 TB"]], i:"Unravel.TWO.png"},
+  {n:"Until Dawn", l:[["disque 2 TB"]], i:"Until Dawn 35.7 GB .png"},
+  {n:"GTA: Vice City", l:[["disque 2 TB"]], i:"GTA.Vice.City.Definitive.Edition.png"},
+  {n:"Watch Dogs 2", l:[["disque 2 TB"]], i:"WATCH DOGS 2 game.png"},
+  {n:"World War Z", l:[["disque 2 TB"]], i:"WORLD.WAR.Z..png"},
+  {n:"WWE 2K24", l:[["disque 2 TB"]], i:"WWE 2K24 game.png"}
 ];
 
 /* ---- أدوات ---- */
@@ -574,42 +506,65 @@ const ALIASES = [
 ];
 
 GAMES.forEach(g => {
-  let k = norm(g.n);
+  let k = norm(g.n) + norm((g.l||[]).map(x => x[0]).join(' '));
+  if (g.ar) k += norm('arabe arabic') + 'عربية';
   for (const [re, extra] of ALIASES) if (re.test(g.n)) k += norm(extra);
   g._k = k;
 });
+
+// قائمة الأماكن (حسب ترتيب ظهورها في القائمة)
+const LOCS = [...new Set(GAMES.flatMap(g => (g.l||[]).map(x => x[0])))];
 
 // تطابق إذا وُجدت العبارة كاملة أو وُجدت كل كلمة على حدة
 const matches = (g, q, qw) => g._k.includes(q) || qw.every(w => g._k.includes(w));
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-let sortMode = 'az';
+let sortMode = 'az', locFilter = '', onlyAr = false;
 
 /* ---- الرسم ---- */
+// صور بدون امتداد: يجرّب الموقع الامتدادات واحداً بعد الآخر
+const EXT = ['.png','.jpg','.jpeg','.webp','.PNG','.JPG','.avif'];
+const hasExt = f => /\.(png|jpe?g|webp|avif|gif)$/i.test(f);
+function imgFail(el){
+  const base = el.dataset.base;
+  if (base){
+    const n = +el.dataset.t || 0;
+    if (n < EXT.length){ el.dataset.t = n + 1; el.src = './icon_games/' + base + EXT[n]; return; }
+  }
+  el.parentNode.classList.add('no-img');
+}
+
 function cardHTML(g){
   const cover = g.i
-    ? `<div class="game-cover"><img src="./icon_games/${esc(g.i)}" alt="${esc(g.n)}" loading="lazy" decoding="async"
-         onerror="this.parentNode.classList.add('no-img')"></div>`
+    ? (hasExt(g.i)
+        ? `<div class="game-cover"><img src="./icon_games/${esc(g.i)}" alt="${esc(g.n)}" loading="lazy" decoding="async" onerror="imgFail(this)"></div>`
+        : `<div class="game-cover"><img src="./icon_games/${esc(g.i)}${EXT[0]}" data-base="${esc(g.i)}" data-t="1" alt="${esc(g.n)}" loading="lazy" decoding="async" onerror="imgFail(this)"></div>`)
     : `<div class="game-cover no-img"></div>`;
-  const size = g.s   ? `<span class="badge badge-size" dir="ltr">${esc(g.s)}</span>` : '';
-  const isNew = g.new ? `<span class="badge badge-new">جديد</span>` : '';
-      const isArabic = g.ar ? `<span class="badge badge-ar">عربية</span>` : '';
-  return `<article class="game-card">${cover}${size}${isNew}${isArabic}<div class="game-name" dir="auto">${esc(g.n)}</div></article>`;
+  const isArabic = g.ar ? `<span class="badge badge-ar">عربية</span>` : '';
+  const mixed = g.l && g.l.some(x => x[1]) && g.l.some(x => !x[1]);
+  const loc = g.l && g.l.length
+    ? `<div class="game-loc">📀 ${g.l.map(x => `<span>${esc(x[0])}${mixed && x[1] ? ' · عربية' : ''}</span>`).join('')}</div>`
+    : `<div class="game-loc none">📀 —</div>`;
+  return `<article class="game-card">${cover}${isArabic}<div class="game-name" dir="auto">${esc(g.n)}</div>${loc}</article>`;
 }
+
+const byName = (a,b) => a.n.localeCompare(b.n,'en',{sensitivity:'base'});
 
 function render(){
   const q = norm(searchEl.value), qw = words(searchEl.value);
-  let list = q ? GAMES.filter(g => matches(g, q, qw)) : GAMES.slice();
+  let list = GAMES.filter(g =>
+    (!q || matches(g, q, qw)) && (!locFilter || (g.l||[]).some(x => x[0] === locFilter)) && (!onlyAr || g.ar));
 
-  list.sort(sortMode === 'new'
-    ? (a,b) => (b.new||0)-(a.new||0) || a.n.localeCompare(b.n,'en',{sensitivity:'base'})
-    : (a,b) => a.n.localeCompare(b.n,'en',{sensitivity:'base'}));
+  if (sortMode === 'ar')       list.sort((a,b) => (b.ar||0)-(a.ar||0) || byName(a,b));
+  else if (sortMode === 'loc') list.sort((a,b) => a.o - b.o);
+  else                         list.sort(byName);
 
   grid.innerHTML = list.map(cardHTML).join('');
   empty.classList.toggle('show', list.length === 0);
 
-  countEl.innerHTML = q
+  const filtered = q || locFilter || onlyAr;
+  countEl.innerHTML = filtered
     ? `<b>${list.length}</b> نتيجة من أصل ${GAMES.length} لعبة`
     : `<b>${GAMES.length}</b> لعبة متوفّرة`;
 
@@ -624,11 +579,25 @@ $('searchClear').addEventListener('click', () => { searchEl.value=''; render(); 
 function setSort(mode){
   sortMode = mode;
   $('sortAz').setAttribute('aria-pressed',  mode === 'az');
-  $('sortNew').setAttribute('aria-pressed', mode === 'new');
+  $('sortAr').setAttribute('aria-pressed',  mode === 'ar');
+  $('sortLoc').setAttribute('aria-pressed', mode === 'loc');
   render();
 }
 $('sortAz').addEventListener('click',  () => setSort('az'));
-$('sortNew').addEventListener('click', () => setSort('new'));
+$('sortAr').addEventListener('click',  () => setSort('ar'));
+$('sortLoc').addEventListener('click', () => setSort('loc'));
+
+$('onlyAr').addEventListener('click', () => {
+  onlyAr = !onlyAr;
+  $('onlyAr').setAttribute('aria-pressed', onlyAr);
+  render();
+});
+
+// فلتر المكان
+const locSel = $('locSel');
+locSel.innerHTML = '<option value="">📀 كل الأماكن</option>' +
+  LOCS.map(l => `<option value="${esc(l)}">${esc(l)} (${GAMES.filter(g => (g.l||[]).some(x => x[0] === l)).length})</option>`).join('');
+locSel.addEventListener('change', () => { locFilter = locSel.value; render(); });
 
 // اختصار: اضغط "/" للبحث مباشرة
 document.addEventListener('keydown', e => {
