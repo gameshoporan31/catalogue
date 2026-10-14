@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GAME SHOP ORAN | ألعاب PS4</title>
-<meta name="description" content="GAME SHOP ORAN — كتالوج ألعاب PS4، 264 لعبة.">
+<title>GAME SHOP ORAN | ألعاب PS4 و Nintendo Switch</title>
+<meta name="description" content="GAME SHOP ORAN — كتالوج ألعاب PS4 و Nintendo Switch.">
 <meta name="theme-color" content="#070a10">
-<meta property="og:title" content="GAME SHOP ORAN | ألعاب PS4">
-<meta property="og:description" content="كتالوج ألعاب PS4 — 264 لعبة.">
+<meta property="og:title" content="GAME SHOP ORAN | ألعاب PS4 و Nintendo Switch">
+<meta property="og:description" content="كتالوج ألعاب PS4 و Nintendo Switch.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%8E%AE</text></svg>">
 <style>
@@ -16,6 +16,7 @@
   --accent:#35e0a1; --accent2:#6d7cff; --radius:16px;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{
   margin:0; color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif;
@@ -41,6 +42,13 @@ body{
 .search-clear{position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px;display:none}
 .search-clear:hover{color:var(--text);background:rgba(255,255,255,.06)}
 .search-wrap.filled .search-clear{display:block}
+
+/* ---------- المنصات ---------- */
+.platforms{display:flex;gap:6px;background:#0b1018;border:1px solid var(--line);border-radius:14px;padding:4px}
+.plat-btn{background:none;border:0;color:var(--muted);font:inherit;font-size:14px;font-weight:800;padding:9px 18px;border-radius:10px;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap;direction:ltr}
+.plat-btn:hover{color:var(--text)}
+.plat-btn[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#05070b}
+.plat-btn small{font-weight:700;opacity:.75;margin-inline-start:4px}
 
 /* ---------- شريط الأدوات ---------- */
 .container{max-width:1400px;margin:auto;padding:26px 28px 70px}
@@ -99,6 +107,8 @@ body{
 @media(max-width:720px){
   .header-inner{padding:13px 16px;gap:12px}
   .brand-name{font-size:18px}
+  .platforms{order:2;width:100%}
+  .plat-btn{flex:1;padding:9px 10px;font-size:13px}
   .search-wrap{flex-basis:100%;order:3}
   .container{padding:20px 16px 60px}
   .game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
@@ -134,8 +144,12 @@ body{
       <div class="brand-icon">🎮</div>
       <div>
         <div class="brand-name">GAME SHOP ORAN</div>
-        <div class="brand-sub">كتالوج ألعاب PS4</div>
+        <div class="brand-sub" id="brandSub">كتالوج ألعاب PS4</div>
       </div>
+    </div>
+    <div class="platforms" role="group" aria-label="المنصة">
+      <button class="plat-btn" id="platPs4" type="button" aria-pressed="true">PS4 <small id="nPs4"></small></button>
+      <button class="plat-btn" id="platSw" type="button" aria-pressed="false">Nintendo Switch <small id="nSw"></small></button>
     </div>
     <div class="search-wrap" id="searchWrap">
       <span class="search-ico">🔎</span>
@@ -148,17 +162,17 @@ body{
 <main class="container">
   <div class="toolbar">
     <div>
-      <h1>ألعاب PS4</h1>
+      <h1 id="pageTitle">ألعاب PS4</h1>
       <div class="count" id="count"></div>
     </div>
     <div class="filters">
       <div class="sorts" role="group" aria-label="ترتيب">
         <button class="sort-btn" id="sortAz"  type="button" aria-pressed="true">أبجدي</button>
-        <button class="sort-btn" id="sortAr"  type="button" aria-pressed="false">عربية أولاً</button>
-        <button class="sort-btn" id="sortLoc" type="button" aria-pressed="false">حسب القرص</button>
+        <button class="sort-btn ps4-only" id="sortAr"  type="button" aria-pressed="false">عربية أولاً</button>
+        <button class="sort-btn ps4-only" id="sortLoc" type="button" aria-pressed="false">حسب القرص</button>
       </div>
-      <button class="only-ar" id="onlyAr" type="button" aria-pressed="false">عربية فقط</button>
-      <select class="loc-select" id="locSel" aria-label="المكان"></select>
+      <button class="only-ar ps4-only" id="onlyAr" type="button" aria-pressed="false">عربية فقط</button>
+      <select class="loc-select ps4-only" id="locSel" aria-label="المكان"></select>
     </div>
   </div>
 
@@ -172,7 +186,7 @@ body{
 </main>
 
 <footer class="footer">
-  GAME SHOP ORAN • كتالوج ألعاب PS4<br>
+  GAME SHOP ORAN • كتالوج ألعاب PS4 و Nintendo Switch<br>
   <span id="footCount"></span>
 </footer>
 
@@ -182,11 +196,12 @@ body{
 /* =========================================================================
    GAME SHOP ORAN — كتالوج الألعاب
    -------------------------------------------------------------------------
-   لإضافة لعبة جديدة: أضف سطراً واحداً في القائمة GAMES أسفله.
+   لإضافة لعبة PS4: أضف سطراً واحداً في القائمة GAMES.
      n = اسم اللعبة                          (إجباري)
      l = الأماكن [[القرص,1=عربية]]            (اختياري، مثال: [["disque 2 TB",1],["Noir"]])
      i = اسم ملف الصورة داخل مجلد icon_games (اختياري)
      ar: 1                                   (اختياري — لعبة بالعربية)
+   لإضافة لعبة Nintendo Switch: أضف سطراً في القائمة SWITCH (n و i فقط).
    مثال:
      {n:"God of War", l:[["disque 2 TB",1],["disque 60 G"]], i:"God.of.War.game.png", ar:1},
    ========================================================================= */
@@ -458,20 +473,54 @@ const GAMES = [
   {n:"WWE 2K24", l:[["disque 2 TB"]], i:"WWE 2K24 game.png"}
 ];
 
+/* ---- Nintendo Switch ----
+   Images : même dossier icon_games, nom de fichier exact avec extension dans "i". */
+const SWITCH = [
+  {n:"Animal Crossing: New Horizons", i:"Animal Crossing New Horizons.jpg"},
+  {n:"Beach Buggy Racing 2 Island Adventure", i:"Beach Buggy Racing 2 Island Adventure.jpg"},
+  {n:"Ben 10 Power Trip", i:"Ben 10 Power Trip.jpg"},
+  {n:"Bob l'éponge Cuisine en Folie", i:"Bob l'éponge Cuisine en Folie.jpg"},
+  {n:"Burnout Paradise Remastered", i:"Burnout Paradise Remastered.jpg"},
+  {n:"Crash Bandicoot N. Sane Trilogy", i:"Crash Bandicoot N. Sane Trilogy.nsp.jpg"},
+  {n:"Donkey Kong Country Tropical Freeze", i:"Donkey Kong Country Tropical Freeze.jpg"},
+  {n:"DRAGON BALL Sparking ZERO", i:"DRAGON BALL Sparking ZERO.jpg"},
+  {n:"EA Sports FC 26", i:"EA Sports FC 26.jpg"},
+  {n:"Kirby's Return to Dream Land Deluxe", i:"Kirby's Return to Dream Land Deluxe.jpg"},
+  {n:"Mario Kart 8 Deluxe", i:"Mario Kart 8 Deluxe (NSP).jpg"},
+  {n:"Mario Party Superstars", i:"Mario Party Superstars.jpg"},
+  {n:"Mario Strikers: Battle League", i:"mario_strikers_battle_league.xci.jpg"},
+  {n:"Minecraft", i:"Minecraft.webp"},
+  {n:"Need for Speed Hot Pursuit Remastered", i:"Need for Speed Hot Pursuit Remastered.jpg"},
+  {n:"New Super Mario Bros. U Deluxe", i:"New Super Mario Bros. U Deluxe.nsp.jpg"},
+  {n:"Nintendo Switch Sports", i:"Nintendo Switch Sports.jpg"},
+  {n:"Pokemon Violet", i:"Pokemon Violet.jpg"},
+  {n:"RAYMAN LEGENDS DEFINITIVE EDITION", i:"RAYMAN LEGENDS DEFINITIVE EDITION.jpg"},
+  {n:"SMURFS KART", i:"SMURFS KART.jpg"},
+  {n:"Sniper Elite 4", i:"Sniper Elite 4.jpg"},
+  {n:"SONIC SUPERSTARS Digital Deluxe Edition", i:"SONIC SUPERSTARS Digital Deluxe Edition.jpg"},
+  {n:"Splatoon 3", i:"Splatoon 3.jpg"},
+  {n:"SUPER MARIO ODYSSEY", i:"SUPER MARIO ODYSSEY.jpg"},
+  {n:"Super Mario 3D World + Bowser's Fury", i:"Super Mario 3D World + Bowser's Fury.webp"},
+  {n:"Super Mario Bros. Wonder", i:"Super Mario Bros. Wonder.jpg"},
+  {n:"Super Mario Party Jamboree", i:"Super Mario Party Jamboree.jpg"},
+  {n:"Tennis World Tour 2", i:"Tennis World Tour 2.jpg"},
+  {n:"The Legend of Zelda: Tears of the Kingdom", i:"The Legend of Zelda Tears of the Kingdom.jpg"},
+  {n:"Yoshi's Crafted World", i:"Yoshi's Crafted World.nsp.jpg"}
+];
+
 /* ---- أدوات ---- */
 const $ = id => document.getElementById(id);
 const grid = $('grid'), empty = $('empty'), countEl = $('count'), searchEl = $('search');
 
 // تطبيع النص: حروف صغيرة، بلا تشكيل ولا فواصل ولا رموز.
-// هكذا يجد البحث "assassins creed" النتيجة "Assassin's Creed® Syndicate".
 const norm = s => s.toLowerCase()
-  .normalize('NFD').replace(/[̀-ͯ]/g,'')
-  .replace(/[^a-z0-9؀-ۿ]+/g,'');
+  .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/[^a-z0-9\u0600-\u06ff]+/g,'');
 
 // كلمات البحث، للعثور على النتيجة مهما كان ترتيب الكلمات
 const words = s => s.toLowerCase()
-  .normalize('NFD').replace(/[̀-ͯ]/g,'')
-  .replace(/[^a-z0-9؀-ۿ]+/g,' ')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/[^a-z0-9\u0600-\u06ff]+/g,' ')
   .trim().split(' ').filter(Boolean);
 
 /* اختصارات البحث: الكلمة التي يكتبها الزبون -> الألعاب المعنية.
@@ -502,25 +551,36 @@ const ALIASES = [
   [/watch dogs/i,                  "watchdogs ووتش دوقز"],
   [/uncharted/i,                   "انشارتد"],
   [/batman/i,                      "باتمان"],
+  [/mario/i,                       "ماريو"],
+  [/zelda/i,                       "زيلدا"],
+  [/pokemon/i,                     "بوكيمون"],
+  [/sonic/i,                       "سونيك"],
   [/\bps2\s?to\s?ps4|\[PS2toPS4\]/i, "ps2 بلايستيشن2"],
 ];
 
-GAMES.forEach(g => {
+[...GAMES, ...SWITCH].forEach(g => {
   let k = norm(g.n) + norm((g.l||[]).map(x => x[0]).join(' '));
   if (g.ar) k += norm('arabe arabic') + 'عربية';
   for (const [re, extra] of ALIASES) if (re.test(g.n)) k += norm(extra);
   g._k = k;
 });
 
-// قائمة الأماكن (حسب ترتيب ظهورها في القائمة)
+// قائمة الأماكن PS4 (حسب ترتيب ظهورها في القائمة)
 const LOCS = [...new Set(GAMES.flatMap(g => (g.l||[]).map(x => x[0])))];
+// ترتيب "حسب القرص": رقم أول مكان للعبة
+GAMES.forEach(g => { const f = g.l && g.l[0] ? LOCS.indexOf(g.l[0][0]) : -1; g.o = f < 0 ? 999 : f; });
 
 // تطابق إذا وُجدت العبارة كاملة أو وُجدت كل كلمة على حدة
 const matches = (g, q, qw) => g._k.includes(q) || qw.every(w => g._k.includes(w));
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-let sortMode = 'az', locFilter = '', onlyAr = false;
+/* ---- المنصات ---- */
+const PLATFORMS = {
+  ps4:    { list: GAMES,  title: 'ألعاب PS4',             sub: 'كتالوج ألعاب PS4' },
+  switch: { list: SWITCH, title: 'ألعاب Nintendo Switch', sub: 'كتالوج ألعاب Nintendo Switch' }
+};
+let platform = 'ps4', sortMode = 'az', locFilter = '', onlyAr = false;
 
 /* ---- الرسم ---- */
 // صور بدون امتداد: يجرّب الموقع الامتدادات واحداً بعد الآخر
@@ -543,21 +603,25 @@ function cardHTML(g){
     : `<div class="game-cover no-img"></div>`;
   const isArabic = g.ar ? `<span class="badge badge-ar">عربية</span>` : '';
   const mixed = g.l && g.l.some(x => x[1]) && g.l.some(x => !x[1]);
-  const loc = g.l && g.l.length
-    ? `<div class="game-loc">📀 ${g.l.map(x => `<span>${esc(x[0])}${mixed && x[1] ? ' · عربية' : ''}</span>`).join('')}</div>`
-    : `<div class="game-loc none">📀 —</div>`;
+  let loc = '';
+  if (platform === 'ps4'){
+    loc = g.l && g.l.length
+      ? `<div class="game-loc">📀 ${g.l.map(x => `<span>${esc(x[0])}${mixed && x[1] ? ' · عربية' : ''}</span>`).join('')}</div>`
+      : `<div class="game-loc none">📀 —</div>`;
+  }
   return `<article class="game-card">${cover}${isArabic}<div class="game-name" dir="auto">${esc(g.n)}</div>${loc}</article>`;
 }
 
 const byName = (a,b) => a.n.localeCompare(b.n,'en',{sensitivity:'base'});
 
 function render(){
+  const all = PLATFORMS[platform].list;
   const q = norm(searchEl.value), qw = words(searchEl.value);
-  let list = GAMES.filter(g =>
+  let list = all.filter(g =>
     (!q || matches(g, q, qw)) && (!locFilter || (g.l||[]).some(x => x[0] === locFilter)) && (!onlyAr || g.ar));
 
   if (sortMode === 'ar')       list.sort((a,b) => (b.ar||0)-(a.ar||0) || byName(a,b));
-  else if (sortMode === 'loc') list.sort((a,b) => a.o - b.o);
+  else if (sortMode === 'loc') list.sort((a,b) => a.o - b.o || byName(a,b));
   else                         list.sort(byName);
 
   grid.innerHTML = list.map(cardHTML).join('');
@@ -565,8 +629,8 @@ function render(){
 
   const filtered = q || locFilter || onlyAr;
   countEl.innerHTML = filtered
-    ? `<b>${list.length}</b> نتيجة من أصل ${GAMES.length} لعبة`
-    : `<b>${GAMES.length}</b> لعبة متوفّرة`;
+    ? `<b>${list.length}</b> نتيجة من أصل ${all.length} لعبة`
+    : `<b>${all.length}</b> لعبة متوفّرة`;
 
   $('searchWrap').classList.toggle('filled', searchEl.value !== '');
 }
@@ -593,11 +657,27 @@ $('onlyAr').addEventListener('click', () => {
   render();
 });
 
-// فلتر المكان
+// فلتر المكان (PS4)
 const locSel = $('locSel');
 locSel.innerHTML = '<option value="">📀 كل الأماكن</option>' +
   LOCS.map(l => `<option value="${esc(l)}">${esc(l)} (${GAMES.filter(g => (g.l||[]).some(x => x[0] === l)).length})</option>`).join('');
 locSel.addEventListener('change', () => { locFilter = locSel.value; render(); });
+
+// تبديل المنصة
+function setPlatform(p){
+  platform = p;
+  $('platPs4').setAttribute('aria-pressed', p === 'ps4');
+  $('platSw').setAttribute('aria-pressed',  p === 'switch');
+  $('pageTitle').textContent = PLATFORMS[p].title;
+  $('brandSub').textContent  = PLATFORMS[p].sub;
+  document.querySelectorAll('.ps4-only').forEach(el => { el.hidden = (p !== 'ps4'); });
+  // إعادة ضبط الفلاتر عند تغيير المنصة
+  locFilter = ''; locSel.value = '';
+  onlyAr = false; $('onlyAr').setAttribute('aria-pressed', false);
+  setSort('az');
+}
+$('platPs4').addEventListener('click', () => setPlatform('ps4'));
+$('platSw').addEventListener('click',  () => setPlatform('switch'));
 
 // اختصار: اضغط "/" للبحث مباشرة
 document.addEventListener('keydown', e => {
@@ -610,7 +690,9 @@ addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 600), 
 toTop.addEventListener('click', () => scrollTo({top:0, behavior:'smooth'}));
 
 /* ---- الإقلاع ---- */
-$('footCount').textContent = GAMES.length + ' لعبة';
+$('nPs4').textContent = '(' + GAMES.length + ')';
+$('nSw').textContent  = '(' + SWITCH.length + ')';
+$('footCount').textContent = 'PS4: ' + GAMES.length + ' لعبة • Nintendo Switch: ' + SWITCH.length + ' لعبة';
 render();
 </script>
 </body>
