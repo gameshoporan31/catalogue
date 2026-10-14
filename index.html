@@ -134,6 +134,26 @@ body{
 .loc-select:focus{border-color:var(--accent2)}
 .only-ar{background:#0b1018;border:1px solid var(--line);color:var(--muted);border-radius:12px;padding:10px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .only-ar[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:rgba(53,224,161,.08)}
+
+/* ---------- شعارات المنصات + تبويب PS5 ---------- */
+.plat-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 10px}
+.plat-btn{padding:6px 12px}
+.plat-logo{height:50px;width:auto;display:block;border-radius:10px;object-fit:contain;font-size:12px;color:var(--text)}
+.plat-logo-sq{width:50px;height:50px}
+.plat-btn[aria-pressed="false"] .plat-logo{opacity:.9}
+.plat-btn:hover .plat-logo{opacity:1}
+.plat-btn small{font-size:11px}
+.soon{text-align:center;padding:60px 20px;border:1px dashed var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#121925,#0d131c)}
+.soon-logo{width:min(320px,70%);height:auto;border-radius:14px;margin-bottom:22px}
+.soon h2{font-size:24px;margin:0 0 10px;font-weight:900;color:var(--accent)}
+.soon p{margin:0;color:var(--muted);font-size:15px}
+@media(max-width:720px){.plat-logo{height:42px}.plat-logo-sq{width:42px;height:42px}.plat-btn{padding:5px 6px}}
+
+/* ---------- رقم الهاتف ---------- */
+.call{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#05070b;font-weight:900;font-size:15px;text-decoration:none;padding:11px 18px;border-radius:12px;white-space:nowrap;direction:ltr;box-shadow:0 8px 22px rgba(53,224,161,.18)}
+.call:hover{filter:brightness(1.08)}
+.footer a{color:var(--accent);text-decoration:none;font-weight:800;direction:ltr;unicode-bidi:isolate}
+@media(max-width:720px){.call{order:1;font-size:14px;padding:9px 13px}}
 </style>
 </head>
 <body>
@@ -147,9 +167,11 @@ body{
         <div class="brand-sub" id="brandSub">كتالوج ألعاب PS4</div>
       </div>
     </div>
+    <a class="call" href="tel:+213560602585" aria-label="اتصل بنا: 0560 60 25 85">📞 0560 60 25 85</a>
     <div class="platforms" role="group" aria-label="المنصة">
-      <button class="plat-btn" id="platPs4" type="button" aria-pressed="true">PS4 <small id="nPs4"></small></button>
-      <button class="plat-btn" id="platSw" type="button" aria-pressed="false">Nintendo Switch <small id="nSw"></small></button>
+      <button class="plat-btn" id="platPs4" type="button" aria-pressed="true" aria-label="PS4"><img src="./logos/ps4.png" alt="PS4" class="plat-logo"> <small id="nPs4"></small></button>
+      <button class="plat-btn" id="platPs5" type="button" aria-pressed="false" aria-label="PS5"><img src="./logos/ps5.png" alt="PS5" class="plat-logo"> <small id="nPs5">قريباً</small></button>
+      <button class="plat-btn" id="platSw" type="button" aria-pressed="false" aria-label="Nintendo Switch"><img src="./logos/nintendo-switch.png" alt="Nintendo Switch" class="plat-logo plat-logo-sq"> <small id="nSw"></small></button>
     </div>
     <div class="search-wrap" id="searchWrap">
       <span class="search-ico">🔎</span>
@@ -183,11 +205,18 @@ body{
     <h2>لا توجد نتيجة</h2>
     <p>جرّب كلمة أخرى أو تحقّق من الإملاء.</p>
   </div>
+
+  <section class="soon" id="soon" hidden>
+    <img src="./logos/ps5.png" alt="PS5" class="soon-logo">
+    <h2>ألعاب PS5 متوفرة قريباً</h2>
+    <p>نعمل على تجهيز كتالوج ألعاب PS5. ترقّبوا الإضافة قريباً!</p>
+  </section>
 </main>
 
 <footer class="footer">
   GAME SHOP ORAN • كتالوج ألعاب PS4 و Nintendo Switch<br>
-  <span id="footCount"></span>
+  <span id="footCount"></span><br>
+  📞 للطلب والاستفسار: <a href="tel:+213560602585">0560 60 25 85</a>
 </footer>
 
 <button class="to-top" id="toTop" type="button" aria-label="العودة إلى الأعلى">↑</button>
@@ -694,6 +723,29 @@ $('nPs4').textContent = '(' + GAMES.length + ')';
 $('nSw').textContent  = '(' + SWITCH.length + ')';
 $('footCount').textContent = 'PS4: ' + GAMES.length + ' لعبة • Nintendo Switch: ' + SWITCH.length + ' لعبة';
 render();
+</script>
+
+<!-- تبويب PS5 (قريباً) — سكربت منفصل، السكربت الأصلي أعلاه لم يتغيّر -->
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const hideWhenSoon = ['grid','empty','count','searchWrap'].map($)
+    .concat([document.querySelector('.filters')]);
+  function setSoon(on){
+    hideWhenSoon.forEach(el => { if (el) el.hidden = on; });
+    $('soon').hidden = !on;
+    $('platPs5').setAttribute('aria-pressed', on);
+    if (on){
+      $('platPs4').setAttribute('aria-pressed', false);
+      $('platSw').setAttribute('aria-pressed', false);
+      $('pageTitle').textContent = 'ألعاب PS5';
+      $('brandSub').textContent  = 'ألعاب PS5 متوفرة قريباً';
+    }
+  }
+  $('platPs5').addEventListener('click', () => setSoon(true));
+  $('platPs4').addEventListener('click', () => setSoon(false));
+  $('platSw').addEventListener('click',  () => setSoon(false));
+})();
 </script>
 </body>
 </html>
