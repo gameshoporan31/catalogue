@@ -798,5 +798,110 @@ function logoFail(el){
   $('platSw').addEventListener('click',  () => setSoon(false));
 })();
 </script>
+<script>
+/* GAME SHOP ORAN — نافذة تفاصيل اللعبة (تكبير الصورة + ملخص بالعربية + يوتيوب)
+   ملف مستقل: لا يغيّر السكربت الأصلي. أضِف 
+   لإضافة ملخص للعبة: سطر جديد في DETAILS  ->  "اسم اللعبة كما في الكتالوج": "الملخص" */
+
+const DETAILS = {
+  "God of War": "كريتوس يعيش في بلاد الشمال مع ابنه أتريوس، ويخوضان رحلة لنثر رماد الزوجة الراحلة على أعلى قمة، وسط آلهة ووحوش من الأساطير الإسكندنافية. قتال سينمائي وقصة مؤثرة.",
+  "God of War Ragnarök": "تكملة رحلة كريتوس وأتريوس مع اقتراب نهاية العالم (راغناروك) وصراع مع آلهة الشمال، في عوالم أوسع وقتال أعنف.",
+  "The Last of Us": "جويل وإيلي يعبران أمريكا بعد وباء فطري حوّل البشر إلى مصابين. قصة إنسانية مؤثرة وبقاء وتخفٍّ وقتال.",
+  "The Last of Us Part II": "بعد سنوات من الجزء الأول، تنطلق إيلي في رحلة انتقام قاسية، في قصة مظلمة عن الحب والكراهية والعنف.",
+  "Marvel's Spider-Man": "بيتر باركر رجل العنكبوت المحترف يحمي نيويورك من أعداء مثل الدكتور أوكتوباس، مع تنقل سريع بالشباك وقتال ممتع.",
+  "Spider-Man: Miles Morales": "مايلز موراليس يتولى حماية نيويورك في الشتاء ويواجه تهديداً جديداً، بقدرات الكهرباء والتخفي.",
+  "Red Dead Redemption 2": "آرثر مورغان وعصابة فان در ليند في الغرب الأمريكي مع نهاية عصر الخارجين عن القانون. عالم مفتوح ضخم وقصة ملحمية.",
+  "GTA V": "ثلاث شخصيات (مايكل، فرانكلين، تريفور) في مدينة لوس سانتوس: سرقات ومهام وعالم مفتوح ضخم مع لعب جماعي أونلاين.",
+  "Cyberpunk 2077": "في مدينة نايت سيتي المستقبلية، تلعب دور V وتبحث عن شريحة تمنح الخلود. عالم مفتوح وقرارات تؤثر على القصة.",
+  "Elden Ring": "عالم مفتوح فانتازي من تصميم FromSoftware وجورج ر. ر. مارتن. استكشاف حر وزعماء أقوياء وصعوبة عالية.",
+  "Ghost of Tsushima": "الساموراي جين ساكاي يدافع عن جزيرة تسوشيما من الغزو المغولي، بقتال بالسيف وجمال بصري مذهل.",
+  "Horizon Zero Dawn": "آلوي صيادة ماهرة تكتشف أسرار عالم تسيطر عليه آلات عملاقة على شكل حيوانات.",
+  "Horizon Forbidden West": "تكملة مغامرة آلوي نحو الغرب المحظور، بآلات جديدة ومناطق ومخاطر أكبر.",
+  "Uncharted 4: A Thief's End": "ناثان دريك الباحث عن الكنوز يعود لمغامرة أخيرة مع أخيه سام: مطاردات وتسلق وألغاز وقصة ممتعة.",
+  "Resident Evil 4": "الجندي ليون يُرسل لإنقاذ ابنة الرئيس من قرية غامضة مليئة بالمصابين. رعب وأكشن وإعادة بناء رائعة.",
+  "Resident Evil Village": "إيثان يبحث عن ابنته في قرية أوروبية مظلمة يحكمها كائنات مرعبة وليدي ديميتريسكو.",
+  "Hogwarts Legacy": "طالب في هوجورتس في القرن التاسع عشر: تتعلم السحر وتستكشف القلعة وتواجه أسراراً قديمة.",
+  "Detroit: Become Human": "ثلاثة روبوتات تتمرد وتبحث عن حريتها. قرارك يغيّر القصة ونهايتها.",
+  "A WAY OUT": "لعبة تعاونية لاثنين: سجينان يخططان للهروب ثم الانتقام. تُلعب بجهازين أو أونلاين.",
+  "It Takes Two": "زوجان تحوّلا إلى دميتين ويجب أن يتعاونا للعودة. لعبة تعاونية ممتعة ومليئة بالأفكار.",
+  "Days Gone": "ديكون سانت جون سائق دراجة نارية يبحث عن زوجته في عالم مليء بالمتحولين (الفريكرز).",
+  "Bloodborne": "مدينة يارنهام الموبوءة بالوحوش، قتال سريع وصعب وأجواء رعب قوطية.",
+  "Death Stranding": "سام بريدجز يوصّل الطرود ويعيد ربط أمريكا بعد كارثة غامضة. لعبة فريدة من هيديو كوجيما.",
+  "Fortnite": "باتل رويال مجاني: 100 لاعب على جزيرة، بناء وقتال ومواسم جديدة باستمرار.",
+  "Minecraft (2024)": "عالم من المكعبات: ابنِ وعدّن وصنّع وقاتل الوحوش، وحدك أو مع أصدقائك.",
+  "EA SPORTS FC 27": "أحدث لعبة كرة قدم من EA (فيفا سابقاً) بالأندية واللاعبين والبطولات واللعب الأونلاين.",
+  "Mortal Kombat 11 Ultimate": "لعبة قتال دموية بشخصيات شهيرة وضربات نهائية (Fatalities) وقصة سفر عبر الزمن.",
+  "Call of Duty: Modern Warfare": "حرب حديثة وواقعية: حملة قصة مثيرة ولعب جماعي أونلاين سريع.",
+  "Assassin's Creed Valhalla": "إيفور، فايكنغ من النرويج، يغزو إنجلترا في القرن التاسع: استكشاف وغارات وقتال.",
+  "Mario Kart 8 Deluxe": "سباقات ماريو الممتعة بمسارات مجنونة وأسلحة، للعب العائلي والجماعي على نفس الجهاز.",
+  "The Legend of Zelda: Tears of the Kingdom": "لينك يستكشف أرض هايرول وسماءها ويبني مركبات وأدوات ليوقف غانون.",
+  "Animal Crossing: New Horizons": "تعيش على جزيرة هادئة: تزيّن وتصطاد وتصادق الحيوانات اللطيفة. لعبة مريحة للجميع.",
+  "SUPER MARIO ODYSSEY": "ماريو يسافر بين ممالك مختلفة بقبعته السحرية ليُنقذ الأميرة بيتش.",
+  "Pokemon Violet": "عالم مفتوح في إقليم باldea: اجمع البوكيمون وخض مغامرة المدرسة والتحديات.",
+  "Splatoon 3": "معارك بالحبر الملوّن بين فرق، لعب أونلاين ممتع وسريع."
+};
+
+(function () {
+  const css = document.createElement('style');
+  css.textContent = `
+  .game-cover{cursor:zoom-in}
+  .gd-ov{position:fixed;inset:0;z-index:1000;background:rgba(3,6,12,.82);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+  .gd-ov.show{opacity:1;visibility:visible}
+  .gd-box{position:relative;width:min(520px,100%);max-height:92vh;overflow:auto;background:linear-gradient(180deg,#121925,#0d131c);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:scale(.9);transition:transform .25s}
+  .gd-ov.show .gd-box{transform:scale(1)}
+  .gd-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#080c13}
+  .gd-noimg{aspect-ratio:1/1;display:grid;place-items:center;font-size:70px;background:#0d131c}
+  .gd-x{position:absolute;top:10px;inset-inline-end:10px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(7,10,16,.85);color:var(--text);font-size:22px;cursor:pointer;line-height:1}
+  .gd-body{padding:18px 20px 22px}
+  .gd-title{margin:0 0 10px;font-size:20px;font-weight:900;unicode-bidi:plaintext}
+  .gd-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .gd-tags span{font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(109,124,255,.14);color:var(--accent2);direction:ltr}
+  .gd-tags .ar{background:rgba(53,224,161,.12);color:var(--accent)}
+  .gd-sum{margin:0 0 16px;font-size:15px;line-height:1.8;color:#d5deea}
+  .gd-sum.none{color:var(--muted)}
+  .gd-links{display:flex;gap:10px;flex-wrap:wrap}
+  .gd-links a{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:14px;padding:11px 14px;border-radius:12px;color:#05070b;background:linear-gradient(135deg,var(--accent2),var(--accent))}
+  .gd-links a.alt{background:#0b1018;color:var(--text);border:1px solid var(--line)}
+  @media(prefers-reduced-motion:reduce){.gd-ov,.gd-box{transition:none}}`;
+  document.head.appendChild(css);
+
+  const ov = document.createElement('div');
+  ov.className = 'gd-ov';
+  ov.innerHTML = '<div class="gd-box" role="dialog" aria-modal="true"><button class="gd-x" type="button" aria-label="إغلاق">&times;</button><div id="gdMedia"></div><div class="gd-body"><h2 class="gd-title" id="gdTitle" dir="auto"></h2><div class="gd-tags" id="gdTags"></div><p class="gd-sum" id="gdSum"></p><div class="gd-links" id="gdLinks"></div></div></div>';
+  document.body.appendChild(ov);
+
+  const q = id => ov.querySelector('#' + id);
+  const yt = s => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+  const close = () => { ov.classList.remove('show'); document.body.style.overflow = ''; };
+
+  function open(card) {
+    const name = card.querySelector('.game-name').textContent.trim();
+    const g = [...GAMES, ...SWITCH].find(x => x.n === name) || { n: name };
+    const img = card.querySelector('.game-cover img');
+    const ok = img && !card.querySelector('.game-cover').classList.contains('no-img');
+    q('gdMedia').innerHTML = ok ? '<img class="gd-img" alt="">' : '<div class="gd-noimg">🎮</div>';
+    if (ok) { const m = q('gdMedia').firstChild; m.src = img.currentSrc || img.src; m.alt = name; }
+    q('gdTitle').textContent = name;
+    q('gdTags').innerHTML = (g.ar ? '<span class="ar">عربية</span>' : '') +
+      (g.l || []).map(x => '<span>📀 ' + x[0].replace(/[<>&]/g, '') + '</span>').join('');
+    const d = DETAILS[name];
+    q('gdSum').textContent = d || 'سيتم إضافة ملخص هذه اللعبة قريباً — يمكنك مشاهدة العرض على يوتيوب.';
+    q('gdSum').className = 'gd-sum' + (d ? '' : ' none');
+    q('gdLinks').innerHTML =
+      '<a href="' + yt(name + ' official trailer') + '" target="_blank" rel="noopener">▶ عرض اللعبة (يوتيوب)</a>' +
+      '<a class="alt" href="' + yt('شرح و مراجعة لعبة ' + name + ' بالعربية') + '" target="_blank" rel="noopener">شرح بالعربية</a>';
+    ov.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.addEventListener('click', e => {
+    const cover = e.target.closest('.game-cover');
+    if (cover) { open(cover.closest('.game-card')); return; }
+    if (e.target === ov || e.target.closest('.gd-x')) close();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+
+</script>
 </body>
 </html>
